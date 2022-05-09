@@ -7,7 +7,8 @@ export default class LexicalComponent extends HTMLElement {
   }
 
   async connectedCallback() {
-    const $contentEditableElement = this.shadowRoot.getElementById('editor');
+    const $contentEditableElement = this.shadowRoot.querySelector('#editor');
+    // NOTE: This breaks encapsulation but ensures we're using the same logic across document and webcomponent.
     const editor = initializeEditorToElement($contentEditableElement);
     console.log({
       msg: "[lexical-component] connectedCallback",
