@@ -1,0 +1,35 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/lexical.bundle.min.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "dependencies": {
+    "@lexical/clipboard": "0.2.5",
+    "@lexical/code": "0.2.5",
+    "@lexical/dragon": "0.2.5",
+    "@lexical/hashtag": "0.2.5",
+    "@lexical/history": "0.2.5",
+    "@lexical/link": "0.2.5",
+    "@lexical/list": "0.2.5",
+    "@lexical/markdown": "0.2.5",
+    "@lexical/overflow": "0.2.5",
+    "@lexical/plain-text": "0.2.5",
+    "@lexical/rich-text": "0.2.5",
+    "@lexical/selection": "0.2.5",
+    "@lexical/table": "0.2.5",
+    "@lexical/text": "0.2.5",
+    "@lexical/utils": "0.2.5",
+    "@lexical/yjs": "0.2.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "babel-loader": "^8.2.5",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
