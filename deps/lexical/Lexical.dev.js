@@ -1638,7 +1638,6 @@ function onBeforeInput(event, editor) {
       return;
     }
 
-    console.log("updateEditor", { selection });
     if (!$isRangeSelection(selection)) {
       return;
     }
@@ -6127,7 +6126,6 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
       eventType === "compositionend" ||
       (eventType === "click" && window.event.detail === 3) ||
       eventType === null);
-  console.log("internalCreateRangeSelection", { useDOMSelection });
   let anchorDOM, focusDOM, anchorOffset, focusOffset;
 
   if (!$isRangeSelection(lastSelection) || useDOMSelection) {
