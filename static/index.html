@@ -53,12 +53,17 @@
 
 <div id="container">
   <h1>document-level editor</h1>
-  <p>Here, we import the minified lexical library at the HTML level. We then attach it to the content-editable
-    "editor" below. Everything works</p>
+  <p>
+    Here, we import the minified lexical library at the HTML level. We then
+    attach it to the content-editable "editor" below. Everything works
+  </p>
   <div id="editor" contenteditable></div>
   <h1>webcomponent editor</h1>
-  <p>Here, we import a webcomponent. The webcomponent attaches an editor to an element in its shadow root. Properties on
-    the editor are set but the editor is not typeable.</p>
+  <p>
+    Here, we import a webcomponent. The webcomponent attaches an editor to an
+    element in its shadow root. Properties on the editor are set but the editor
+    is not typeable.
+  </p>
   <lexical-component id="webcomponent-editor"></lexical-component>
 </div>
 
@@ -67,11 +72,11 @@
     await import("../dist/lexical.bundle.min.js");
     const editor = Lexical.lexical.createEditor({
       theme: {
-        ltr: 'ltr',
-        rtl: 'rtl',
-        placeholder: 'editor-placeholder',
-        paragraph: 'editor-paragraph',
-      }
+        ltr: "ltr",
+        rtl: "rtl",
+        placeholder: "editor-placeholder",
+        paragraph: "editor-paragraph",
+      },
     });
     editor.setRootElement($element);
     editor.registerUpdateListener(({ editorState }) => {
@@ -82,13 +87,12 @@
   }
 </script>
 <script type="module">
-
   // 1) Load document-level editor
-  const $contentEditableElement = document.getElementById('editor');
+  const $contentEditableElement = document.getElementById("editor");
+
   initializeEditorToElement($contentEditableElement);
 
   // 2) Load webcomponent editor
   import LexicalComponent from "./lexical-component.js";
-  window.customElements.define('lexical-component', LexicalComponent);
-
+  window.customElements.define("lexical-component", LexicalComponent);
 </script>
