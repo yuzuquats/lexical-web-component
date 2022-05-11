@@ -170,6 +170,51 @@ function isSelectionWithinEditor(editor, anchorDOM, focusDOM) {
   const rootElement = editor.getRootElement();
 
   try {
+    console.log(">>>>");
+    if (rootElement == null || anchorDOM == null) {
+      console.log(
+        "    isSelectionWithinEditor",
+        "rootElement or anchorDOM are null",
+        { rootElement, anchorDOM }
+      );
+    } else {
+      /*
+        3a. FAILING HERE
+       */
+      if (!rootElement.contains(anchorDOM)) {
+        console.log(
+          "    isSelectionWithinEditor",
+          "rootElement doesn't contain anchorDom",
+          { rootElement, anchorDOM }
+        );
+      }
+      /*
+        3b. FAILING HERE
+       */
+      if (!rootElement.contains(focusDOM)) {
+        console.log(
+          "    isSelectionWithinEditor",
+          "rootElement doesn't contain focusDom",
+          { rootElement, anchorDOM }
+        );
+      }
+      if (!isSelectionCapturedInDecoratorInput(anchorDOM)) {
+        console.log(
+          "    isSelectionWithinEditor",
+          "isSelectionCapturedInDecoratorInput=false"
+        );
+      }
+      /*
+        3c. FAILING HERE
+       */
+      if (getNearestEditorFromDOMNode(anchorDOM) != editor) {
+        console.log(
+          "    isSelectionWithinEditor",
+          "getNearestEditorFromDOMNode is not editor"
+        );
+      }
+    }
+    console.log("<<<<");
     return (
       rootElement !== null &&
       rootElement.contains(anchorDOM) &&
@@ -179,6 +224,8 @@ function isSelectionWithinEditor(editor, anchorDOM, focusDOM) {
       getNearestEditorFromDOMNode(anchorDOM) === editor
     );
   } catch (error) {
+    console.error(error);
+    console.log("<<<<");
     return false;
   }
 }
@@ -6020,6 +6067,17 @@ function internalResolveSelectionPoints(
     focusDOM === null ||
     !isSelectionWithinEditor(editor, anchorDOM, focusDOM)
   ) {
+    /*
+      2. isSelectionWithinEditor returns false here
+        anchorDOM: div#container
+        focusDOM: div#container
+        focusedInEditor: false
+    */
+    console.log("internalResolveSelectionPoints", {
+      anchorDOM,
+      focusDOM,
+      focusedInEditor: isSelectionWithinEditor(editor, anchorDOM, focusDOM),
+    });
     return null;
   }
 
@@ -6126,7 +6184,11 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
         eventType === "compositionstart" ||
         eventType === "compositionend" ||
         (eventType === "click" && window.event.detail === 3)));
-  console.log("internalCreateRangeSelection", { useDOMSelection, eventType });
+  console.log("internalCreateRangeSelection", {
+    useDOMSelection,
+    eventType,
+    domSelection,
+  });
   let anchorDOM, focusDOM, anchorOffset, focusOffset;
 
   if (!$isRangeSelection(lastSelection) || useDOMSelection) {
@@ -6143,6 +6205,21 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
   } // Let's resolve the text nodes from the offsets and DOM nodes we have from
   // native selection.
 
+  /*
+    1. Logs this in a webcomponent:
+      anchorDOM: div#container
+      anchorOffset: 11
+      focusDOM: div#container
+      focusOffset: 11
+      lastSelection: null
+   */
+  console.log({
+    anchorDOM,
+    anchorOffset,
+    focusDOM,
+    focusOffset,
+    lastSelection,
+  });
   const resolvedSelectionPoints = internalResolveSelectionPoints(
     anchorDOM,
     anchorOffset,
