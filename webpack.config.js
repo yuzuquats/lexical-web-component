@@ -1,4 +1,4 @@
-const path = require("path")
+const path = require("path");
 
 module.exports = {
   entry: path.resolve(__dirname, "main.js"),
@@ -17,5 +17,5 @@ module.exports = {
       },
     ],
   },
-  mode: "production",
-}
+  mode: "development",
+};

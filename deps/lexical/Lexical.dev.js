@@ -499,7 +499,8 @@ function getTextNodeOffset(node, moveSelectionToEnd) {
   return moveSelectionToEnd ? node.getTextContentSize() : 0;
 }
 
-function getNodeKeyFromDOM(dom, editor) { // Note that node here refers to a DOM Node, not an Lexical Node
+function getNodeKeyFromDOM(dom, editor) {
+  // Note that node here refers to a DOM Node, not an Lexical Node
   let node = dom;
 
   while (node != null) {
@@ -1637,6 +1638,7 @@ function onBeforeInput(event, editor) {
       return;
     }
 
+    console.log("updateEditor", { selection });
     if (!$isRangeSelection(selection)) {
       return;
     }
@@ -6124,7 +6126,8 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
       eventType === "compositionstart" ||
       eventType === "compositionend" ||
       (eventType === "click" && window.event.detail === 3) ||
-      eventType === undefined);
+      eventType === null);
+  console.log("internalCreateRangeSelection", { useDOMSelection });
   let anchorDOM, focusDOM, anchorOffset, focusOffset;
 
   if (!$isRangeSelection(lastSelection) || useDOMSelection) {
@@ -7043,7 +7046,8 @@ class LexicalNode {
     }
   }
 
-  updateDOM(prevNode, dom, config) { // $FlowFixMe: TODO
+  updateDOM(prevNode, dom, config) {
+    // $FlowFixMe: TODO
     {
       throw Error(`updateDOM: base method not extended`);
     }

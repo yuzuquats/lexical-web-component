@@ -8,8 +8,8 @@
   },
   "keywords": [],
   "dependencies": {
-    "lexical": "file:deps/lexical",
-    "@lexical/plain-text": "file:deps/@lexical/plain-text"
+    "@lexical/plain-text": "file:deps/@lexical/plain-text",
+    "lexical": "file:deps/lexical"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
