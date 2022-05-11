@@ -6119,13 +6119,14 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
   const eventType = getActiveEventType();
   const isSelectionChange = eventType === "selectionchange";
   const useDOMSelection =
-    !getIsProcesssingMutations() &&
-    (isSelectionChange ||
-      eventType === "beforeinput" ||
-      eventType === "compositionstart" ||
-      eventType === "compositionend" ||
-      (eventType === "click" && window.event.detail === 3) ||
-      eventType === null);
+    eventType == null ||
+    (!getIsProcesssingMutations() &&
+      (isSelectionChange ||
+        eventType === "beforeinput" ||
+        eventType === "compositionstart" ||
+        eventType === "compositionend" ||
+        (eventType === "click" && window.event.detail === 3)));
+  console.log("internalCreateRangeSelection", { useDOMSelection, eventType });
   let anchorDOM, focusDOM, anchorOffset, focusOffset;
 
   if (!$isRangeSelection(lastSelection) || useDOMSelection) {
