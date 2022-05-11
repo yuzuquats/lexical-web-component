@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-'use strict';
+"use strict";
 
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
@@ -12,7 +12,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 const getSelection = () => window.getSelection();
 
@@ -24,7 +24,7 @@ var getDOMSelection = getSelection;
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 // DOM
 const DOM_ELEMENT_TYPE = 1;
@@ -55,12 +55,15 @@ const IS_ALIGN_CENTER = 2;
 const IS_ALIGN_RIGHT = 3;
 const IS_ALIGN_JUSTIFY = 4; // Reconciliation
 
-const ZERO_WIDTH_CHAR = '\u200b';
-const DOUBLE_LINE_BREAK = '\n\n';
-const RTL = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC';
-const LTR = 'A-Za-z\u00C0-\u00D6\u00D8-\u00F6' + '\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF\u200E\u2C00-\uFB1C' + '\uFE00-\uFE6F\uFEFD-\uFFFF';
-const RTL_REGEX = new RegExp('^[^' + LTR + ']*[' + RTL + ']');
-const LTR_REGEX = new RegExp('^[^' + RTL + ']*[' + LTR + ']');
+const ZERO_WIDTH_CHAR = "\u200b";
+const DOUBLE_LINE_BREAK = "\n\n";
+const RTL = "\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC";
+const LTR =
+  "A-Za-z\u00C0-\u00D6\u00D8-\u00F6" +
+  "\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF\u200E\u2C00-\uFB1C" +
+  "\uFE00-\uFE6F\uFEFD-\uFFFF";
+const RTL_REGEX = new RegExp("^[^" + LTR + "]*[" + RTL + "]");
+const LTR_REGEX = new RegExp("^[^" + RTL + "]*[" + LTR + "]");
 const TEXT_TYPE_TO_FORMAT = {
   bold: IS_BOLD,
   code: IS_CODE,
@@ -68,19 +71,19 @@ const TEXT_TYPE_TO_FORMAT = {
   strikethrough: IS_STRIKETHROUGH,
   subscript: IS_SUBSCRIPT,
   superscript: IS_SUPERSCRIPT,
-  underline: IS_UNDERLINE
+  underline: IS_UNDERLINE,
 };
 const ELEMENT_TYPE_TO_FORMAT = {
   center: IS_ALIGN_CENTER,
   justify: IS_ALIGN_JUSTIFY,
   left: IS_ALIGN_LEFT,
-  right: IS_ALIGN_RIGHT
+  right: IS_ALIGN_RIGHT,
 };
 const TEXT_MODE_TO_TYPE = {
   inert: IS_INERT,
   normal: IS_NORMAL,
   segmented: IS_SEGMENTED,
-  token: IS_TOKEN
+  token: IS_TOKEN,
 };
 
 /**
@@ -89,9 +92,12 @@ const TEXT_MODE_TO_TYPE = {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
-const CAN_USE_DOM = typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.document.createElement !== 'undefined';
+const CAN_USE_DOM =
+  typeof window !== "undefined" &&
+  typeof window.document !== "undefined" &&
+  typeof window.document.createElement !== "undefined";
 
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
@@ -99,14 +105,23 @@ const CAN_USE_DOM = typeof window !== 'undefined' && typeof window.document !== 
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
-const documentMode = CAN_USE_DOM && 'documentMode' in document ? document.documentMode : null;
+const documentMode =
+  CAN_USE_DOM && "documentMode" in document ? document.documentMode : null;
 const IS_APPLE = CAN_USE_DOM && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-const IS_FIREFOX = CAN_USE_DOM && /^(?!.*Seamonkey)(?=.*Firefox).*/i.test(navigator.userAgent);
-const CAN_USE_BEFORE_INPUT = CAN_USE_DOM && 'InputEvent' in window && !documentMode ? 'getTargetRanges' in new window.InputEvent('input') : false;
-const IS_SAFARI = CAN_USE_DOM && /Version\/[\d\.]+.*Safari/.test(navigator.userAgent);
-const IS_IOS = CAN_USE_DOM && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream; // Keep these in case we need to use them in the future.
+const IS_FIREFOX =
+  CAN_USE_DOM && /^(?!.*Seamonkey)(?=.*Firefox).*/i.test(navigator.userAgent);
+const CAN_USE_BEFORE_INPUT =
+  CAN_USE_DOM && "InputEvent" in window && !documentMode
+    ? "getTargetRanges" in new window.InputEvent("input")
+    : false;
+const IS_SAFARI =
+  CAN_USE_DOM && /Version\/[\d\.]+.*Safari/.test(navigator.userAgent);
+const IS_IOS =
+  CAN_USE_DOM &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+  !window.MSStream; // Keep these in case we need to use them in the future.
 // export const IS_WINDOWS: boolean = CAN_USE_DOM && /Win/.test(navigator.platform);
 // export const IS_CHROME: boolean = CAN_USE_DOM && /^(?=.*Chrome).*/i.test(navigator.userAgent);
 // export const canUseTextInputEvent: boolean = CAN_USE_DOM && 'TextEvent' in window && !documentMode;
@@ -117,11 +132,11 @@ const IS_IOS = CAN_USE_DOM && /iPad|iPhone|iPod/.test(navigator.userAgent) && !w
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 let keyCounter = 0;
 function generateRandomKey() {
-  return '' + keyCounter++;
+  return "" + keyCounter++;
 }
 function getRegisteredNodeOrThrow(editor, nodeType) {
   const registeredNode = editor._nodes.get(nodeType);
@@ -134,23 +149,35 @@ function getRegisteredNodeOrThrow(editor, nodeType) {
 
   return registeredNode;
 }
-const scheduleMicroTask = typeof queueMicrotask === 'function' ? queueMicrotask : fn => {
-  // No window prefix intended (#1400)
-  Promise.resolve().then(fn);
-};
+const scheduleMicroTask =
+  typeof queueMicrotask === "function"
+    ? queueMicrotask
+    : (fn) => {
+        // No window prefix intended (#1400)
+        Promise.resolve().then(fn);
+      };
 
 function isSelectionCapturedInDecoratorInput(anchorDOM) {
   const activeElement = document.activeElement;
   const nodeName = activeElement !== null ? activeElement.nodeName : null;
-  return !$isDecoratorNode($getNearestNodeFromDOMNode(anchorDOM)) || nodeName !== 'INPUT' && nodeName !== 'TEXTAREA';
+  return (
+    !$isDecoratorNode($getNearestNodeFromDOMNode(anchorDOM)) ||
+    (nodeName !== "INPUT" && nodeName !== "TEXTAREA")
+  );
 }
 
 function isSelectionWithinEditor(editor, anchorDOM, focusDOM) {
   const rootElement = editor.getRootElement();
 
   try {
-    return rootElement !== null && rootElement.contains(anchorDOM) && rootElement.contains(focusDOM) && // Ignore if selection is within nested editor
-    anchorDOM !== null && isSelectionCapturedInDecoratorInput(anchorDOM) && getNearestEditorFromDOMNode(anchorDOM) === editor;
+    return (
+      rootElement !== null &&
+      rootElement.contains(anchorDOM) &&
+      rootElement.contains(focusDOM) && // Ignore if selection is within nested editor
+      anchorDOM !== null &&
+      isSelectionCapturedInDecoratorInput(anchorDOM) &&
+      getNearestEditorFromDOMNode(anchorDOM) === editor
+    );
   } catch (error) {
     return false;
   }
@@ -173,11 +200,11 @@ function getNearestEditorFromDOMNode(node) {
 }
 function getTextDirection(text) {
   if (RTL_REGEX.test(text)) {
-    return 'rtl';
+    return "rtl";
   }
 
   if (LTR_REGEX.test(text)) {
-    return 'ltr';
+    return "ltr";
   }
 
   return null;
@@ -206,7 +233,10 @@ function toggleTextFormatType(format, type, alignWithFormat) {
   const activeFormat = TEXT_TYPE_TO_FORMAT[type];
   const isStateFlagPresent = format & activeFormat;
 
-  if (isStateFlagPresent && (alignWithFormat === null || (alignWithFormat & activeFormat) === 0)) {
+  if (
+    isStateFlagPresent &&
+    (alignWithFormat === null || (alignWithFormat & activeFormat) === 0)
+  ) {
     // Remove the state flag.
     return format ^ activeFormat;
   }
@@ -234,7 +264,6 @@ function $setNodeKey(node, existingKey) {
   const key = generateRandomKey();
 
   editorState._nodeMap.set(key, node); // TODO Split this function into leaf/element
-
 
   if ($isElementNode(node)) {
     editor._dirtyElements.set(key, true);
@@ -365,7 +394,7 @@ function $getNodeByKey(key, _editorState) {
 function getNodeFromDOMNode(dom, editorState) {
   const editor = getActiveEditor(); // $FlowFixMe: internal field
 
-  const key = dom['__lexicalKey_' + editor._key];
+  const key = dom["__lexicalKey_" + editor._key];
 
   if (key !== undefined) {
     return $getNodeByKey(key, editorState);
@@ -395,43 +424,52 @@ function cloneDecorators(editor) {
   return pendingDecorators;
 }
 function getEditorStateTextContent(editorState) {
-  return editorState.read(view => $getRoot().getTextContent());
+  return editorState.read((view) => $getRoot().getTextContent());
 }
 function markAllNodesAsDirty(editor, type) {
   // Mark all existing text nodes as dirty
-  updateEditor(editor, () => {
-    const editorState = getActiveEditorState();
+  updateEditor(
+    editor,
+    () => {
+      const editorState = getActiveEditorState();
 
-    if (editorState.isEmpty()) {
-      return;
-    }
+      if (editorState.isEmpty()) {
+        return;
+      }
 
-    if (type === 'root') {
-      $getRoot().markDirty();
-      return;
-    }
+      if (type === "root") {
+        $getRoot().markDirty();
+        return;
+      }
 
-    const nodeMap = editorState._nodeMap;
+      const nodeMap = editorState._nodeMap;
 
-    for (const [, node] of nodeMap) {
-      node.markDirty();
-    }
-  }, editor._pendingEditorState === null ? {
-    tag: 'history-merge'
-  } : undefined);
+      for (const [, node] of nodeMap) {
+        node.markDirty();
+      }
+    },
+    editor._pendingEditorState === null
+      ? {
+          tag: "history-merge",
+        }
+      : undefined
+  );
 }
 function $getRoot() {
   return internalGetRoot(getActiveEditorState());
 }
 function internalGetRoot(editorState) {
-  return editorState._nodeMap.get('root' // $FlowFixMe: root is always in our Map
+  return editorState._nodeMap.get(
+    "root" // $FlowFixMe: root is always in our Map
   );
 }
 function $setSelection(selection) {
   const editorState = getActiveEditorState();
 
   if (selection !== null && Object.isFrozen(selection)) {
-    console.warn('$setSelection called on frozen selection object. Ensure selection is cloned before passing in.');
+    console.warn(
+      "$setSelection called on frozen selection object. Ensure selection is cloned before passing in."
+    );
   }
 
   editorState._selection = selection;
@@ -449,7 +487,7 @@ function getNodeFromDOM(dom) {
     const rootElement = editor.getRootElement();
 
     if (dom === rootElement) {
-      return $getNodeByKey('root');
+      return $getNodeByKey("root");
     }
 
     return null;
@@ -461,13 +499,11 @@ function getTextNodeOffset(node, moveSelectionToEnd) {
   return moveSelectionToEnd ? node.getTextContentSize() : 0;
 }
 
-function getNodeKeyFromDOM( // Note that node here refers to a DOM Node, not an Lexical Node
-dom, editor) {
+function getNodeKeyFromDOM(dom, editor) { // Note that node here refers to a DOM Node, not an Lexical Node
   let node = dom;
 
   while (node != null) {
-    const key = // $FlowFixMe: internal field
-    node['__lexicalKey_' + editor._key];
+    const key = node["__lexicalKey_" + editor._key]; // $FlowFixMe: internal field
 
     if (key !== undefined) {
       return key;
@@ -494,7 +530,10 @@ function getEditorsToPropagate(editor) {
   return editorsToPropagate;
 }
 function createUID() {
-  return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  return Math.random()
+    .toString(36)
+    .replace(/[^a-z]+/g, "")
+    .substr(0, 5);
 }
 function $updateSelectedTextFromDOM(editor, compositionEndEvent) {
   // Update the text content with the latest composition text
@@ -505,10 +544,7 @@ function $updateSelectedTextFromDOM(editor, compositionEndEvent) {
   }
 
   const anchorNode = domSelection.anchorNode;
-  let {
-    anchorOffset,
-    focusOffset
-  } = domSelection;
+  let { anchorOffset, focusOffset } = domSelection;
 
   if (anchorNode !== null && anchorNode.nodeType === DOM_TEXT_TYPE) {
     const node = $getNearestNodeFromDOMNode(anchorNode);
@@ -524,25 +560,40 @@ function $updateSelectedTextFromDOM(editor, compositionEndEvent) {
         focusOffset = offset;
       }
 
-      $updateTextNodeFromDOMContent(node, textContent, anchorOffset, focusOffset, compositionEndEvent !== null);
+      $updateTextNodeFromDOMContent(
+        node,
+        textContent,
+        anchorOffset,
+        focusOffset,
+        compositionEndEvent !== null
+      );
     }
   }
 }
-function $updateTextNodeFromDOMContent(textNode, textContent, anchorOffset, focusOffset, compositionEnd) {
+function $updateTextNodeFromDOMContent(
+  textNode,
+  textContent,
+  anchorOffset,
+  focusOffset,
+  compositionEnd
+) {
   let node = textNode;
 
   if (node.isAttached() && (compositionEnd || !node.isDirty())) {
     const isComposing = node.isComposing();
     let normalizedTextContent = textContent;
 
-    if ((isComposing || compositionEnd) && textContent[textContent.length - 1] === ZERO_WIDTH_CHAR) {
+    if (
+      (isComposing || compositionEnd) &&
+      textContent[textContent.length - 1] === ZERO_WIDTH_CHAR
+    ) {
       normalizedTextContent = textContent.slice(0, -1);
     }
 
     const prevTextContent = node.getTextContent();
 
     if (compositionEnd || normalizedTextContent !== prevTextContent) {
-      if (normalizedTextContent === '') {
+      if (normalizedTextContent === "") {
         $setCompositionKey(null);
 
         if (!IS_SAFARI && !IS_IOS) {
@@ -565,17 +616,27 @@ function $updateTextNodeFromDOMContent(textNode, textContent, anchorOffset, focu
       const parent = node.getParent();
       const prevSelection = $getPreviousSelection();
 
-      if ($isTokenOrInert(node) || $getCompositionKey() !== null && !isComposing || // Check if character was added at the start, and we need
-      // to clear this input from occuring as that action wasn't
-      // permitted.
-      parent !== null && $isRangeSelection(prevSelection) && !parent.canInsertTextBefore() && prevSelection.anchor.offset === 0) {
+      if (
+        $isTokenOrInert(node) ||
+        ($getCompositionKey() !== null && !isComposing) || // Check if character was added at the start, and we need
+        // to clear this input from occuring as that action wasn't
+        // permitted.
+        (parent !== null &&
+          $isRangeSelection(prevSelection) &&
+          !parent.canInsertTextBefore() &&
+          prevSelection.anchor.offset === 0)
+      ) {
         node.markDirty();
         return;
       }
 
       const selection = $getSelection();
 
-      if (!$isRangeSelection(selection) || anchorOffset === null || focusOffset === null) {
+      if (
+        !$isRangeSelection(selection) ||
+        anchorOffset === null ||
+        focusOffset === null
+      ) {
         node.setTextContent(normalizedTextContent);
         return;
       }
@@ -606,8 +667,12 @@ function $shouldInsertTextAfterOrBeforeTextNode(selection, node) {
   const offset = selection.anchor.offset;
   const parent = node.getParentOrThrow();
   const isToken = node.isToken();
-  const shouldInsertTextBefore = offset === 0 && (!node.canInsertTextBefore() || !parent.canInsertTextBefore() || isToken);
-  const shouldInsertTextAfter = node.getTextContentSize() === offset && (!node.canInsertTextBefore() || !parent.canInsertTextBefore() || isToken);
+  const shouldInsertTextBefore =
+    offset === 0 &&
+    (!node.canInsertTextBefore() || !parent.canInsertTextBefore() || isToken);
+  const shouldInsertTextAfter =
+    node.getTextContentSize() === offset &&
+    (!node.canInsertTextBefore() || !parent.canInsertTextBefore() || isToken);
   return shouldInsertTextBefore || shouldInsertTextAfter;
 }
 
@@ -619,15 +684,19 @@ function $shouldPreventDefaultAndInsertText(selection, text, isBeforeInput) {
   const domAnchorNode = domSelection !== null ? domSelection.anchorNode : null;
   const anchorKey = anchor.key;
   const backingAnchorElement = getActiveEditor().getElementByKey(anchorKey);
-  return anchorKey !== focus.key || // If we're working with a non-text node.
-  !$isTextNode(anchorNode) || // If we're working with a range that is not during composition.
-  anchor.offset !== focus.offset && !anchorNode.isComposing() || // If the text length is more than a single character and we're either
-  // dealing with this in "beforeinput" or where the node has already recently
-  // been changed (thus is dirty).
-  (isBeforeInput || anchorNode.isDirty()) && text.length > 1 || // If the DOM selection element is not the same as the backing node
-  backingAnchorElement !== null && !anchorNode.isComposing() && domAnchorNode !== getDOMTextNode(backingAnchorElement) || // Check if we're changing from bold to italics, or some other format.
-  anchorNode.getFormat() !== selection.format || // One last set of heuristics to check against.
-  $shouldInsertTextAfterOrBeforeTextNode(selection, anchorNode);
+  return (
+    anchorKey !== focus.key || // If we're working with a non-text node.
+    !$isTextNode(anchorNode) || // If we're working with a range that is not during composition.
+    (anchor.offset !== focus.offset && !anchorNode.isComposing()) || // If the text length is more than a single character and we're either
+    // dealing with this in "beforeinput" or where the node has already recently
+    // been changed (thus is dirty).
+    ((isBeforeInput || anchorNode.isDirty()) && text.length > 1) || // If the DOM selection element is not the same as the backing node
+    (backingAnchorElement !== null &&
+      !anchorNode.isComposing() &&
+      domAnchorNode !== getDOMTextNode(backingAnchorElement)) || // Check if we're changing from bold to italics, or some other format.
+    anchorNode.getFormat() !== selection.format || // One last set of heuristics to check against.
+    $shouldInsertTextAfterOrBeforeTextNode(selection, anchorNode)
+  );
 }
 function isTab(keyCode, altKey, ctrlKey, metaKey) {
   return keyCode === 9 && !altKey && !ctrlKey && !metaKey;
@@ -670,7 +739,7 @@ function isDeleteBackward(keyCode, altKey, metaKey, ctrlKey) {
       return false;
     }
 
-    return isBackspace(keyCode) || keyCode === 72 && ctrlKey;
+    return isBackspace(keyCode) || (keyCode === 72 && ctrlKey);
   }
 
   if (ctrlKey || altKey || metaKey) {
@@ -685,7 +754,7 @@ function isDeleteForward(keyCode, ctrlKey, shiftKey, altKey, metaKey) {
       return false;
     }
 
-    return isDelete(keyCode) || keyCode === 68 && ctrlKey;
+    return isDelete(keyCode) || (keyCode === 68 && ctrlKey);
   }
 
   if (ctrlKey || altKey || metaKey) {
@@ -702,7 +771,7 @@ function isRedo(keyCode, shiftKey, metaKey, ctrlKey) {
     return keyCode === 90 && metaKey && shiftKey;
   }
 
-  return keyCode === 89 && ctrlKey || keyCode === 90 && ctrlKey && shiftKey;
+  return (keyCode === 89 && ctrlKey) || (keyCode === 90 && ctrlKey && shiftKey);
 }
 
 function isArrowLeft(keyCode) {
@@ -762,15 +831,21 @@ function getCachedClassNameArray(classNamesTheme, classNameThemeType) {
   // className tokens to an array that can be
   // applied to classList.add()/remove().
 
-  if (typeof classNames === 'string') {
-    const classNamesArr = classNames.split(' ');
+  if (typeof classNames === "string") {
+    const classNamesArr = classNames.split(" ");
     classNamesTheme[classNameThemeType] = classNamesArr;
     return classNamesArr;
   }
 
   return classNames;
 }
-function setMutatedNode(mutatedNodes, registeredNodes, mutationListeners, node, mutation) {
+function setMutatedNode(
+  mutatedNodes,
+  registeredNodes,
+  mutationListeners,
+  node,
+  mutation
+) {
   if (mutationListeners.size === 0) {
     return;
   }
@@ -805,7 +880,11 @@ function $nodesOfType(klass) {
   const nodesOfType = [];
 
   for (const [, node] of nodes) {
-    if (node instanceof klass && node.__type === klassType && (readOnly || node.isAttached())) {
+    if (
+      node instanceof klass &&
+      node.__type === klassType &&
+      (readOnly || node.isAttached())
+    ) {
       nodesOfType.push(node);
     }
   }
@@ -834,17 +913,26 @@ function resolveElement(element, isBackward, focusOffset) {
 function $getDecoratorNode(focus, isBackward) {
   const focusOffset = focus.offset;
 
-  if (focus.type === 'element') {
+  if (focus.type === "element") {
     const block = focus.getNode();
     return resolveElement(block, isBackward, focusOffset);
   } else {
     const focusNode = focus.getNode();
 
-    if (isBackward && focusOffset === 0 || !isBackward && focusOffset === focusNode.getTextContentSize()) {
-      const possibleNode = isBackward ? focusNode.getPreviousSibling() : focusNode.getNextSibling();
+    if (
+      (isBackward && focusOffset === 0) ||
+      (!isBackward && focusOffset === focusNode.getTextContentSize())
+    ) {
+      const possibleNode = isBackward
+        ? focusNode.getPreviousSibling()
+        : focusNode.getNextSibling();
 
       if (possibleNode === null) {
-        return resolveElement(focusNode.getParentOrThrow(), isBackward, focusNode.getIndexWithinParent() + (isBackward ? 0 : 1));
+        return resolveElement(
+          focusNode.getParentOrThrow(),
+          isBackward,
+          focusNode.getIndexWithinParent() + (isBackward ? 0 : 1)
+        );
       }
 
       return possibleNode;
@@ -856,7 +944,10 @@ function $getDecoratorNode(focus, isBackward) {
 function isFirefoxClipboardEvents() {
   const event = window.event;
   const inputType = event && event.inputType;
-  return inputType === 'insertFromPaste' || inputType === 'insertFromPasteAsQuotation';
+  return (
+    inputType === "insertFromPaste" ||
+    inputType === "insertFromPasteAsQuotation"
+  );
 }
 function dispatchCommand(editor, type, payload) {
   return triggerCommandListeners(editor, type, payload);
@@ -871,7 +962,7 @@ function $textContentRequiresDoubleLinebreakAtEnd(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 function $garbageCollectDetachedDecorators(editor, pendingEditorState) {
   const currentDecorators = editor._decorators;
@@ -891,7 +982,13 @@ function $garbageCollectDetachedDecorators(editor, pendingEditorState) {
   }
 }
 
-function $garbageCollectDetachedDeepChildNodes(node, parentKey, prevNodeMap, nodeMap, dirtyNodes) {
+function $garbageCollectDetachedDeepChildNodes(
+  node,
+  parentKey,
+  prevNodeMap,
+  nodeMap,
+  dirtyNodes
+) {
   const children = node.__children;
   const childrenLength = children.length;
 
@@ -901,10 +998,15 @@ function $garbageCollectDetachedDeepChildNodes(node, parentKey, prevNodeMap, nod
 
     if (child !== undefined && child.__parent === parentKey) {
       if ($isElementNode(child)) {
-        $garbageCollectDetachedDeepChildNodes(child, childKey, prevNodeMap, nodeMap, dirtyNodes);
+        $garbageCollectDetachedDeepChildNodes(
+          child,
+          childKey,
+          prevNodeMap,
+          nodeMap,
+          dirtyNodes
+        );
       } // If we have created a node and it was dereferenced, then also
       // remove it from out dirty nodes Set.
-
 
       if (!prevNodeMap.has(childKey)) {
         dirtyNodes.delete(childKey);
@@ -915,7 +1017,12 @@ function $garbageCollectDetachedDeepChildNodes(node, parentKey, prevNodeMap, nod
   }
 }
 
-function $garbageCollectDetachedNodes(prevEditorState, editorState, dirtyLeaves, dirtyElements) {
+function $garbageCollectDetachedNodes(
+  prevEditorState,
+  editorState,
+  dirtyLeaves,
+  dirtyElements
+) {
   const prevNodeMap = prevEditorState._nodeMap;
   const nodeMap = editorState._nodeMap;
 
@@ -938,10 +1045,15 @@ function $garbageCollectDetachedNodes(prevEditorState, editorState, dirtyLeaves,
       // Garbage collect node and its children if they exist
       if (!node.isAttached()) {
         if ($isElementNode(node)) {
-          $garbageCollectDetachedDeepChildNodes(node, nodeKey, prevNodeMap, nodeMap, dirtyElements);
+          $garbageCollectDetachedDeepChildNodes(
+            node,
+            nodeKey,
+            prevNodeMap,
+            nodeMap,
+            dirtyElements
+          );
         } // If we have created a node and it was dereferenced, then also
         // remove it from out dirty nodes Set.
-
 
         if (!prevNodeMap.has(nodeKey)) {
           dirtyElements.delete(nodeKey);
@@ -959,7 +1071,7 @@ function $garbageCollectDetachedNodes(prevEditorState, editorState, dirtyLeaves,
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 
 function $canSimpleTextNodesBeMerged(node1, node2) {
@@ -969,7 +1081,11 @@ function $canSimpleTextNodesBeMerged(node1, node2) {
   const node2Mode = node2.__mode;
   const node2Format = node2.__format;
   const node2Style = node2.__style;
-  return (node1Mode === null || node1Mode === node2Mode) && (node1Format === null || node1Format === node2Format) && (node1Style === null || node1Style === node2Style);
+  return (
+    (node1Mode === null || node1Mode === node2Mode) &&
+    (node1Format === null || node1Format === node2Format) &&
+    (node1Style === null || node1Style === node2Style)
+  );
 }
 
 function $mergeTextNodes(node1, node2) {
@@ -985,16 +1101,20 @@ function $mergeTextNodes(node1, node2) {
 function $normalizeTextNode(textNode) {
   let node = textNode;
 
-  if (node.__text === '' && node.isSimpleText() && !node.isUnmergeable()) {
+  if (node.__text === "" && node.isSimpleText() && !node.isUnmergeable()) {
     node.remove();
     return;
   } // Backward
 
-
   let previousNode;
 
-  while ((previousNode = node.getPreviousSibling()) !== null && $isTextNode(previousNode) && previousNode.isSimpleText() && !previousNode.isUnmergeable()) {
-    if (previousNode.__text === '') {
+  while (
+    (previousNode = node.getPreviousSibling()) !== null &&
+    $isTextNode(previousNode) &&
+    previousNode.isSimpleText() &&
+    !previousNode.isUnmergeable()
+  ) {
+    if (previousNode.__text === "") {
       previousNode.remove();
     } else if ($canSimpleTextNodesBeMerged(previousNode, node)) {
       node = $mergeTextNodes(previousNode, node);
@@ -1004,11 +1124,15 @@ function $normalizeTextNode(textNode) {
     }
   } // Forward
 
-
   let nextNode;
 
-  while ((nextNode = node.getNextSibling()) !== null && $isTextNode(nextNode) && nextNode.isSimpleText() && !nextNode.isUnmergeable()) {
-    if (nextNode.__text === '') {
+  while (
+    (nextNode = node.getNextSibling()) !== null &&
+    $isTextNode(nextNode) &&
+    nextNode.isSimpleText() &&
+    !nextNode.isUnmergeable()
+  ) {
+    if (nextNode.__text === "") {
       nextNode.remove();
     } else if ($canSimpleTextNodesBeMerged(node, nextNode)) {
       node = $mergeTextNodes(node, nextNode);
@@ -1025,16 +1149,22 @@ function $normalizeTextNode(textNode) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 function $createNodeFromParse(parsedNode, parsedNodeMap) {
   errorOnReadOnly();
   const editor = getActiveEditor();
   return internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, null);
 }
-function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKey, state = {
-  originalSelection: null
-}) {
+function internalCreateNodeFromParse(
+  parsedNode,
+  parsedNodeMap,
+  editor,
+  parentKey,
+  state = {
+    originalSelection: null,
+  }
+) {
   const nodeType = parsedNode.__type;
 
   const registeredNode = editor._nodes.get(nodeType);
@@ -1045,18 +1175,20 @@ function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKe
     }
   } // Check for properties that are editors
 
-
   for (const property in parsedNode) {
     const value = parsedNode[property];
 
-    if (value != null && typeof value === 'object') {
+    if (value != null && typeof value === "object") {
       const parsedEditorState = value.editorState;
 
       if (parsedEditorState != null) {
         const nestedEditor = createEditor();
         nestedEditor._nodes = editor._nodes;
         nestedEditor._parentEditor = editor._parentEditor;
-        nestedEditor._pendingEditorState = parseEditorState(parsedEditorState, nestedEditor);
+        nestedEditor._pendingEditorState = parseEditorState(
+          parsedEditorState,
+          nestedEditor
+        );
         parsedNode[property] = nestedEditor;
       }
     }
@@ -1074,7 +1206,7 @@ function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKe
   if ($isRootNode(node)) {
     const editorState = getActiveEditorState();
 
-    editorState._nodeMap.set('root', node);
+    editorState._nodeMap.set("root", node);
   }
 
   node.__parent = parentKey; // We will need to recursively handle the children in the case
@@ -1088,7 +1220,13 @@ function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKe
       const parsedChild = parsedNodeMap.get(childKey);
 
       if (parsedChild !== undefined) {
-        const child = internalCreateNodeFromParse(parsedChild, parsedNodeMap, editor, key, state);
+        const child = internalCreateNodeFromParse(
+          parsedChild,
+          parsedNodeMap,
+          editor,
+          key,
+          state
+        );
         const newChildKey = child.__key;
 
         node.__children.push(newChildKey);
@@ -1107,27 +1245,27 @@ function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKe
   } // The selection might refer to an old node whose key has changed. Produce a
   // new selection record with the old keys mapped to the new ones.
 
-
   const originalSelection = state != null ? state.originalSelection : undefined;
 
   if (originalSelection != null) {
     let remappedSelection = state.remappedSelection;
 
-    if (originalSelection.type === 'range') {
+    if (originalSelection.type === "range") {
       const anchor = originalSelection.anchor;
       const focus = originalSelection.focus;
 
-      if (remappedSelection == null && (parsedKey === anchor.key || parsedKey === focus.key)) {
+      if (
+        remappedSelection == null &&
+        (parsedKey === anchor.key || parsedKey === focus.key)
+      ) {
         state.remappedSelection = remappedSelection = {
-          anchor: { ...anchor
-          },
-          focus: { ...focus
-          },
-          type: 'range'
+          anchor: { ...anchor },
+          focus: { ...focus },
+          type: "range",
         };
       }
 
-      if (remappedSelection != null && remappedSelection.type === 'range') {
+      if (remappedSelection != null && remappedSelection.type === "range") {
         if (parsedKey === anchor.key) {
           remappedSelection.anchor.key = key;
         }
@@ -1136,7 +1274,7 @@ function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKe
           remappedSelection.focus.key = key;
         }
       }
-    } else if (originalSelection.type === 'node') {
+    } else if (originalSelection.type === "node") {
       const nodes = originalSelection.nodes;
       const indexOf = nodes.indexOf(parsedKey);
 
@@ -1144,26 +1282,32 @@ function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKe
         if (remappedSelection == null) {
           state.remappedSelection = remappedSelection = {
             nodes: [...nodes],
-            type: 'node'
+            type: "node",
           };
         }
 
-        if (remappedSelection.type === 'node') {
+        if (remappedSelection.type === "node") {
           remappedSelection.nodes.splice(indexOf, 1, key);
         }
       }
-    } else if (originalSelection.type === 'grid') {
+    } else if (originalSelection.type === "grid") {
       const gridKey = originalSelection.gridKey;
       const anchorCellKey = originalSelection.anchor.key;
       const focusCellKey = originalSelection.focus.key;
 
-      if (remappedSelection == null && (gridKey === parsedKey || gridKey === anchorCellKey || gridKey === focusCellKey)) {
-        state.remappedSelection = remappedSelection = { ...originalSelection,
-          type: 'grid'
+      if (
+        remappedSelection == null &&
+        (gridKey === parsedKey ||
+          gridKey === anchorCellKey ||
+          gridKey === focusCellKey)
+      ) {
+        state.remappedSelection = remappedSelection = {
+          ...originalSelection,
+          type: "grid",
         };
       }
 
-      if (remappedSelection != null && remappedSelection.type === 'grid') {
+      if (remappedSelection != null && remappedSelection.type === "grid") {
         if (gridKey === parsedKey) {
           remappedSelection.gridKey = key;
         }
@@ -1188,7 +1332,7 @@ function internalCreateNodeFromParse(parsedNode, parsedNodeMap, editor, parentKe
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 function createCommand() {
   // $FlowFixMe: avoid freezing the object for perf reasons
@@ -1238,43 +1382,51 @@ const KEY_MODIFIER_COMMAND = createCommand();
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 const PASS_THROUGH_COMMAND = Object.freeze({});
 const ANDROID_COMPOSITION_LATENCY = 30;
-const rootElementEvents = [// $FlowIgnore bad event inheritance
-['keydown', onKeyDown], // $FlowIgnore bad event inheritance
-['compositionstart', onCompositionStart], // $FlowIgnore bad event inheritance
-['compositionend', onCompositionEnd], // $FlowIgnore bad event inheritance
-['input', onInput], // $FlowIgnore bad event inheritance
-['click', onClick], ['cut', PASS_THROUGH_COMMAND], ['copy', PASS_THROUGH_COMMAND], ['dragstart', PASS_THROUGH_COMMAND], ['paste', PASS_THROUGH_COMMAND], ['focus', PASS_THROUGH_COMMAND], ['blur', PASS_THROUGH_COMMAND]];
+const rootElementEvents = [
+  // $FlowIgnore bad event inheritance
+  ["keydown", onKeyDown], // $FlowIgnore bad event inheritance
+  ["compositionstart", onCompositionStart], // $FlowIgnore bad event inheritance
+  ["compositionend", onCompositionEnd], // $FlowIgnore bad event inheritance
+  ["input", onInput], // $FlowIgnore bad event inheritance
+  ["click", onClick],
+  ["cut", PASS_THROUGH_COMMAND],
+  ["copy", PASS_THROUGH_COMMAND],
+  ["dragstart", PASS_THROUGH_COMMAND],
+  ["paste", PASS_THROUGH_COMMAND],
+  ["focus", PASS_THROUGH_COMMAND],
+  ["blur", PASS_THROUGH_COMMAND],
+];
 
 if (CAN_USE_BEFORE_INPUT) {
   // $FlowIgnore bad event inheritance
-  rootElementEvents.push(['beforeinput', onBeforeInput]);
+  rootElementEvents.push(["beforeinput", onBeforeInput]);
 } else {
-  rootElementEvents.push(['drop', PASS_THROUGH_COMMAND]);
+  rootElementEvents.push(["drop", PASS_THROUGH_COMMAND]);
 }
 
 let lastKeyDownTimeStamp = 0;
 let rootElementsRegistered = 0;
 let isSelectionChangeFromReconcile = false;
 let isInsertLineBreak = false;
-let collapsedSelectionFormat = [0, 0, 'root', 0];
+let collapsedSelectionFormat = [0, 0, "root", 0];
 
 function shouldSkipSelectionChange(domNode, offset) {
-  return domNode !== null && domNode.nodeType === DOM_TEXT_TYPE && offset !== 0 && offset !== domNode.nodeValue.length;
+  return (
+    domNode !== null &&
+    domNode.nodeType === DOM_TEXT_TYPE &&
+    offset !== 0 &&
+    offset !== domNode.nodeValue.length
+  );
 }
 
 function onSelectionChange(domSelection, editor, isActive) {
   if (isSelectionChangeFromReconcile) {
     isSelectionChangeFromReconcile = false;
-    const {
-      anchorNode,
-      anchorOffset,
-      focusNode,
-      focusOffset
-    } = domSelection; // If native DOM selection is on a DOM element, then
+    const { anchorNode, anchorOffset, focusNode, focusOffset } = domSelection; // If native DOM selection is on a DOM element, then
     // we should continue as usual, as Lexical's selection
     // may have normalized to a better child. If the DOM
     // element is a text node, we can safely apply this
@@ -1283,7 +1435,10 @@ function onSelectionChange(domSelection, editor, isActive) {
     // because in this case, we might need to normalize to a
     // sibling instead.
 
-    if (shouldSkipSelectionChange(anchorNode, anchorOffset) && shouldSkipSelectionChange(focusNode, focusOffset)) {
+    if (
+      shouldSkipSelectionChange(anchorNode, anchorOffset) &&
+      shouldSkipSelectionChange(focusNode, focusOffset)
+    ) {
       return;
     }
   }
@@ -1304,22 +1459,26 @@ function onSelectionChange(domSelection, editor, isActive) {
 
       if (selection.isCollapsed()) {
         // Badly interpreted range selection when collapsed - #1482
-        if (domSelection.type === 'Range') {
+        if (domSelection.type === "Range") {
           selection.dirty = true;
         } // If we have marked a collapsed selection format, and we're
         // within the given time range – then attempt to use that format
         // instead of getting the format from the anchor node.
 
-
         const currentTimeStamp = window.event.timeStamp;
-        const [lastFormat, lastOffset, lastKey, timeStamp] = collapsedSelectionFormat;
+        const [lastFormat, lastOffset, lastKey, timeStamp] =
+          collapsedSelectionFormat;
 
-        if (currentTimeStamp < timeStamp + 200 && anchor.offset === lastOffset && anchor.key === lastKey) {
+        if (
+          currentTimeStamp < timeStamp + 200 &&
+          anchor.offset === lastOffset &&
+          anchor.key === lastKey
+        ) {
           selection.format = lastFormat;
         } else {
-          if (anchor.type === 'text') {
+          if (anchor.type === "text") {
             selection.format = anchorNode.getFormat();
-          } else if (anchor.type === 'element') {
+          } else if (anchor.type === "element") {
             selection.format = 0;
           }
         }
@@ -1328,11 +1487,11 @@ function onSelectionChange(domSelection, editor, isActive) {
         const focusNode = focus.getNode();
         let combinedFormat = 0;
 
-        if (anchor.type === 'text') {
+        if (anchor.type === "text") {
           combinedFormat |= anchorNode.getFormat();
         }
 
-        if (focus.type === 'text' && !anchorNode.is(focusNode)) {
+        if (focus.type === "text" && !anchorNode.is(focusNode)) {
           combinedFormat |= focusNode.getFormat();
         }
 
@@ -1348,7 +1507,6 @@ function onSelectionChange(domSelection, editor, isActive) {
 // also help other browsers when selection might "appear" lost, when it
 // really isn't.
 
-
 function onClick(event, editor) {
   updateEditor(editor, () => {
     const selection = $getSelection();
@@ -1356,7 +1514,13 @@ function onClick(event, editor) {
     if ($isRangeSelection(selection)) {
       const anchor = selection.anchor;
 
-      if (anchor.type === 'element' && anchor.offset === 0 && selection.isCollapsed() && $getRoot().getChildrenSize() === 1 && anchor.getNode().getTopLevelElementOrThrow().isEmpty()) {
+      if (
+        anchor.type === "element" &&
+        anchor.offset === 0 &&
+        selection.isCollapsed() &&
+        $getRoot().getChildrenSize() === 1 &&
+        anchor.getNode().getTopLevelElementOrThrow().isEmpty()
+      ) {
         const lastSelection = $getPreviousSelection();
 
         if (lastSelection !== null && selection.is(lastSelection)) {
@@ -1381,20 +1545,28 @@ function $applyTargetRange(selection, event) {
 }
 
 function $canRemoveText(anchorNode, focusNode) {
-  return anchorNode !== focusNode || $isElementNode(anchorNode) || $isElementNode(focusNode) || !$isTokenOrInert(anchorNode) || !$isTokenOrInert(focusNode);
+  return (
+    anchorNode !== focusNode ||
+    $isElementNode(anchorNode) ||
+    $isElementNode(focusNode) ||
+    !$isTokenOrInert(anchorNode) ||
+    !$isTokenOrInert(focusNode)
+  );
 }
 
 function onBeforeInput(event, editor) {
   const inputType = event.inputType; // We let the browser do its own thing for composition.
 
-  if (inputType === 'deleteCompositionText' || // If we're pasting in FF, we shouldn't get this event
-  // as the `paste` event should have triggered, unless the
-  // user has dom.event.clipboardevents.enabled disabled in
-  // about:config. In that case, we need to process the
-  // pasted content in the DOM mutation phase.
-  IS_FIREFOX && isFirefoxClipboardEvents()) {
+  if (
+    inputType === "deleteCompositionText" || // If we're pasting in FF, we shouldn't get this event
+    // as the `paste` event should have triggered, unless the
+    // user has dom.event.clipboardevents.enabled disabled in
+    // about:config. In that case, we need to process the
+    // pasted content in the DOM mutation phase.
+    (IS_FIREFOX && isFirefoxClipboardEvents())
+  ) {
     return;
-  } else if (inputType === 'insertCompositionText') {
+  } else if (inputType === "insertCompositionText") {
     // This logic handles insertion of text between different
     // format text types. We have to detect a change in type
     // during composition and see if the previous text contains
@@ -1411,7 +1583,13 @@ function onBeforeInput(event, editor) {
           const node = anchor.getNode();
           const prevNode = node.getPreviousSibling();
 
-          if (anchor.offset === 0 && $isTextNode(node) && $isTextNode(prevNode) && node.getTextContent() === ' ' && prevNode.getFormat() !== selection.format) {
+          if (
+            anchor.offset === 0 &&
+            $isTextNode(node) &&
+            $isTextNode(prevNode) &&
+            node.getTextContent() === " " &&
+            prevNode.getFormat() !== selection.format
+          ) {
             const prevTextContent = prevNode.getTextContent();
 
             if (composedText.indexOf(prevTextContent) === 0) {
@@ -1434,7 +1612,7 @@ function onBeforeInput(event, editor) {
   updateEditor(editor, () => {
     const selection = $getSelection();
 
-    if (inputType === 'deleteContentBackward') {
+    if (inputType === "deleteContentBackward") {
       if (selection === null) {
         // Use previous selection
         const prevSelection = $getPreviousSelection();
@@ -1445,7 +1623,6 @@ function onBeforeInput(event, editor) {
 
         $setSelection(prevSelection.clone());
       } // Used for Android
-
 
       $setCompositionKey(null);
       event.preventDefault();
@@ -1466,7 +1643,11 @@ function onBeforeInput(event, editor) {
 
     const data = event.data;
 
-    if (!selection.dirty && selection.isCollapsed() && !$isRootNode(selection.anchor.getNode())) {
+    if (
+      !selection.dirty &&
+      selection.isCollapsed() &&
+      !$isRootNode(selection.anchor.getNode())
+    ) {
       $applyTargetRange(selection, event);
     }
 
@@ -1475,8 +1656,8 @@ function onBeforeInput(event, editor) {
     const anchorNode = anchor.getNode();
     const focusNode = focus.getNode();
 
-    if (inputType === 'insertText') {
-      if (data === '\n') {
+    if (inputType === "insertText") {
+      if (data === "\n") {
         event.preventDefault();
         dispatchCommand(editor, INSERT_LINE_BREAK_COMMAND);
       } else if (data === DOUBLE_LINE_BREAK) {
@@ -1484,10 +1665,13 @@ function onBeforeInput(event, editor) {
         dispatchCommand(editor, INSERT_PARAGRAPH_COMMAND);
       } else if (data == null && event.dataTransfer) {
         // Gets around a Safari text replacement bug.
-        const text = event.dataTransfer.getData('text/plain');
+        const text = event.dataTransfer.getData("text/plain");
         event.preventDefault();
         selection.insertRawText(text);
-      } else if (data != null && $shouldPreventDefaultAndInsertText(selection, data, true)) {
+      } else if (
+        data != null &&
+        $shouldPreventDefaultAndInsertText(selection, data, true)
+      ) {
         event.preventDefault();
         dispatchCommand(editor, INSERT_TEXT_COMMAND, data);
       }
@@ -1497,142 +1681,122 @@ function onBeforeInput(event, editor) {
     // the input event, so we can control the
     // output.
 
-
     event.preventDefault();
 
     switch (inputType) {
-      case 'insertFromYank':
-      case 'insertFromDrop':
-      case 'insertReplacementText':
-        {
-          dispatchCommand(editor, INSERT_TEXT_COMMAND, event);
-          break;
-        }
+      case "insertFromYank":
+      case "insertFromDrop":
+      case "insertReplacementText": {
+        dispatchCommand(editor, INSERT_TEXT_COMMAND, event);
+        break;
+      }
 
-      case 'insertFromComposition':
-        {
-          // This is the end of composition
-          $setCompositionKey(null);
-          dispatchCommand(editor, INSERT_TEXT_COMMAND, event);
-          break;
-        }
+      case "insertFromComposition": {
+        // This is the end of composition
+        $setCompositionKey(null);
+        dispatchCommand(editor, INSERT_TEXT_COMMAND, event);
+        break;
+      }
 
-      case 'insertLineBreak':
-        {
-          // Used for Android
-          $setCompositionKey(null);
+      case "insertLineBreak": {
+        // Used for Android
+        $setCompositionKey(null);
+        dispatchCommand(editor, INSERT_LINE_BREAK_COMMAND);
+        break;
+      }
+
+      case "insertParagraph": {
+        // Used for Android
+        $setCompositionKey(null); // Some browsers do not provide the type "insertLineBreak".
+        // So instead, we need to infer it from the keyboard event.
+
+        if (isInsertLineBreak) {
+          isInsertLineBreak = false;
           dispatchCommand(editor, INSERT_LINE_BREAK_COMMAND);
-          break;
+        } else {
+          dispatchCommand(editor, INSERT_PARAGRAPH_COMMAND);
         }
 
-      case 'insertParagraph':
-        {
-          // Used for Android
-          $setCompositionKey(null); // Some browsers do not provide the type "insertLineBreak".
-          // So instead, we need to infer it from the keyboard event.
+        break;
+      }
 
-          if (isInsertLineBreak) {
-            isInsertLineBreak = false;
-            dispatchCommand(editor, INSERT_LINE_BREAK_COMMAND);
-          } else {
-            dispatchCommand(editor, INSERT_PARAGRAPH_COMMAND);
-          }
+      case "insertFromPaste":
+      case "insertFromPasteAsQuotation": {
+        dispatchCommand(editor, PASTE_COMMAND, event);
+        break;
+      }
 
-          break;
-        }
-
-      case 'insertFromPaste':
-      case 'insertFromPasteAsQuotation':
-        {
-          dispatchCommand(editor, PASTE_COMMAND, event);
-          break;
-        }
-
-      case 'deleteByComposition':
-        {
-          if ($canRemoveText(anchorNode, focusNode)) {
-            dispatchCommand(editor, REMOVE_TEXT_COMMAND);
-          }
-
-          break;
-        }
-
-      case 'deleteByDrag':
-      case 'deleteByCut':
-        {
+      case "deleteByComposition": {
+        if ($canRemoveText(anchorNode, focusNode)) {
           dispatchCommand(editor, REMOVE_TEXT_COMMAND);
-          break;
         }
 
-      case 'deleteContent':
-        {
-          dispatchCommand(editor, DELETE_CHARACTER_COMMAND, false);
-          break;
-        }
+        break;
+      }
 
-      case 'deleteWordBackward':
-        {
-          dispatchCommand(editor, DELETE_WORD_COMMAND, true);
-          break;
-        }
+      case "deleteByDrag":
+      case "deleteByCut": {
+        dispatchCommand(editor, REMOVE_TEXT_COMMAND);
+        break;
+      }
 
-      case 'deleteWordForward':
-        {
-          dispatchCommand(editor, DELETE_WORD_COMMAND, false);
-          break;
-        }
+      case "deleteContent": {
+        dispatchCommand(editor, DELETE_CHARACTER_COMMAND, false);
+        break;
+      }
 
-      case 'deleteHardLineBackward':
-      case 'deleteSoftLineBackward':
-        {
-          dispatchCommand(editor, DELETE_LINE_COMMAND, true);
-          break;
-        }
+      case "deleteWordBackward": {
+        dispatchCommand(editor, DELETE_WORD_COMMAND, true);
+        break;
+      }
 
-      case 'deleteContentForward':
-      case 'deleteHardLineForward':
-      case 'deleteSoftLineForward':
-        {
-          dispatchCommand(editor, DELETE_LINE_COMMAND, false);
-          break;
-        }
+      case "deleteWordForward": {
+        dispatchCommand(editor, DELETE_WORD_COMMAND, false);
+        break;
+      }
 
-      case 'formatStrikeThrough':
-        {
-          dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'strikethrough');
-          break;
-        }
+      case "deleteHardLineBackward":
+      case "deleteSoftLineBackward": {
+        dispatchCommand(editor, DELETE_LINE_COMMAND, true);
+        break;
+      }
 
-      case 'formatBold':
-        {
-          dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'bold');
-          break;
-        }
+      case "deleteContentForward":
+      case "deleteHardLineForward":
+      case "deleteSoftLineForward": {
+        dispatchCommand(editor, DELETE_LINE_COMMAND, false);
+        break;
+      }
 
-      case 'formatItalic':
-        {
-          dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'italic');
-          break;
-        }
+      case "formatStrikeThrough": {
+        dispatchCommand(editor, FORMAT_TEXT_COMMAND, "strikethrough");
+        break;
+      }
 
-      case 'formatUnderline':
-        {
-          dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'underline');
-          break;
-        }
+      case "formatBold": {
+        dispatchCommand(editor, FORMAT_TEXT_COMMAND, "bold");
+        break;
+      }
 
-      case 'historyUndo':
-        {
-          dispatchCommand(editor, UNDO_COMMAND);
-          break;
-        }
+      case "formatItalic": {
+        dispatchCommand(editor, FORMAT_TEXT_COMMAND, "italic");
+        break;
+      }
 
-      case 'historyRedo':
-        {
-          dispatchCommand(editor, REDO_COMMAND);
-          break;
-        }
+      case "formatUnderline": {
+        dispatchCommand(editor, FORMAT_TEXT_COMMAND, "underline");
+        break;
+      }
 
+      case "historyUndo": {
+        dispatchCommand(editor, UNDO_COMMAND);
+        break;
+      }
+
+      case "historyRedo": {
+        dispatchCommand(editor, REDO_COMMAND);
+        break;
+      }
     }
   });
 }
@@ -1644,7 +1808,11 @@ function onInput(event, editor) {
     const selection = $getSelection();
     const data = event.data;
 
-    if (data != null && $isRangeSelection(selection) && $shouldPreventDefaultAndInsertText(selection, data, false)) {
+    if (
+      data != null &&
+      $isRangeSelection(selection) &&
+      $shouldPreventDefaultAndInsertText(selection, data, false)
+    ) {
       dispatchCommand(editor, INSERT_TEXT_COMMAND, data); // For Android
 
       if (editor._compositionKey !== null) {
@@ -1655,7 +1823,6 @@ function onInput(event, editor) {
       $updateSelectedTextFromDOM(editor, null);
     } // Also flush any other mutations that might have occurred
     // since the change.
-
 
     $flushMutations$1();
   });
@@ -1669,16 +1836,20 @@ function onCompositionStart(event, editor) {
       const anchor = selection.anchor;
       $setCompositionKey(anchor.key);
 
-      if ( // If it has been 30ms since the last keydown, then we should
-      // apply the empty space heuristic.
-      event.timeStamp < lastKeyDownTimeStamp + ANDROID_COMPOSITION_LATENCY || // FF has issues around composing multibyte characters, so we also
-      // need to invoke the empty space heuristic below.
-      IS_FIREFOX && anchor.type === 'element' || !selection.isCollapsed() || selection.anchor.getNode().getFormat() !== selection.format) {
+      if (
+        // If it has been 30ms since the last keydown, then we should
+        // apply the empty space heuristic.
+        event.timeStamp < lastKeyDownTimeStamp + ANDROID_COMPOSITION_LATENCY || // FF has issues around composing multibyte characters, so we also
+        // need to invoke the empty space heuristic below.
+        (IS_FIREFOX && anchor.type === "element") ||
+        !selection.isCollapsed() ||
+        selection.anchor.getNode().getFormat() !== selection.format
+      ) {
         // We insert an empty space, ready for the composition
         // to get inserted into the new node we create. If
         // we don't do this, Safari will fail on us because
         // there is no text node matching the selection.
-        dispatchCommand(editor, INSERT_TEXT_COMMAND, ' ');
+        dispatchCommand(editor, INSERT_TEXT_COMMAND, " ");
       }
     }
   });
@@ -1693,16 +1864,22 @@ function onCompositionEnd(event, editor) {
     if (compositionKey !== null && data != null) {
       // It can sometimes move to an adjacent DOM node when backspacing.
       // So check for the empty case.
-      if (data === '') {
+      if (data === "") {
         const node = $getNodeByKey(compositionKey);
         const textNode = getDOMTextNode(editor.getElementByKey(compositionKey));
 
         if (textNode !== null && $isTextNode(node)) {
-          $updateTextNodeFromDOMContent(node, textNode.nodeValue, null, null, true);
+          $updateTextNodeFromDOMContent(
+            node,
+            textNode.nodeValue,
+            null,
+            null,
+            true
+          );
         }
 
         return;
-      } else if (data[data.length - 1] === '\n') {
+      } else if (data[data.length - 1] === "\n") {
         const selection = $getSelection();
 
         if ($isRangeSelection(selection)) {
@@ -1727,13 +1904,7 @@ function onKeyDown(event, editor) {
     return;
   }
 
-  const {
-    keyCode,
-    shiftKey,
-    ctrlKey,
-    metaKey,
-    altKey
-  } = event;
+  const { keyCode, shiftKey, ctrlKey, metaKey, altKey } = event;
 
   if (isMoveForward(keyCode, ctrlKey, shiftKey, altKey, metaKey)) {
     dispatchCommand(editor, KEY_ARROW_RIGHT_COMMAND, event);
@@ -1783,13 +1954,13 @@ function onKeyDown(event, editor) {
     dispatchCommand(editor, DELETE_LINE_COMMAND, false);
   } else if (isBold(keyCode, altKey, metaKey, ctrlKey)) {
     event.preventDefault();
-    dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'bold');
+    dispatchCommand(editor, FORMAT_TEXT_COMMAND, "bold");
   } else if (isUnderline(keyCode, altKey, metaKey, ctrlKey)) {
     event.preventDefault();
-    dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'underline');
+    dispatchCommand(editor, FORMAT_TEXT_COMMAND, "underline");
   } else if (isItalic(keyCode, altKey, metaKey, ctrlKey)) {
     event.preventDefault();
-    dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'italic');
+    dispatchCommand(editor, FORMAT_TEXT_COMMAND, "italic");
   } else if (isTab(keyCode, altKey, ctrlKey, metaKey)) {
     dispatchCommand(editor, KEY_TAB_COMMAND, event);
   } else if (isUndo(keyCode, shiftKey, metaKey, ctrlKey)) {
@@ -1819,7 +1990,6 @@ function getRootElementRemoveHandles(rootElement) {
 } // Mapping root editors to their active nested editors, contains nested editors
 // mapping only, so if root editor is selected map will have no reference to free up memory
 
-
 const activeNestedEditorsMap = new Map();
 
 function onDocumentSelectionChange(event) {
@@ -1831,7 +2001,6 @@ function onDocumentSelectionChange(event) {
   } // When editor receives selection change event, we're checking if
   // it has any sibling editors (within same parent editor) that were active
   // before, and trigger selection change on it to nullify selection.
-
 
   const editors = getEditorsToPropagate(nextActiveEditor);
   const rootEditor = editors[editors.length - 1];
@@ -1857,7 +2026,7 @@ function addRootElementEvents(rootElement, editor) {
   // between all editor instances.
   if (rootElementsRegistered === 0) {
     const doc = rootElement.ownerDocument;
-    doc.addEventListener('selectionchange', onDocumentSelectionChange);
+    doc.addEventListener("selectionchange", onDocumentSelectionChange);
   }
 
   rootElementsRegistered++; // $FlowFixMe: internal field
@@ -1867,39 +2036,42 @@ function addRootElementEvents(rootElement, editor) {
 
   for (let i = 0; i < rootElementEvents.length; i++) {
     const [eventName, onEvent] = rootElementEvents[i];
-    const eventHandler = typeof onEvent === 'function' ? event => {
-      if (!editor.isReadOnly()) {
-        onEvent(event, editor);
-      }
-    } : event => {
-      if (!editor.isReadOnly()) {
-        switch (eventName) {
-          case 'cut':
-            return dispatchCommand(editor, CUT_COMMAND, event);
+    const eventHandler =
+      typeof onEvent === "function"
+        ? (event) => {
+            if (!editor.isReadOnly()) {
+              onEvent(event, editor);
+            }
+          }
+        : (event) => {
+            if (!editor.isReadOnly()) {
+              switch (eventName) {
+                case "cut":
+                  return dispatchCommand(editor, CUT_COMMAND, event);
 
-          case 'copy':
-            return dispatchCommand(editor, COPY_COMMAND, event);
+                case "copy":
+                  return dispatchCommand(editor, COPY_COMMAND, event);
 
-          case 'paste':
-            return dispatchCommand(editor, PASTE_COMMAND, event);
+                case "paste":
+                  return dispatchCommand(editor, PASTE_COMMAND, event);
 
-          case 'dragstart':
-            return dispatchCommand(editor, DRAGSTART_COMMAND, event);
+                case "dragstart":
+                  return dispatchCommand(editor, DRAGSTART_COMMAND, event);
 
-          case 'dragend':
-            return dispatchCommand(editor, DRAGEND_COMMAND, event);
+                case "dragend":
+                  return dispatchCommand(editor, DRAGEND_COMMAND, event);
 
-          case 'focus':
-            return dispatchCommand(editor, FOCUS_COMMAND, event);
+                case "focus":
+                  return dispatchCommand(editor, FOCUS_COMMAND, event);
 
-          case 'blur':
-            return dispatchCommand(editor, BLUR_COMMAND, event);
+                case "blur":
+                  return dispatchCommand(editor, BLUR_COMMAND, event);
 
-          case 'drop':
-            return dispatchCommand(editor, DROP_COMMAND, event);
-        }
-      }
-    };
+                case "drop":
+                  return dispatchCommand(editor, DROP_COMMAND, event);
+              }
+            }
+          };
     rootElement.addEventListener(eventName, eventHandler);
     removeHandles.push(() => {
       rootElement.removeEventListener(eventName, eventHandler);
@@ -1913,10 +2085,9 @@ function removeRootElementEvents(rootElement) {
 
     if (rootElementsRegistered === 0) {
       const doc = rootElement.ownerDocument;
-      doc.removeEventListener('selectionchange', onDocumentSelectionChange);
+      doc.removeEventListener("selectionchange", onDocumentSelectionChange);
     }
   } // $FlowFixMe: internal field
-
 
   const editor = rootElement.__lexicalEditor;
 
@@ -1931,7 +2102,6 @@ function removeRootElementEvents(rootElement) {
   for (let i = 0; i < removeHandles.length; i++) {
     removeHandles[i]();
   } // $FlowFixMe: internal field
-
 
   rootElement.__lexicalEventHandles = [];
 }
@@ -1965,11 +2135,11 @@ function markCollapsedSelectionFormat(format, offset, key, timeStamp) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
-let subTreeTextContent = '';
-let subTreeDirectionedTextContent = '';
-let editorTextContent = '';
+let subTreeTextContent = "";
+let subTreeDirectionedTextContent = "";
+let editorTextContent = "";
 let activeEditorConfig;
 let activeEditor$1;
 let activeEditorNodes;
@@ -1993,7 +2163,6 @@ function destroyNode(key, parentDOM) {
   } // This logic is really important, otherwise we will leak DOM nodes
   // when their corresponding LexicalNodes are removed from the editor state.
 
-
   if (!activeNextNodeMap.has(key)) {
     activeEditor$1._keyToDOMMap.delete(key);
   }
@@ -2004,7 +2173,13 @@ function destroyNode(key, parentDOM) {
   }
 
   if (node !== undefined) {
-    setMutatedNode(mutatedNodes, activeEditorNodes, activeMutationListeners, node, 'destroyed');
+    setMutatedNode(
+      mutatedNodes,
+      activeEditorNodes,
+      activeMutationListeners,
+      node,
+      "destroyed"
+    );
   }
 }
 
@@ -2021,26 +2196,29 @@ function destroyChildren(children, _startIndex, endIndex, dom) {
 }
 
 function setTextAlign(domStyle, value) {
-  domStyle.setProperty('text-align', value);
+  domStyle.setProperty("text-align", value);
 }
 
 function setElementIndent(dom, indent) {
-  dom.style.setProperty('padding-inline-start', indent === 0 ? '' : indent * 20 + 'px');
+  dom.style.setProperty(
+    "padding-inline-start",
+    indent === 0 ? "" : indent * 20 + "px"
+  );
 }
 
 function setElementFormat(dom, format) {
   const domStyle = dom.style;
 
   if (format === 0) {
-    setTextAlign(domStyle, '');
+    setTextAlign(domStyle, "");
   } else if (format === IS_ALIGN_LEFT) {
-    setTextAlign(domStyle, 'left');
+    setTextAlign(domStyle, "left");
   } else if (format === IS_ALIGN_CENTER) {
-    setTextAlign(domStyle, 'center');
+    setTextAlign(domStyle, "center");
   } else if (format === IS_ALIGN_RIGHT) {
-    setTextAlign(domStyle, 'right');
+    setTextAlign(domStyle, "right");
   } else if (format === IS_ALIGN_JUSTIFY) {
-    setTextAlign(domStyle, 'justify');
+    setTextAlign(domStyle, "justify");
   }
 }
 
@@ -2059,9 +2237,9 @@ function createNode(key, parentDOM, insertDOM) {
   // this attribute).
 
   if ($isTextNode(node)) {
-    dom.setAttribute('data-lexical-text', 'true');
+    dom.setAttribute("data-lexical-text", "true");
   } else if ($isDecoratorNode(node)) {
-    dom.setAttribute('data-lexical-decorator', 'true');
+    dom.setAttribute("data-lexical-decorator", "true");
   }
 
   if ($isElementNode(node)) {
@@ -2101,8 +2279,7 @@ function createNode(key, parentDOM, insertDOM) {
         reconcileDecorator(key, decorator);
       } // Decorators are always non editable
 
-
-      dom.contentEditable = 'false';
+      dom.contentEditable = "false";
     } else if ($isTextNode(node)) {
       if (!node.isDirectionless()) {
         subTreeDirectionedTextContent += text;
@@ -2110,11 +2287,11 @@ function createNode(key, parentDOM, insertDOM) {
 
       if (node.isInert()) {
         const domStyle = dom.style;
-        domStyle.pointerEvents = 'none';
-        domStyle.userSelect = 'none';
-        dom.contentEditable = 'false'; // To support Safari
+        domStyle.pointerEvents = "none";
+        domStyle.userSelect = "none";
+        dom.contentEditable = "false"; // To support Safari
 
-        domStyle.setProperty('-webkit-user-select', 'none');
+        domStyle.setProperty("-webkit-user-select", "none");
       }
     }
 
@@ -2142,13 +2319,19 @@ function createNode(key, parentDOM, insertDOM) {
     Object.freeze(node);
   }
 
-  setMutatedNode(mutatedNodes, activeEditorNodes, activeMutationListeners, node, 'created');
+  setMutatedNode(
+    mutatedNodes,
+    activeEditorNodes,
+    activeMutationListeners,
+    node,
+    "created"
+  );
   return dom;
 }
 
 function createChildrenWithDirection(children, endIndex, element, dom) {
   const previousSubTreeDirectionedTextContent = subTreeDirectionedTextContent;
-  subTreeDirectionedTextContent = '';
+  subTreeDirectionedTextContent = "";
   createChildren(children, 0, endIndex, dom, null);
   reconcileBlockDirection(element, dom);
   subTreeDirectionedTextContent = previousSubTreeDirectionedTextContent;
@@ -2156,13 +2339,12 @@ function createChildrenWithDirection(children, endIndex, element, dom) {
 
 function createChildren(children, _startIndex, endIndex, dom, insertDOM) {
   const previousSubTreeTextContent = subTreeTextContent;
-  subTreeTextContent = '';
+  subTreeTextContent = "";
   let startIndex = _startIndex;
 
   for (; startIndex <= endIndex; ++startIndex) {
     createNode(children[startIndex], dom, insertDOM);
   } // $FlowFixMe: internal field
-
 
   dom.__lexicalTextContent = subTreeTextContent;
   subTreeTextContent = previousSubTreeTextContent + subTreeTextContent;
@@ -2174,10 +2356,15 @@ function isLastChildLineBreakOrDecorator(children, nodeMap) {
   return $isLineBreakNode(node) || $isDecoratorNode(node);
 } // If we end an element with a LinkBreakNode, then we need to add an additonal <br>
 
-
 function reconcileElementTerminatingLineBreak(prevChildren, nextChildren, dom) {
-  const prevLineBreak = prevChildren !== null && (prevChildren.length === 0 || isLastChildLineBreakOrDecorator(prevChildren, activePrevNodeMap));
-  const nextLineBreak = nextChildren !== null && (nextChildren.length === 0 || isLastChildLineBreakOrDecorator(nextChildren, activeNextNodeMap));
+  const prevLineBreak =
+    prevChildren !== null &&
+    (prevChildren.length === 0 ||
+      isLastChildLineBreakOrDecorator(prevChildren, activePrevNodeMap));
+  const nextLineBreak =
+    nextChildren !== null &&
+    (nextChildren.length === 0 ||
+      isLastChildLineBreakOrDecorator(nextChildren, activeNextNodeMap));
 
   if (prevLineBreak) {
     if (!nextLineBreak) {
@@ -2188,11 +2375,10 @@ function reconcileElementTerminatingLineBreak(prevChildren, nextChildren, dom) {
         dom.removeChild(element);
       } // $FlowFixMe: internal field
 
-
       dom.__lexicalLineBreak = null;
     }
   } else if (nextLineBreak) {
-    const element = document.createElement('br'); // $FlowFixMe: internal field
+    const element = document.createElement("br"); // $FlowFixMe: internal field
 
     dom.__lexicalLineBreak = element;
     dom.appendChild(element);
@@ -2200,47 +2386,54 @@ function reconcileElementTerminatingLineBreak(prevChildren, nextChildren, dom) {
 }
 
 function reconcileBlockDirection(element, dom) {
-  const previousSubTreeDirectionTextContent = // $FlowFixMe: internal field
-  dom.__lexicalDirTextContent; // $FlowFixMe: internal field
+  const previousSubTreeDirectionTextContent = dom.__lexicalDirTextContent; // $FlowFixMe: internal field // $FlowFixMe: internal field
 
   const previousDirection = dom.__lexicalDir;
 
-  if (previousSubTreeDirectionTextContent !== subTreeDirectionedTextContent || previousDirection !== activeTextDirection) {
-    const hasEmptyDirectionedTextContent = subTreeDirectionedTextContent === '';
-    const direction = hasEmptyDirectionedTextContent ? activeTextDirection : getTextDirection(subTreeDirectionedTextContent);
+  if (
+    previousSubTreeDirectionTextContent !== subTreeDirectionedTextContent ||
+    previousDirection !== activeTextDirection
+  ) {
+    const hasEmptyDirectionedTextContent = subTreeDirectionedTextContent === "";
+    const direction = hasEmptyDirectionedTextContent
+      ? activeTextDirection
+      : getTextDirection(subTreeDirectionedTextContent);
 
     if (direction !== previousDirection) {
       const classList = dom.classList;
       const theme = activeEditorConfig.theme;
-      let previousDirectionTheme = previousDirection !== null ? theme[previousDirection] : undefined;
-      let nextDirectionTheme = direction !== null ? theme[direction] : undefined; // Remove the old theme classes if they exist
+      let previousDirectionTheme =
+        previousDirection !== null ? theme[previousDirection] : undefined;
+      let nextDirectionTheme =
+        direction !== null ? theme[direction] : undefined; // Remove the old theme classes if they exist
 
       if (previousDirectionTheme !== undefined) {
-        if (typeof previousDirectionTheme === 'string') {
-          const classNamesArr = previousDirectionTheme.split(' '); // $FlowFixMe: intentional
+        if (typeof previousDirectionTheme === "string") {
+          const classNamesArr = previousDirectionTheme.split(" "); // $FlowFixMe: intentional
 
           previousDirectionTheme = theme[previousDirection] = classNamesArr;
         } // $FlowFixMe: intentional
 
-
         classList.remove(...previousDirectionTheme);
       }
 
-      if (direction === null || hasEmptyDirectionedTextContent && direction === 'ltr') {
+      if (
+        direction === null ||
+        (hasEmptyDirectionedTextContent && direction === "ltr")
+      ) {
         // Remove direction
-        dom.removeAttribute('dir');
+        dom.removeAttribute("dir");
       } else {
         // Apply the new theme classes if they exist
         if (nextDirectionTheme !== undefined) {
-          if (typeof nextDirectionTheme === 'string') {
-            const classNamesArr = nextDirectionTheme.split(' '); // $FlowFixMe: intentional
+          if (typeof nextDirectionTheme === "string") {
+            const classNamesArr = nextDirectionTheme.split(" "); // $FlowFixMe: intentional
 
             nextDirectionTheme = theme[direction] = classNamesArr;
           }
 
           classList.add(...nextDirectionTheme);
         } // Update direction
-
 
         dom.dir = direction;
       }
@@ -2259,9 +2452,14 @@ function reconcileBlockDirection(element, dom) {
   }
 }
 
-function reconcileChildrenWithDirection(prevChildren, nextChildren, element, dom) {
+function reconcileChildrenWithDirection(
+  prevChildren,
+  nextChildren,
+  element,
+  dom
+) {
   const previousSubTreeDirectionTextContent = subTreeDirectionedTextContent;
-  subTreeDirectionedTextContent = '';
+  subTreeDirectionedTextContent = "";
   reconcileChildren(element, prevChildren, nextChildren, dom);
   reconcileBlockDirection(element, dom);
   subTreeDirectionedTextContent = previousSubTreeDirectionTextContent;
@@ -2269,7 +2467,7 @@ function reconcileChildrenWithDirection(prevChildren, nextChildren, element, dom
 
 function reconcileChildren(element, prevChildren, nextChildren, dom) {
   const previousSubTreeTextContent = subTreeTextContent;
-  subTreeTextContent = '';
+  subTreeTextContent = "";
   const prevChildrenLength = prevChildren.length;
   const nextChildrenLength = nextChildren.length;
 
@@ -2294,21 +2492,32 @@ function reconcileChildren(element, prevChildren, nextChildren, dom) {
       // $FlowFixMe: internal field
       const lexicalLineBreak = dom.__lexicalLineBreak;
       const canUseFastPath = lexicalLineBreak == null;
-      destroyChildren(prevChildren, 0, prevChildrenLength - 1, canUseFastPath ? null : dom);
+      destroyChildren(
+        prevChildren,
+        0,
+        prevChildrenLength - 1,
+        canUseFastPath ? null : dom
+      );
 
       if (canUseFastPath) {
         // Fast path for removing DOM nodes
-        dom.textContent = '';
+        dom.textContent = "";
       }
     }
   } else {
-    reconcileNodeChildren(prevChildren, nextChildren, prevChildrenLength, nextChildrenLength, element, dom);
+    reconcileNodeChildren(
+      prevChildren,
+      nextChildren,
+      prevChildrenLength,
+      nextChildrenLength,
+      element,
+      dom
+    );
   }
 
   if ($textContentRequiresDoubleLinebreakAtEnd(element)) {
     subTreeTextContent += DOUBLE_LINE_BREAK;
   } // $FlowFixMe: internal field
-
 
   dom.__lexicalTextContent = subTreeTextContent;
   subTreeTextContent = previousSubTreeTextContent + subTreeTextContent;
@@ -2320,11 +2529,16 @@ function reconcileNode(key, parentDOM) {
 
   if (prevNode === undefined || nextNode === undefined) {
     {
-      throw Error(`reconcileNode: prevNode or nextNode does not exist in nodeMap`);
+      throw Error(
+        `reconcileNode: prevNode or nextNode does not exist in nodeMap`
+      );
     }
   }
 
-  const isDirty = treatAllNodesAsDirty || activeDirtyLeaves.has(key) || activeDirtyElements.has(key);
+  const isDirty =
+    treatAllNodesAsDirty ||
+    activeDirtyLeaves.has(key) ||
+    activeDirtyElements.has(key);
   const dom = getElementByKeyOrThrow(activeEditor$1, key);
 
   if (prevNode === nextNode && !isDirty) {
@@ -2336,7 +2550,6 @@ function reconcileNode(key, parentDOM) {
         subTreeTextContent += previousSubTreeTextContent;
         editorTextContent += previousSubTreeTextContent;
       } // $FlowFixMe: internal field
-
 
       const previousSubTreeDirectionTextContent = dom.__lexicalDirTextContent;
 
@@ -2358,9 +2571,14 @@ function reconcileNode(key, parentDOM) {
   }
 
   if (prevNode !== nextNode && isDirty) {
-    setMutatedNode(mutatedNodes, activeEditorNodes, activeMutationListeners, nextNode, 'updated');
+    setMutatedNode(
+      mutatedNodes,
+      activeEditorNodes,
+      activeMutationListeners,
+      nextNode,
+      "updated"
+    );
   } // Update node. If it returns true, we need to unmount and re-create the node
-
 
   if (nextNode.updateDOM(prevNode, dom, activeEditorConfig)) {
     const replacementDOM = createNode(key, null, null);
@@ -2427,7 +2645,11 @@ function reconcileNode(key, parentDOM) {
     editorTextContent += text;
   }
 
-  if (!activeEditorStateReadOnly && $isRootNode(nextNode) && nextNode.__cachedText !== editorTextContent) {
+  if (
+    !activeEditorStateReadOnly &&
+    $isRootNode(nextNode) &&
+    nextNode.__cachedText !== editorTextContent
+  ) {
     // Cache the latest text content.
     nextNode = nextNode.getWritable();
     nextNode.__cachedText = editorTextContent;
@@ -2466,7 +2688,14 @@ function getNextSibling(element) {
   return element.nextSibling;
 }
 
-function reconcileNodeChildren(prevChildren, nextChildren, prevChildrenLength, nextChildrenLength, element, dom) {
+function reconcileNodeChildren(
+  prevChildren,
+  nextChildren,
+  prevChildrenLength,
+  nextChildrenLength,
+  element,
+  dom
+) {
   const prevEndIndex = prevChildrenLength - 1;
   const nextEndIndex = nextChildrenLength - 1;
   let prevChildrenSet;
@@ -2531,17 +2760,27 @@ function reconcileNodeChildren(prevChildren, nextChildren, prevChildrenLength, n
 
   if (appendNewChildren && !removeOldChildren) {
     const previousNode = nextChildren[nextEndIndex + 1];
-    const insertDOM = previousNode === undefined ? null : activeEditor$1.getElementByKey(previousNode);
+    const insertDOM =
+      previousNode === undefined
+        ? null
+        : activeEditor$1.getElementByKey(previousNode);
     createChildren(nextChildren, nextIndex, nextEndIndex, dom, insertDOM);
   } else if (removeOldChildren && !appendNewChildren) {
     destroyChildren(prevChildren, prevIndex, prevEndIndex, dom);
   }
 }
 
-function reconcileRoot(prevEditorState, nextEditorState, editor, dirtyType, dirtyElements, dirtyLeaves) {
-  subTreeTextContent = '';
-  editorTextContent = '';
-  subTreeDirectionedTextContent = ''; // Rather than pass around a load of arguments through the stack recursively
+function reconcileRoot(
+  prevEditorState,
+  nextEditorState,
+  editor,
+  dirtyType,
+  dirtyElements,
+  dirtyLeaves
+) {
+  subTreeTextContent = "";
+  editorTextContent = "";
+  subTreeDirectionedTextContent = ""; // Rather than pass around a load of arguments through the stack recursively
   // we instead set them as bindings within the scope of the module.
 
   treatAllNodesAsDirty = dirtyType === FULL_RECONCILE;
@@ -2558,7 +2797,7 @@ function reconcileRoot(prevEditorState, nextEditorState, editor, dirtyType, dirt
   activePrevKeyToDOMMap = new Map(editor._keyToDOMMap);
   const currentMutatedNodes = new Map();
   mutatedNodes = currentMutatedNodes;
-  reconcileNode('root', null); // We don't want a bunch of void checks throughout the scope
+  reconcileNode("root", null); // We don't want a bunch of void checks throughout the scope
   // so instead we make it seem that these values are always set.
   // We also want to make sure we clear them down, otherwise we
   // can leak memory.
@@ -2584,7 +2823,15 @@ function reconcileRoot(prevEditorState, nextEditorState, editor, dirtyType, dirt
   return currentMutatedNodes;
 }
 
-function updateEditorState(rootElement, currentEditorState, pendingEditorState, currentSelection, pendingSelection, needsUpdate, editor) {
+function updateEditorState(
+  rootElement,
+  currentEditorState,
+  pendingEditorState,
+  currentSelection,
+  pendingSelection,
+  needsUpdate,
+  editor
+) {
   const observer = editor._observer;
   let reconcileMutatedNodes = null;
 
@@ -2595,28 +2842,43 @@ function updateEditorState(rootElement, currentEditorState, pendingEditorState, 
     observer.disconnect();
 
     try {
-      reconcileMutatedNodes = reconcileRoot(currentEditorState, pendingEditorState, editor, dirtyType, dirtyElements, dirtyLeaves);
+      reconcileMutatedNodes = reconcileRoot(
+        currentEditorState,
+        pendingEditorState,
+        editor,
+        dirtyType,
+        dirtyElements,
+        dirtyLeaves
+      );
     } finally {
       observer.observe(rootElement, {
         characterData: true,
         childList: true,
-        subtree: true
+        subtree: true,
       });
     }
   }
 
   const domSelection = getDOMSelection();
 
-  if (!editor._readOnly && domSelection !== null && (needsUpdate || pendingSelection === null || pendingSelection.dirty)) {
-    reconcileSelection(currentSelection, pendingSelection, editor, domSelection);
+  if (
+    !editor._readOnly &&
+    domSelection !== null &&
+    (needsUpdate || pendingSelection === null || pendingSelection.dirty)
+  ) {
+    reconcileSelection(
+      currentSelection,
+      pendingSelection,
+      editor,
+      domSelection
+    );
   }
 
   return reconcileMutatedNodes;
 }
 
 function scrollIntoViewIfNeeded(editor, node, rootElement) {
-  const element = // $FlowFixMe: this is valid, as we are checking the nodeType
-  node.nodeType === DOM_TEXT_TYPE ? node.parentNode : node;
+  const element = node.nodeType === DOM_TEXT_TYPE ? node.parentNode : node; // $FlowFixMe: this is valid, as we are checking the nodeType
 
   if (element !== null) {
     const rect = element.getBoundingClientRect();
@@ -2635,11 +2897,16 @@ function scrollIntoViewIfNeeded(editor, node, rootElement) {
       }
     }
 
-    editor._updateTags.add('scroll-into-view');
+    editor._updateTags.add("scroll-into-view");
   }
 }
 
-function reconcileSelection(prevSelection, nextSelection, editor, domSelection) {
+function reconcileSelection(
+  prevSelection,
+  nextSelection,
+  editor,
+  domSelection
+) {
   const anchorDOMNode = domSelection.anchorNode;
   const focusDOMNode = domSelection.focusNode;
   const anchorOffset = domSelection.anchorOffset;
@@ -2648,7 +2915,10 @@ function reconcileSelection(prevSelection, nextSelection, editor, domSelection) 
   const rootElement = editor._rootElement; // TODO: make this not hard-coded, and add another config option
   // that makes this configurable.
 
-  if (editor._updateTags.has('collaboration') && activeElement !== rootElement) {
+  if (
+    editor._updateTags.has("collaboration") &&
+    activeElement !== rootElement
+  ) {
     return;
   }
 
@@ -2657,7 +2927,10 @@ function reconcileSelection(prevSelection, nextSelection, editor, domSelection) 
     // of editor.setRootElement(). If this occurs on init when the
     // editor is already focused, then this can cause the editor to
     // lose focus.
-    if (prevSelection !== null && isSelectionWithinEditor(editor, anchorDOMNode, focusDOMNode)) {
+    if (
+      prevSelection !== null &&
+      isSelectionWithinEditor(editor, anchorDOMNode, focusDOMNode)
+    ) {
       domSelection.removeAllRanges();
     }
 
@@ -2686,57 +2959,77 @@ function reconcileSelection(prevSelection, nextSelection, editor, domSelection) 
   let nextFocusNode = focusDOM;
   let anchorFormatChanged = false;
 
-  if (anchor.type === 'text') {
+  if (anchor.type === "text") {
     nextAnchorNode = getDOMTextNode(anchorDOM);
     anchorFormatChanged = anchor.getNode().getFormat() !== nextFormat;
   }
 
-  if (focus.type === 'text') {
+  if (focus.type === "text") {
     nextFocusNode = getDOMTextNode(focusDOM);
   } // If we can't get an underlying text node for selection, then
   // we should avoid setting selection to something incorrect.
-
 
   if (nextAnchorNode === null || nextFocusNode === null) {
     return;
   }
 
-  if (isCollapsed && (prevSelection === null || anchorFormatChanged || prevSelection.format !== nextFormat)) {
-    markCollapsedSelectionFormat(nextFormat, nextAnchorOffset, anchorKey, performance.now());
+  if (
+    isCollapsed &&
+    (prevSelection === null ||
+      anchorFormatChanged ||
+      prevSelection.format !== nextFormat)
+  ) {
+    markCollapsedSelectionFormat(
+      nextFormat,
+      nextAnchorOffset,
+      anchorKey,
+      performance.now()
+    );
   } // Diff against the native DOM selection to ensure we don't do
   // an unnecessary selection update. We also skip this check if
   // we're moving selection to within an element, as this can
   // sometimes be problematic around scrolling.
 
-
-  if (anchorOffset === nextAnchorOffset && focusOffset === nextFocusOffset && anchorDOMNode === nextAnchorNode && focusDOMNode === nextFocusNode && // Badly interpreted range selection when collapsed - #1482
-  !(domSelection.type === 'Range' && isCollapsed)) {
+  if (
+    anchorOffset === nextAnchorOffset &&
+    focusOffset === nextFocusOffset &&
+    anchorDOMNode === nextAnchorNode &&
+    focusDOMNode === nextFocusNode && // Badly interpreted range selection when collapsed - #1482
+    !(domSelection.type === "Range" && isCollapsed)
+  ) {
     // If the root element does not have focus, ensure it has focus
-    if (rootElement !== null && (activeElement === null || !rootElement.contains(activeElement))) {
+    if (
+      rootElement !== null &&
+      (activeElement === null || !rootElement.contains(activeElement))
+    ) {
       rootElement.focus({
-        preventScroll: true
+        preventScroll: true,
       });
     } // In Safari/iOS if we have selection on an element, then we also
     // need to additionally set the DOM selection, otherwise a selectionchange
     // event will not fire.
 
-
-    if (!(IS_IOS || IS_SAFARI) || anchor.type !== 'element') {
+    if (!(IS_IOS || IS_SAFARI) || anchor.type !== "element") {
       return;
     }
   } // Apply the updated selection to the DOM. Note: this will trigger
   // a "selectionchange" event, although it will be asynchronous.
 
-
   try {
-    domSelection.setBaseAndExtent(nextAnchorNode, nextAnchorOffset, nextFocusNode, nextFocusOffset);
+    domSelection.setBaseAndExtent(
+      nextAnchorNode,
+      nextAnchorOffset,
+      nextFocusNode,
+      nextFocusOffset
+    );
 
     if (nextSelection.isCollapsed() && rootElement === activeElement) {
       scrollIntoViewIfNeeded(editor, nextAnchorNode, rootElement);
     }
 
     markSelectionChangeFromReconcile();
-  } catch (error) {// If we encounter an error, continue. This can sometimes
+  } catch (error) {
+    // If we encounter an error, continue. This can sometimes
     // occur with FF and there's no good reason as to why it
     // should happen.
   }
@@ -2745,7 +3038,7 @@ function reconcileSelection(prevSelection, nextSelection, editor, domSelection) 
 function storeDOMWithKey(key, dom, editor) {
   const keyToDOMMap = editor._keyToDOMMap; // $FlowFixMe: internal field
 
-  dom['__lexicalKey_' + editor._key] = key;
+  dom["__lexicalKey_" + editor._key] = key;
   keyToDOMMap.set(key, dom);
 }
 
@@ -2754,7 +3047,9 @@ function getPrevElementByKeyOrThrow(key) {
 
   if (element === undefined) {
     {
-      throw Error(`Reconciliation: could not find DOM element for node key "${key}"`);
+      throw Error(
+        `Reconciliation: could not find DOM element for node key "${key}"`
+      );
     }
   }
 
@@ -2766,7 +3061,9 @@ function getElementByKeyOrThrow(editor, key) {
 
   if (element === undefined) {
     {
-      throw Error(`Reconciliation: could not find DOM element for node key "${key}"`);
+      throw Error(
+        `Reconciliation: could not find DOM element for node key "${key}"`
+      );
     }
   }
 
@@ -2779,7 +3076,7 @@ function getElementByKeyOrThrow(editor, key) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 let activeEditorState = null;
 let activeEditor = null;
@@ -2799,14 +3096,18 @@ function errorOnReadOnly() {
 function errorOnInfiniteTransforms() {
   if (infiniteTransformCount > 99) {
     {
-      throw Error(`One or more transforms are endlessly triggering additional transforms. May have encountered infinite recursion caused by transforms that have their preconditions too lose and/or conflict with each other.`);
+      throw Error(
+        `One or more transforms are endlessly triggering additional transforms. May have encountered infinite recursion caused by transforms that have their preconditions too lose and/or conflict with each other.`
+      );
     }
   }
 }
 function getActiveEditorState() {
   if (activeEditorState === null) {
     {
-      throw Error(`Unable to find an active editor state. State helpers or node methods can only be used synchronously during the callback of editor.update() or editorState.read().`);
+      throw Error(
+        `Unable to find an active editor state. State helpers or node methods can only be used synchronously during the callback of editor.update() or editorState.read().`
+      );
     }
   }
 
@@ -2815,7 +3116,9 @@ function getActiveEditorState() {
 function getActiveEditor() {
   if (activeEditor === null) {
     {
-      throw Error(`Unable to find an active editor. This method can only be used synchronously during the callback of editor.update().`);
+      throw Error(
+        `Unable to find an active editor. This method can only be used synchronously during the callback of editor.update().`
+      );
     }
   }
 
@@ -2843,8 +3146,11 @@ function $applyTransforms(editor, node, transformsCache) {
 }
 
 function $isNodeValidForTransform(node, compositionKey) {
-  return node !== undefined && // We don't want to transform nodes being composed
-  node.__key !== compositionKey && node.isAttached();
+  return (
+    node !== undefined && // We don't want to transform nodes being composed
+    node.__key !== compositionKey &&
+    node.isAttached()
+  );
 }
 
 function $normalizeAllDirtyTextNodes(editorState, editor) {
@@ -2854,7 +3160,12 @@ function $normalizeAllDirtyTextNodes(editorState, editor) {
   for (const nodeKey of dirtyLeaves) {
     const node = nodeMap.get(nodeKey);
 
-    if ($isTextNode(node) && node.isAttached() && node.isSimpleText() && !node.isUnmergeable()) {
+    if (
+      $isTextNode(node) &&
+      node.isAttached() &&
+      node.isSimpleText() &&
+      !node.isUnmergeable()
+    ) {
       $normalizeTextNode(node);
     }
   }
@@ -2870,7 +3181,6 @@ function $normalizeAllDirtyTextNodes(editorState, editor) {
  * editor._subtrees which we reset in every loop.
  */
 
-
 function $applyAllTransforms(editorState, editor) {
   const dirtyLeaves = editor._dirtyLeaves;
   const dirtyElements = editor._dirtyElements;
@@ -2882,7 +3192,10 @@ function $applyAllTransforms(editorState, editor) {
   let untransformedDirtyElements = dirtyElements;
   let untransformedDirtyElementsLength = untransformedDirtyElements.size;
 
-  while (untransformedDirtyLeavesLength > 0 || untransformedDirtyElementsLength > 0) {
+  while (
+    untransformedDirtyLeavesLength > 0 ||
+    untransformedDirtyElementsLength > 0
+  ) {
     if (untransformedDirtyLeavesLength > 0) {
       // We leverage editor._dirtyLeaves to track the new dirty leaves after the transforms
       editor._dirtyLeaves = new Set();
@@ -2890,11 +3203,19 @@ function $applyAllTransforms(editorState, editor) {
       for (const nodeKey of untransformedDirtyLeaves) {
         const node = nodeMap.get(nodeKey);
 
-        if ($isTextNode(node) && node.isAttached() && node.isSimpleText() && !node.isUnmergeable()) {
+        if (
+          $isTextNode(node) &&
+          node.isAttached() &&
+          node.isSimpleText() &&
+          !node.isUnmergeable()
+        ) {
           $normalizeTextNode(node);
         }
 
-        if (node !== undefined && $isNodeValidForTransform(node, compositionKey)) {
+        if (
+          node !== undefined &&
+          $isNodeValidForTransform(node, compositionKey)
+        ) {
           $applyTransforms(editor, node, transformsCache);
         }
 
@@ -2912,7 +3233,6 @@ function $applyAllTransforms(editorState, editor) {
     // We have previously processed dirty leaves, so let's restart the editor leaves Set to track
     // new ones caused by element transforms
 
-
     editor._dirtyLeaves = new Set();
     editor._dirtyElements = new Map();
 
@@ -2920,13 +3240,16 @@ function $applyAllTransforms(editorState, editor) {
       const nodeKey = currentUntransformedDirtyElement[0];
       const intentionallyMarkedAsDirty = currentUntransformedDirtyElement[1];
 
-      if (nodeKey === 'root' || !intentionallyMarkedAsDirty) {
+      if (nodeKey === "root" || !intentionallyMarkedAsDirty) {
         continue;
       }
 
       const node = nodeMap.get(nodeKey);
 
-      if (node !== undefined && $isNodeValidForTransform(node, compositionKey)) {
+      if (
+        node !== undefined &&
+        $isNodeValidForTransform(node, compositionKey)
+      ) {
         $applyTransforms(editor, node, transformsCache);
       }
 
@@ -2948,7 +3271,7 @@ function parseEditorState(parsedEditorState, editor) {
   const nodeMap = new Map();
   const editorState = new EditorState(nodeMap);
   const nodeParserState = {
-    originalSelection: parsedEditorState._selection
+    originalSelection: parsedEditorState._selection,
   };
   const previousActiveEditorState = activeEditorState;
   const previousReadOnlyMode = isReadOnlyMode;
@@ -2960,17 +3283,24 @@ function parseEditorState(parsedEditorState, editor) {
   try {
     const parsedNodeMap = new Map(parsedEditorState._nodeMap); // $FlowFixMe: root always exists in Map
 
-    const parsedRoot = parsedNodeMap.get('root');
-    internalCreateNodeFromParse(parsedRoot, parsedNodeMap, editor, null
-    /* parentKey */
-    , nodeParserState);
+    const parsedRoot = parsedNodeMap.get("root");
+    internalCreateNodeFromParse(
+      parsedRoot,
+      parsedNodeMap,
+      editor,
+      null,
+      /* parentKey */
+      nodeParserState
+    );
   } finally {
     activeEditorState = previousActiveEditorState;
     isReadOnlyMode = previousReadOnlyMode;
     activeEditor = previousActiveEditor;
   }
 
-  editorState._selection = internalCreateSelectionFromParse(nodeParserState.remappedSelection || nodeParserState.originalSelection);
+  editorState._selection = internalCreateSelectionFromParse(
+    nodeParserState.remappedSelection || nodeParserState.originalSelection
+  );
   return editorState;
 } // This technically isn't an update but given we need
 // exposure to the module's active bindings, we have this
@@ -2999,17 +3329,15 @@ function handleDEVOnlyPendingUpdateGuarantees(pendingEditorState) {
   const nodeMap = pendingEditorState._nodeMap; // $FlowFixMe: this is allowed
 
   nodeMap.set = () => {
-    throw new Error('Cannot call set() on a frozen Lexical node map');
+    throw new Error("Cannot call set() on a frozen Lexical node map");
   }; // $FlowFixMe: this is allowed
-
 
   nodeMap.clear = () => {
-    throw new Error('Cannot call clear() on a frozen Lexical node map');
+    throw new Error("Cannot call clear() on a frozen Lexical node map");
   }; // $FlowFixMe: this is allowed
 
-
   nodeMap.delete = () => {
-    throw new Error('Cannot call delete() on a frozen Lexical node map');
+    throw new Error("Cannot call delete() on a frozen Lexical node map");
   };
 }
 
@@ -3038,15 +3366,27 @@ function commitPendingUpdates(editor) {
   editor._updating = true;
 
   try {
-    const mutatedNodes = updateEditorState(rootElement, currentEditorState, pendingEditorState, currentSelection, pendingSelection, needsUpdate, editor);
+    const mutatedNodes = updateEditorState(
+      rootElement,
+      currentEditorState,
+      pendingEditorState,
+      currentSelection,
+      pendingSelection,
+      needsUpdate,
+      editor
+    );
 
     if (mutatedNodes !== null) {
-      triggerMutationListeners(editor, currentEditorState, pendingEditorState, mutatedNodes);
+      triggerMutationListeners(
+        editor,
+        currentEditorState,
+        pendingEditorState,
+        mutatedNodes
+      );
     }
   } catch (error) {
     // Report errors
     editor._onError(error); // Reset editor and restore incoming editor state to the DOM
-
 
     if (!isAttemptingToRecoverFromReconcilerError) {
       resetEditor(editor, null, rootElement, pendingEditorState);
@@ -3093,32 +3433,41 @@ function commitPendingUpdates(editor) {
   if (pendingDecorators !== null) {
     editor._decorators = pendingDecorators;
     editor._pendingDecorators = null;
-    triggerListeners('decorator', editor, true, pendingDecorators);
+    triggerListeners("decorator", editor, true, pendingDecorators);
   }
 
   triggerTextContentListeners(editor, currentEditorState, pendingEditorState);
-  triggerListeners('update', editor, true, {
+  triggerListeners("update", editor, true, {
     dirtyElements,
     dirtyLeaves,
     editorState: pendingEditorState,
     normalizedNodes,
     prevEditorState: currentEditorState,
-    tags
+    tags,
   });
   triggerDeferredUpdateCallbacks(editor);
   triggerEnqueuedUpdates(editor);
 }
 
-function triggerTextContentListeners(editor, currentEditorState, pendingEditorState) {
+function triggerTextContentListeners(
+  editor,
+  currentEditorState,
+  pendingEditorState
+) {
   const currentTextContent = getEditorStateTextContent(currentEditorState);
   const latestTextContent = getEditorStateTextContent(pendingEditorState);
 
   if (currentTextContent !== latestTextContent) {
-    triggerListeners('textcontent', editor, true, latestTextContent);
+    triggerListeners("textcontent", editor, true, latestTextContent);
   }
 }
 
-function triggerMutationListeners(editor, currentEditorState, pendingEditorState, mutatedNodes) {
+function triggerMutationListeners(
+  editor,
+  currentEditorState,
+  pendingEditorState,
+  mutatedNodes
+) {
   const listeners = editor._listeners.mutation;
   listeners.forEach((klass, listener) => {
     const mutatedNodesByType = mutatedNodes.get(klass);
@@ -3131,8 +3480,12 @@ function triggerMutationListeners(editor, currentEditorState, pendingEditorState
   });
 }
 
-function triggerListeners(type, editor, isCurrentlyEnqueuingUpdates, // $FlowFixMe: needs refining
-...payload) {
+function triggerListeners(
+  type,
+  editor,
+  isCurrentlyEnqueuingUpdates, // $FlowFixMe: needs refining
+  ...payload
+) {
   const previouslyUpdating = editor._updating;
   editor._updating = isCurrentlyEnqueuingUpdates;
 
@@ -3268,7 +3621,8 @@ function beginUpdate(editor, updateFn, options) {
   let editorStateWasCloned = false;
 
   if (pendingEditorState === null) {
-    pendingEditorState = editor._pendingEditorState = cloneEditorState(currentEditorState);
+    pendingEditorState = editor._pendingEditorState =
+      cloneEditorState(currentEditorState);
     editorStateWasCloned = true;
   }
 
@@ -3299,7 +3653,12 @@ function beginUpdate(editor, updateFn, options) {
       }
 
       processNestedUpdates(editor);
-      $garbageCollectDetachedNodes(currentEditorState, pendingEditorState, editor._dirtyLeaves, editor._dirtyElements);
+      $garbageCollectDetachedNodes(
+        currentEditorState,
+        pendingEditorState,
+        editor._dirtyLeaves,
+        editor._dirtyElements
+      );
     }
 
     const endingCompositionKey = editor._compositionKey;
@@ -3315,9 +3674,14 @@ function beginUpdate(editor, updateFn, options) {
       const anchorKey = pendingSelection.anchor.key;
       const focusKey = pendingSelection.focus.key;
 
-      if (pendingNodeMap.get(anchorKey) === undefined || pendingNodeMap.get(focusKey) === undefined) {
+      if (
+        pendingNodeMap.get(anchorKey) === undefined ||
+        pendingNodeMap.get(focusKey) === undefined
+      ) {
         {
-          throw Error(`updateEditor: selection has been lost because the previously selected nodes have been removed and selection wasn't moved to another node. Ensure selection changes after removing/replacing a selected node.`);
+          throw Error(
+            `updateEditor: selection has been lost because the previously selected nodes have been removed and selection wasn't moved to another node. Ensure selection changes after removing/replacing a selected node.`
+          );
         }
       }
     } else if ($isNodeSelection(pendingSelection)) {
@@ -3329,7 +3693,6 @@ function beginUpdate(editor, updateFn, options) {
   } catch (error) {
     // Report errors
     editor._onError(error); // Restore existing editor state to the DOM
-
 
     editor._pendingEditorState = currentEditorState;
     editor._dirtyType = FULL_RECONCILE;
@@ -3350,7 +3713,9 @@ function beginUpdate(editor, updateFn, options) {
     infiniteTransformCount = 0;
   }
 
-  const shouldUpdate = editor._dirtyType !== NO_DIRTY_NODES || editorStateHasDirtySelection(pendingEditorState, editor);
+  const shouldUpdate =
+    editor._dirtyType !== NO_DIRTY_NODES ||
+    editorStateHasDirtySelection(pendingEditorState, editor);
 
   if (shouldUpdate) {
     if (pendingEditorState._flushSync) {
@@ -3386,7 +3751,7 @@ function updateEditor(editor, updateFn, options) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 
 const TEXT_MUTATION_VARIANCE = 100;
@@ -3402,14 +3767,15 @@ function updateTimeStamp(event) {
 
 function initTextEntryListener() {
   if (lastTextEntryTimeStamp === 0) {
-    window.addEventListener('textInput', updateTimeStamp, true);
+    window.addEventListener("textInput", updateTimeStamp, true);
   }
 }
 
 function isManagedLineBreak(dom, target, editor) {
-  return (// $FlowFixMe: internal field
+  return (
+    // $FlowFixMe: internal field
     target.__lexicalLineBreak === dom || // $FlowFixMe: internal field
-    dom['__lexicalKey_' + editor._key] !== undefined
+    dom["__lexicalKey_" + editor._key] !== undefined
   );
 }
 
@@ -3436,7 +3802,8 @@ function handleTextMutation(target, node, editor) {
 
 function $flushMutations(editor, mutations, observer) {
   isProcessingMutations = true;
-  const shouldFlushTextMutations = performance.now() - lastTextEntryTimeStamp > TEXT_MUTATION_VARIANCE;
+  const shouldFlushTextMutations =
+    performance.now() - lastTextEntryTimeStamp > TEXT_MUTATION_VARIANCE;
 
   try {
     updateEditor(editor, () => {
@@ -3446,26 +3813,37 @@ function $flushMutations(editor, mutations, observer) {
 
       const currentEditorState = editor._editorState;
       let shouldRevertSelection = false;
-      let possibleTextForFirefoxPaste = '';
+      let possibleTextForFirefoxPaste = "";
 
       for (let i = 0; i < mutations.length; i++) {
         const mutation = mutations[i];
         const type = mutation.type;
         const targetDOM = mutation.target;
-        let targetNode = $getNearestNodeFromDOMNode(targetDOM, currentEditorState);
+        let targetNode = $getNearestNodeFromDOMNode(
+          targetDOM,
+          currentEditorState
+        );
 
         if ($isDecoratorNode(targetNode)) {
           continue;
         }
 
-        if (type === 'characterData') {
+        if (type === "characterData") {
           // Text mutations are deferred and passed to mutation listeners to be
           // processed outside of the Lexical engine.
-          if (shouldFlushTextMutations && targetDOM.nodeType === DOM_TEXT_TYPE && $isTextNode(targetNode) && targetNode.isAttached()) {
-            handleTextMutation( // $FlowFixMe: nodeType === DOM_TEXT_TYPE is a Text DOM node
-            targetDOM, targetNode);
+          if (
+            shouldFlushTextMutations &&
+            targetDOM.nodeType === DOM_TEXT_TYPE &&
+            $isTextNode(targetNode) &&
+            targetNode.isAttached()
+          ) {
+            handleTextMutation(
+              // $FlowFixMe: nodeType === DOM_TEXT_TYPE is a Text DOM node
+              targetDOM,
+              targetNode
+            );
           }
-        } else if (type === 'childList') {
+        } else if (type === "childList") {
           shouldRevertSelection = true; // We attempt to "undo" any changes that have occurred outside
           // of Lexical. We want Lexical's editor state to be source of truth.
           // To the user, these will look like no-ops.
@@ -3477,7 +3855,12 @@ function $flushMutations(editor, mutations, observer) {
             const node = getNodeFromDOMNode(addedDOM);
             const parentDOM = addedDOM.parentNode;
 
-            if (parentDOM != null && node === null && (addedDOM.nodeName !== 'BR' || !isManagedLineBreak(addedDOM, parentDOM, editor))) {
+            if (
+              parentDOM != null &&
+              node === null &&
+              (addedDOM.nodeName !== "BR" ||
+                !isManagedLineBreak(addedDOM, parentDOM, editor))
+            ) {
               if (IS_FIREFOX) {
                 const possibleText = addedDOM.innerText || addedDOM.nodeValue;
 
@@ -3499,7 +3882,10 @@ function $flushMutations(editor, mutations, observer) {
             for (let s = 0; s < removedDOMsLength; s++) {
               const removedDOM = removedDOMs[s];
 
-              if (removedDOM.nodeName === 'BR' && isManagedLineBreak(removedDOM, targetDOM, editor)) {
+              if (
+                removedDOM.nodeName === "BR" &&
+                isManagedLineBreak(removedDOM, targetDOM, editor)
+              ) {
                 targetDOM.appendChild(removedDOM);
                 unremovedBRs++;
               }
@@ -3518,7 +3904,6 @@ function $flushMutations(editor, mutations, observer) {
       // to restore their contents back to the source of truth, which
       // is Lexical's "current" editor state. This is basically like
       // an internal revert on the DOM.
-
 
       if (badDOMTargets.size > 0) {
         for (const [targetDOM, targetNode] of badDOMTargets) {
@@ -3551,7 +3936,6 @@ function $flushMutations(editor, mutations, observer) {
       // also prevents us having to process them on the next cycle
       // of onMutation, as these mutations were made by us.
 
-
       const records = observer.takeRecords(); // Check for any random auto-added <br> elements, and remove them.
       // These get added by the browser when we undo the above mutations
       // and this can lead to a broken UI.
@@ -3566,12 +3950,15 @@ function $flushMutations(editor, mutations, observer) {
             const addedDOM = addedNodes[s];
             const parentDOM = addedDOM.parentNode;
 
-            if (parentDOM != null && addedDOM.nodeName === 'BR' && !isManagedLineBreak(addedDOM, target, editor)) {
+            if (
+              parentDOM != null &&
+              addedDOM.nodeName === "BR" &&
+              !isManagedLineBreak(addedDOM, target, editor)
+            ) {
               parentDOM.removeChild(addedDOM);
             }
           }
         } // Clear any of those removal mutations
-
 
         observer.takeRecords();
       }
@@ -3614,7 +4001,7 @@ function initMutationObserver(editor) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 
 class Point {
@@ -3625,7 +4012,11 @@ class Point {
   }
 
   is(point) {
-    return this.key === point.key && this.offset === point.offset && this.type === point.type;
+    return (
+      this.key === point.key &&
+      this.offset === point.offset &&
+      this.type === point.type
+    );
   }
 
   isBefore(b) {
@@ -3674,12 +4065,14 @@ class Point {
         $setCompositionKey(key);
       }
 
-      if (selection !== null && (selection.anchor === this || selection.focus === this)) {
+      if (
+        selection !== null &&
+        (selection.anchor === this || selection.focus === this)
+      ) {
         selection.dirty = true;
       }
     }
   }
-
 }
 
 function $createPoint(key, offset, type) {
@@ -3690,10 +4083,10 @@ function $createPoint(key, offset, type) {
 function selectPointOnNode(point, node) {
   const key = node.__key;
   let offset = point.offset;
-  let type = 'element';
+  let type = "element";
 
   if ($isTextNode(node)) {
-    type = 'text';
+    type = "text";
     const textContentLength = node.getTextContentSize();
 
     if (offset > textContentLength) {
@@ -3722,7 +4115,9 @@ function $transferStartingElementPointToTextPoint(start, end, format) {
   const element = start.getNode();
   const placementNode = element.getChildAtIndex(start.offset);
   const textNode = $createTextNode();
-  const target = $isRootNode(element) ? $createParagraphNode().append(textNode) : textNode;
+  const target = $isRootNode(element)
+    ? $createParagraphNode().append(textNode)
+    : textNode;
   textNode.setFormat(format);
 
   if (placementNode === null) {
@@ -3731,12 +4126,11 @@ function $transferStartingElementPointToTextPoint(start, end, format) {
     placementNode.insertBefore(target);
   } // Transfer the element point to a text point.
 
-
   if (start.is(end)) {
-    end.set(textNode.__key, 0, 'text');
+    end.set(textNode.__key, 0, "text");
   }
 
-  start.set(textNode.__key, 0, 'text');
+  start.set(textNode.__key, 0, "text");
 }
 
 function $setPointValues(point, key, offset, type) {
@@ -3760,7 +4154,7 @@ class NodeSelection {
 
     const a = this._nodes;
     const b = selection._nodes;
-    return a.size === b.size && Array.from(a).every(key => b.has(key));
+    return a.size === b.size && Array.from(a).every((key) => b.has(key));
   }
 
   add(key) {
@@ -3793,10 +4187,12 @@ class NodeSelection {
     return this.getNodes();
   }
 
-  insertRawText(text) {// Do nothing?
+  insertRawText(text) {
+    // Do nothing?
   }
 
-  insertText() {// Do nothing?
+  insertText() {
+    // Do nothing?
   }
 
   getNodes() {
@@ -3816,7 +4212,7 @@ class NodeSelection {
 
   getTextContent() {
     const nodes = this.getNodes();
-    let textContent = '';
+    let textContent = "";
 
     for (let i = 0; i < nodes.length; i++) {
       textContent += nodes[i].getTextContent();
@@ -3824,7 +4220,6 @@ class NodeSelection {
 
     return textContent;
   }
-
 }
 function $isRangeSelection(x) {
   return x instanceof RangeSelection;
@@ -3872,10 +4267,12 @@ class GridSelection {
     return this.getNodes();
   }
 
-  insertRawText(text) {// Do nothing?
+  insertRawText(text) {
+    // Do nothing?
   }
 
-  insertText() {// Do nothing?
+  insertText() {
+    // Do nothing?
   }
 
   getShape() {
@@ -3886,7 +4283,9 @@ class GridSelection {
     }
 
     const anchorCellNodeIndex = anchorCellNode.getIndexWithinParent();
-    const anchorCelRoweIndex = anchorCellNode.getParentOrThrow().getIndexWithinParent();
+    const anchorCelRoweIndex = anchorCellNode
+      .getParentOrThrow()
+      .getIndexWithinParent();
     const focusCellNode = $getNodeByKey(this.focus.key);
 
     if (!focusCellNode) {
@@ -3894,7 +4293,9 @@ class GridSelection {
     }
 
     const focusCellNodeIndex = focusCellNode.getIndexWithinParent();
-    const focusCellRowIndex = focusCellNode.getParentOrThrow().getIndexWithinParent();
+    const focusCellRowIndex = focusCellNode
+      .getParentOrThrow()
+      .getIndexWithinParent();
     const startX = Math.min(anchorCellNodeIndex, focusCellNodeIndex);
     const stopX = Math.max(anchorCellNodeIndex, focusCellNodeIndex);
     const startY = Math.min(anchorCelRoweIndex, focusCellRowIndex);
@@ -3903,18 +4304,13 @@ class GridSelection {
       fromX: Math.min(startX, stopX),
       fromY: Math.min(startY, stopY),
       toX: Math.max(startX, stopX),
-      toY: Math.max(startY, stopY)
+      toY: Math.max(startY, stopY),
     };
   }
 
   getNodes() {
     const nodes = new Set();
-    const {
-      fromX,
-      fromY,
-      toX,
-      toY
-    } = this.getShape();
+    const { fromX, fromY, toX, toY } = this.getShape();
     const gridNode = $getNodeByKey(this.gridKey);
 
     if (!$isGridNode(gridNode)) {
@@ -3966,7 +4362,7 @@ class GridSelection {
 
   getTextContent() {
     const nodes = this.getNodes();
-    let textContent = '';
+    let textContent = "";
 
     for (let i = 0; i < nodes.length; i++) {
       textContent += nodes[i].getTextContent();
@@ -3974,7 +4370,6 @@ class GridSelection {
 
     return textContent;
   }
-
 }
 function $isGridSelection(x) {
   return x instanceof GridSelection;
@@ -3992,7 +4387,11 @@ class RangeSelection {
       return false;
     }
 
-    return this.anchor.is(selection.anchor) && this.focus.is(selection.focus) && this.format === selection.format;
+    return (
+      this.anchor.is(selection.anchor) &&
+      this.focus.is(selection.focus) &&
+      this.format === selection.format
+    );
   }
 
   isBackward() {
@@ -4018,7 +4417,10 @@ class RangeSelection {
     }
 
     if (firstNode.is(lastNode)) {
-      if ($isElementNode(firstNode) && (firstNode.getChildrenSize() > 0 || firstNode.excludeFromCopy())) {
+      if (
+        $isElementNode(firstNode) &&
+        (firstNode.getChildrenSize() > 0 || firstNode.excludeFromCopy())
+      ) {
         return [];
       }
 
@@ -4029,8 +4431,8 @@ class RangeSelection {
   }
 
   setTextNodeRange(anchorNode, anchorOffset, focusNode, focusOffset) {
-    $setPointValues(this.anchor, anchorNode.__key, anchorOffset, 'text');
-    $setPointValues(this.focus, focusNode.__key, focusOffset, 'text');
+    $setPointValues(this.anchor, anchorNode.__key, anchorOffset, "text");
+    $setPointValues(this.focus, focusNode.__key, focusOffset, "text");
     this.dirty = true;
   }
 
@@ -4038,7 +4440,7 @@ class RangeSelection {
     const nodes = this.getNodes();
 
     if (nodes.length === 0) {
-      return '';
+      return "";
     }
 
     const firstNode = nodes[0];
@@ -4047,7 +4449,7 @@ class RangeSelection {
     const focus = this.focus;
     const isBefore = anchor.isBefore(focus);
     const [anchorOffset, focusOffset] = getCharacterOffsets(this);
-    let textContent = '';
+    let textContent = "";
     let prevWasElement = true;
 
     for (let i = 0; i < nodes.length; i++) {
@@ -4055,7 +4457,7 @@ class RangeSelection {
 
       if ($isElementNode(node) && !node.isInline()) {
         if (!prevWasElement) {
-          textContent += '\n';
+          textContent += "\n";
         }
 
         if (node.isEmpty()) {
@@ -4071,16 +4473,26 @@ class RangeSelection {
 
           if (node === firstNode) {
             if (node === lastNode) {
-              text = anchorOffset < focusOffset ? text.slice(anchorOffset, focusOffset) : text.slice(focusOffset, anchorOffset);
+              text =
+                anchorOffset < focusOffset
+                  ? text.slice(anchorOffset, focusOffset)
+                  : text.slice(focusOffset, anchorOffset);
             } else {
-              text = isBefore ? text.slice(anchorOffset) : text.slice(focusOffset);
+              text = isBefore
+                ? text.slice(anchorOffset)
+                : text.slice(focusOffset);
             }
           } else if (node === lastNode) {
-            text = isBefore ? text.slice(0, focusOffset) : text.slice(0, anchorOffset);
+            text = isBefore
+              ? text.slice(0, focusOffset)
+              : text.slice(0, anchorOffset);
           }
 
           textContent += text;
-        } else if (($isDecoratorNode(node) || $isLineBreakNode(node)) && (node !== lastNode || !this.isCollapsed())) {
+        } else if (
+          ($isDecoratorNode(node) || $isLineBreakNode(node)) &&
+          (node !== lastNode || !this.isCollapsed())
+        ) {
           textContent += node.getTextContent();
         }
       }
@@ -4093,21 +4505,42 @@ class RangeSelection {
     const editor = getActiveEditor();
     const currentEditorState = editor.getEditorState();
     const lastSelection = currentEditorState._selection;
-    const resolvedSelectionPoints = internalResolveSelectionPoints(range.startContainer, range.startOffset, range.endContainer, range.endOffset, editor, lastSelection);
+    const resolvedSelectionPoints = internalResolveSelectionPoints(
+      range.startContainer,
+      range.startOffset,
+      range.endContainer,
+      range.endOffset,
+      editor,
+      lastSelection
+    );
 
     if (resolvedSelectionPoints === null) {
       return;
     }
 
     const [anchorPoint, focusPoint] = resolvedSelectionPoints;
-    $setPointValues(this.anchor, anchorPoint.key, anchorPoint.offset, anchorPoint.type);
-    $setPointValues(this.focus, focusPoint.key, focusPoint.offset, focusPoint.type);
+    $setPointValues(
+      this.anchor,
+      anchorPoint.key,
+      anchorPoint.offset,
+      anchorPoint.type
+    );
+    $setPointValues(
+      this.focus,
+      focusPoint.key,
+      focusPoint.offset,
+      focusPoint.type
+    );
   }
 
   clone() {
     const anchor = this.anchor;
     const focus = this.focus;
-    return new RangeSelection($createPoint(anchor.key, anchor.offset, anchor.type), $createPoint(focus.key, focus.offset, focus.type), this.format);
+    return new RangeSelection(
+      $createPoint(anchor.key, anchor.offset, anchor.type),
+      $createPoint(focus.key, focus.offset, focus.type),
+      this.format
+    );
   }
 
   toggleFormat(format) {
@@ -4132,7 +4565,7 @@ class RangeSelection {
       for (let i = 0; i < length; i++) {
         const part = parts[i];
 
-        if (part !== '') {
+        if (part !== "") {
           nodes.push($createTextNode(part));
         }
 
@@ -4151,9 +4584,9 @@ class RangeSelection {
     const isBefore = this.isCollapsed() || anchor.isBefore(focus);
     const format = this.format;
 
-    if (isBefore && anchor.type === 'element') {
+    if (isBefore && anchor.type === "element") {
       $transferStartingElementPointToTextPoint(anchor, focus, format);
-    } else if (!isBefore && focus.type === 'element') {
+    } else if (!isBefore && focus.type === "element") {
       $transferStartingElementPointToTextPoint(focus, anchor, format);
     }
 
@@ -4177,10 +4610,20 @@ class RangeSelection {
     const lastIndex = selectedNodesLength - 1;
     let lastNode = selectedNodes[lastIndex];
 
-    if (this.isCollapsed() && startOffset === firstNodeTextLength && (firstNode.isSegmented() || firstNode.isToken() || !firstNode.canInsertTextAfter() || !firstNodeParent.canInsertTextAfter())) {
+    if (
+      this.isCollapsed() &&
+      startOffset === firstNodeTextLength &&
+      (firstNode.isSegmented() ||
+        firstNode.isToken() ||
+        !firstNode.canInsertTextAfter() ||
+        !firstNodeParent.canInsertTextAfter())
+    ) {
       let nextSibling = firstNode.getNextSibling();
 
-      if (!$isTextNode(nextSibling) || $isTokenOrInertOrSegmented(nextSibling)) {
+      if (
+        !$isTextNode(nextSibling) ||
+        $isTokenOrInertOrSegmented(nextSibling)
+      ) {
         nextSibling = $createTextNode();
 
         if (!firstNodeParent.canInsertTextAfter()) {
@@ -4193,14 +4636,24 @@ class RangeSelection {
       nextSibling.select(0, 0);
       firstNode = nextSibling;
 
-      if (text !== '') {
+      if (text !== "") {
         this.insertText(text);
         return;
       }
-    } else if (this.isCollapsed() && startOffset === 0 && (firstNode.isSegmented() || firstNode.isToken() || !firstNode.canInsertTextBefore() || !firstNodeParent.canInsertTextBefore())) {
+    } else if (
+      this.isCollapsed() &&
+      startOffset === 0 &&
+      (firstNode.isSegmented() ||
+        firstNode.isToken() ||
+        !firstNode.canInsertTextBefore() ||
+        !firstNodeParent.canInsertTextBefore())
+    ) {
       let prevSibling = firstNode.getPreviousSibling();
 
-      if (!$isTextNode(prevSibling) || $isTokenOrInertOrSegmented(prevSibling)) {
+      if (
+        !$isTextNode(prevSibling) ||
+        $isTokenOrInertOrSegmented(prevSibling)
+      ) {
         prevSibling = $createTextNode();
 
         if (!firstNodeParent.canInsertTextBefore()) {
@@ -4213,7 +4666,7 @@ class RangeSelection {
       prevSibling.select();
       firstNode = prevSibling;
 
-      if (text !== '') {
+      if (text !== "") {
         this.insertText(text);
         return;
       }
@@ -4221,15 +4674,21 @@ class RangeSelection {
       const textNode = $createTextNode(firstNode.getTextContent());
       firstNode.replace(textNode);
       firstNode = textNode;
-    } else if (!this.isCollapsed() && text !== '') {
+    } else if (!this.isCollapsed() && text !== "") {
       // When the firstNode or lastNode parents are elements that
       // do not allow text to be inserted before or after, we first
       // clear the content. Then we normalize selection, then insert
       // the new content.
       const lastNodeParent = lastNode.getParent();
 
-      if (!firstNodeParent.canInsertTextBefore() || !firstNodeParent.canInsertTextAfter() || $isElementNode(lastNodeParent) && (!lastNodeParent.canInsertTextBefore() || !lastNodeParent.canInsertTextAfter())) {
-        this.insertText('');
+      if (
+        !firstNodeParent.canInsertTextBefore() ||
+        !firstNodeParent.canInsertTextAfter() ||
+        ($isElementNode(lastNodeParent) &&
+          (!lastNodeParent.canInsertTextBefore() ||
+            !lastNodeParent.canInsertTextAfter()))
+      ) {
+        this.insertText("");
         normalizeSelectionPointsForBoundaries(this.anchor, this.focus, null);
         this.insertText(text);
         return;
@@ -4247,7 +4706,7 @@ class RangeSelection {
       const firstNodeFormat = firstNode.getFormat();
 
       if (startOffset === endOffset && firstNodeFormat !== format) {
-        if (firstNode.getTextContent() === '') {
+        if (firstNode.getTextContent() === "") {
           firstNode.setFormat(format);
         } else {
           const textNode = $createTextNode(text);
@@ -4262,8 +4721,7 @@ class RangeSelection {
           } // When composing, we need to adjust the anchor offset so that
           // we correctly replace that right range.
 
-
-          if (textNode.isComposing() && this.anchor.type === 'text') {
+          if (textNode.isComposing() && this.anchor.type === "text") {
             this.anchor.offset -= text.length;
           }
 
@@ -4274,32 +4732,51 @@ class RangeSelection {
       const delCount = endOffset - startOffset;
       firstNode = firstNode.spliceText(startOffset, delCount, text, true);
 
-      if (firstNode.getTextContent() === '') {
+      if (firstNode.getTextContent() === "") {
         firstNode.remove();
-      } else if (firstNode.isComposing() && this.anchor.type === 'text') {
+      } else if (firstNode.isComposing() && this.anchor.type === "text") {
         // When composing, we need to adjust the anchor offset so that
         // we correctly replace that right range.
         this.anchor.offset -= text.length;
       }
     } else {
-      const markedNodeKeysForKeep = new Set([...firstNode.getParentKeys(), ...lastNode.getParentKeys()]);
-      const firstElement = $isElementNode(firstNode) ? firstNode : firstNode.getParentOrThrow();
-      const lastElement = $isElementNode(lastNode) ? lastNode : lastNode.getParentOrThrow(); // Handle mutations to the last node.
+      const markedNodeKeysForKeep = new Set([
+        ...firstNode.getParentKeys(),
+        ...lastNode.getParentKeys(),
+      ]);
+      const firstElement = $isElementNode(firstNode)
+        ? firstNode
+        : firstNode.getParentOrThrow();
+      const lastElement = $isElementNode(lastNode)
+        ? lastNode
+        : lastNode.getParentOrThrow(); // Handle mutations to the last node.
 
-      if (endPoint.type === 'text' && (endOffset !== 0 || lastNode.getTextContent() === '') || endPoint.type === 'element' && lastNode.getIndexWithinParent() < endOffset) {
-        if ($isTextNode(lastNode) && !$isTokenOrInert(lastNode) && endOffset !== lastNode.getTextContentSize()) {
+      if (
+        (endPoint.type === "text" &&
+          (endOffset !== 0 || lastNode.getTextContent() === "")) ||
+        (endPoint.type === "element" &&
+          lastNode.getIndexWithinParent() < endOffset)
+      ) {
+        if (
+          $isTextNode(lastNode) &&
+          !$isTokenOrInert(lastNode) &&
+          endOffset !== lastNode.getTextContentSize()
+        ) {
           if (lastNode.isSegmented()) {
             const textNode = $createTextNode(lastNode.getTextContent());
             lastNode.replace(textNode);
             lastNode = textNode;
           }
 
-          lastNode = lastNode.spliceText(0, endOffset, '');
+          lastNode = lastNode.spliceText(0, endOffset, "");
           markedNodeKeysForKeep.add(lastNode.__key);
         } else {
           const lastNodeParent = lastNode.getParentOrThrow();
 
-          if (!lastNodeParent.canBeEmpty() && lastNodeParent.getChildrenSize() === 1) {
+          if (
+            !lastNodeParent.canBeEmpty() &&
+            lastNodeParent.getChildrenSize() === 1
+          ) {
             lastNodeParent.remove();
           } else {
             lastNode.remove();
@@ -4310,7 +4787,6 @@ class RangeSelection {
       } // Either move the remaining nodes of the last parent to after
       // the first child, or remove them entirely. If the last parent
       // is the same as the first parent, this logic also works.
-
 
       const lastNodeChildren = lastElement.getChildren();
       const selectedNodesSet = new Set(selectedNodes);
@@ -4323,12 +4799,19 @@ class RangeSelection {
         for (let i = lastNodeChildren.length - 1; i >= 0; i--) {
           const lastNodeChild = lastNodeChildren[i];
 
-          if (lastNodeChild.is(firstNode) || $isElementNode(lastNodeChild) && lastNodeChild.isParentOf(firstNode)) {
+          if (
+            lastNodeChild.is(firstNode) ||
+            ($isElementNode(lastNodeChild) &&
+              lastNodeChild.isParentOf(firstNode))
+          ) {
             break;
           }
 
           if (lastNodeChild.isAttached()) {
-            if (!selectedNodesSet.has(lastNodeChild) || lastNodeChild.is(lastNode)) {
+            if (
+              !selectedNodesSet.has(lastNodeChild) ||
+              lastNodeChild.is(lastNode)
+            ) {
               if (!firstAndLastElementsAreEqual) {
                 firstNode.insertAfter(lastNodeChild);
               }
@@ -4349,7 +4832,10 @@ class RangeSelection {
             const children = parent.getChildren();
             const childrenLength = children.length;
 
-            if (childrenLength === 0 || children[childrenLength - 1].is(lastRemovedParent)) {
+            if (
+              childrenLength === 0 ||
+              children[childrenLength - 1].is(lastRemovedParent)
+            ) {
               markedNodeKeysForKeep.delete(parent.__key);
               lastRemovedParent = parent;
             }
@@ -4360,13 +4846,17 @@ class RangeSelection {
       } // Ensure we do splicing after moving of nodes, as splicing
       // can have side-effects (in the case of hashtags).
 
-
       if (!$isTokenOrInert(firstNode)) {
-        firstNode = firstNode.spliceText(startOffset, firstNodeTextLength - startOffset, text, true);
+        firstNode = firstNode.spliceText(
+          startOffset,
+          firstNodeTextLength - startOffset,
+          text,
+          true
+        );
 
-        if (firstNode.getTextContent() === '') {
+        if (firstNode.getTextContent() === "") {
           firstNode.remove();
-        } else if (firstNode.isComposing() && this.anchor.type === 'text') {
+        } else if (firstNode.isComposing() && this.anchor.type === "text") {
           // When composing, we need to adjust the anchor offset so that
           // we correctly replace that right range.
           this.anchor.offset -= text.length;
@@ -4378,7 +4868,6 @@ class RangeSelection {
         textNode.select();
         firstNode.replace(textNode);
       } // Remove all selected nodes that haven't already been removed.
-
 
       for (let i = 1; i < selectedNodesLength; i++) {
         const selectedNode = selectedNodes[i];
@@ -4392,7 +4881,7 @@ class RangeSelection {
   }
 
   removeText() {
-    this.insertText('');
+    this.insertText("");
   }
 
   formatText(formatType) {
@@ -4446,10 +4935,9 @@ class RangeSelection {
       }
     } // This is the case where we only selected a single node
 
-
     if (firstNode.is(lastNode)) {
       if ($isTextNode(firstNode)) {
-        if (anchor.type === 'element' && focus.type === 'element') {
+        if (anchor.type === "element" && focus.type === "element") {
           firstNode.setFormat(firstNextFormat);
           firstNode.select(startOffset, endOffset);
           this.format = firstNextFormat;
@@ -4462,7 +4950,6 @@ class RangeSelection {
         if (startOffset === endOffset) {
           return;
         } // The entire node is selected, so just format it
-
 
         if (startOffset === 0 && endOffset === firstNodeTextLength) {
           firstNode.setFormat(firstNextFormat);
@@ -4478,7 +4965,6 @@ class RangeSelection {
 
         this.format = firstNextFormat;
       } // multiple nodes selected.
-
     } else {
       if ($isTextNode(firstNode)) {
         if (startOffset !== 0) {
@@ -4508,13 +4994,20 @@ class RangeSelection {
         }
       } // deal with all the nodes in between
 
-
       for (let i = 1; i < lastIndex; i++) {
         const selectedNode = selectedNodes[i];
         const selectedNodeKey = selectedNode.__key;
 
-        if ($isTextNode(selectedNode) && selectedNodeKey !== firstNode.__key && selectedNodeKey !== lastNode.__key && !selectedNode.isToken()) {
-          const selectedNextFormat = selectedNode.getFormatFlags(formatType, lastNextFormat);
+        if (
+          $isTextNode(selectedNode) &&
+          selectedNodeKey !== firstNode.__key &&
+          selectedNodeKey !== lastNode.__key &&
+          !selectedNode.isToken()
+        ) {
+          const selectedNextFormat = selectedNode.getFormatFlags(
+            formatType,
+            lastNextFormat
+          );
           selectedNode.setFormat(selectedNextFormat);
         }
       }
@@ -4532,7 +5025,7 @@ class RangeSelection {
     const anchorNode = anchor.getNode();
     let target = anchorNode;
 
-    if (anchor.type === 'element') {
+    if (anchor.type === "element") {
       const element = anchor.getNode();
       const placementNode = element.getChildAtIndex(anchorOffset - 1);
 
@@ -4547,7 +5040,9 @@ class RangeSelection {
     // append them after the last node we're inserting.
 
     const nextSiblings = anchorNode.getNextSiblings();
-    const topLevelElement = $isRootNode(anchorNode) ? null : anchorNode.getTopLevelElementOrThrow();
+    const topLevelElement = $isRootNode(anchorNode)
+      ? null
+      : anchorNode.getTopLevelElementOrThrow();
 
     if ($isTextNode(anchorNode)) {
       const textContent = anchorNode.getTextContent();
@@ -4604,7 +5099,11 @@ class RangeSelection {
         // so we trigger an invariant to ensure this problem is caught in development
         // and fixed accordingly.
         if (node.is(firstNode)) {
-          if ($isElementNode(target) && target.isEmpty() && target.canReplaceWith(node)) {
+          if (
+            $isElementNode(target) &&
+            target.isEmpty() &&
+            target.canReplaceWith(node)
+          ) {
             target.replace(node);
             target = node;
             didReplaceOrMerge = true;
@@ -4629,7 +5128,6 @@ class RangeSelection {
           //   Text (2)
           //   Text (5)
           //
-
 
           const firstDescendant = node.getFirstDescendant();
 
@@ -4675,9 +5173,15 @@ class RangeSelection {
 
           target = topLevelElement;
         }
-      } else if (didReplaceOrMerge && !$isDecoratorNode(node) && $isRootNode(target.getParent())) {
+      } else if (
+        didReplaceOrMerge &&
+        !$isDecoratorNode(node) &&
+        $isRootNode(target.getParent())
+      ) {
         {
-          throw Error(`insertNodes: cannot insert a non-element into a root node`);
+          throw Error(
+            `insertNodes: cannot insert a non-element into a root node`
+          );
         }
       }
 
@@ -4717,7 +5221,10 @@ class RangeSelection {
             target = target.insertAfter(node);
           }
         }
-      } else if (!$isElementNode(node) || $isDecoratorNode(target) && target.isTopLevel()) {
+      } else if (
+        !$isElementNode(node) ||
+        ($isDecoratorNode(target) && target.isTopLevel())
+      ) {
         lastNodeInserted = node;
         target = target.insertAfter(node);
       } else {
@@ -4747,7 +5254,9 @@ class RangeSelection {
     if ($isElementNode(target)) {
       // If the last node to be inserted was a text node,
       // then we should attempt to move selection to that.
-      const lastChild = $isTextNode(lastNodeInserted) ? lastNodeInserted : target.getLastDescendant();
+      const lastChild = $isTextNode(lastNodeInserted)
+        ? lastNodeInserted
+        : target.getLastDescendant();
 
       if (!selectStart) {
         // Handle moving selection to end for elements
@@ -4777,7 +5286,9 @@ class RangeSelection {
 
               if (!$isElementNode(prevParentClone)) {
                 {
-                  throw Error(`insertNodes: cloned parent clone is not an element`);
+                  throw Error(
+                    `insertNodes: cloned parent clone is not an element`
+                  );
                 }
               }
 
@@ -4788,7 +5299,6 @@ class RangeSelection {
             }
           } // Check if the prev parent is empty, as it might need
           // removing.
-
 
           if (prevParent.isEmpty() && !prevParent.canBeEmpty()) {
             prevParent.remove();
@@ -4820,12 +5330,14 @@ class RangeSelection {
     let nodesToMove = [];
     let siblingsToMove = [];
 
-    if (anchor.type === 'text') {
+    if (anchor.type === "text") {
       const anchorNode = anchor.getNode();
       nodesToMove = anchorNode.getNextSiblings().reverse();
       currentElement = anchorNode.getParentOrThrow();
       const isInline = currentElement.isInline();
-      const textContentLength = isInline ? currentElement.getTextContentSize() : anchorNode.getTextContentSize();
+      const textContentLength = isInline
+        ? currentElement.getTextContentSize()
+        : anchorNode.getTextContentSize();
 
       if (anchorOffset === 0) {
         nodesToMove.push(anchorNode);
@@ -4866,7 +5378,11 @@ class RangeSelection {
 
     const nodesToMoveLength = nodesToMove.length;
 
-    if (anchorOffset === 0 && nodesToMoveLength > 0 && currentElement.isInline()) {
+    if (
+      anchorOffset === 0 &&
+      nodesToMoveLength > 0 &&
+      currentElement.isInline()
+    ) {
       currentElement.getParentOrThrow().insertBefore($createParagraphNode());
       return;
     }
@@ -4879,7 +5395,11 @@ class RangeSelection {
     } else if ($isElementNode(newElement)) {
       // If we're at the beginning of the current element, move the new element to be before the current element
       const currentElementFirstChild = currentElement.getFirstChild();
-      const isBeginning = anchorOffset === 0 && (currentElement.is(anchor.getNode()) || currentElementFirstChild && currentElementFirstChild.is(anchor.getNode()));
+      const isBeginning =
+        anchorOffset === 0 &&
+        (currentElement.is(anchor.getNode()) ||
+          (currentElementFirstChild &&
+            currentElementFirstChild.is(anchor.getNode())));
 
       if (isBeginning && nodesToMoveLength > 0) {
         currentElement.insertBefore(newElement);
@@ -4924,7 +5444,7 @@ class RangeSelection {
     const lineBreakNode = $createLineBreakNode();
     const anchor = this.anchor;
 
-    if (anchor.type === 'element') {
+    if (anchor.type === "element") {
       const element = anchor.getNode();
 
       if ($isRootNode(element)) {
@@ -4959,8 +5479,10 @@ class RangeSelection {
       return [];
     } else if (selectedNodesLength === 1) {
       if ($isTextNode(firstNode)) {
-        const startOffset = anchorOffset > focusOffset ? focusOffset : anchorOffset;
-        const endOffset = anchorOffset > focusOffset ? anchorOffset : focusOffset;
+        const startOffset =
+          anchorOffset > focusOffset ? focusOffset : anchorOffset;
+        const endOffset =
+          anchorOffset > focusOffset ? anchorOffset : focusOffset;
         const splitNodes = firstNode.splitText(startOffset, endOffset);
         const node = startOffset === 0 ? splitNodes[0] : splitNodes[1];
         return node != null ? [node] : [];
@@ -5001,12 +5523,14 @@ class RangeSelection {
   modify(alter, isBackward, granularity) {
     const focus = this.focus;
     const anchor = this.anchor;
-    const collapse = alter === 'move'; // Handle the selection movement around decorators.
+    const collapse = alter === "move"; // Handle the selection movement around decorators.
 
     const possibleNode = $getDecoratorNode(focus, isBackward);
 
     if ($isDecoratorNode(possibleNode) && !possibleNode.isIsolated()) {
-      const sibling = isBackward ? possibleNode.getPreviousSibling() : possibleNode.getNextSibling();
+      const sibling = isBackward
+        ? possibleNode.getPreviousSibling()
+        : possibleNode.getNextSibling();
 
       if (!$isTextNode(sibling)) {
         const parent = possibleNode.getParentOrThrow();
@@ -5025,20 +5549,20 @@ class RangeSelection {
           }
         }
 
-        focus.set(elementKey, offset, 'element');
+        focus.set(elementKey, offset, "element");
 
         if (collapse) {
-          anchor.set(elementKey, offset, 'element');
+          anchor.set(elementKey, offset, "element");
         }
 
         return;
       } else {
         const siblingKey = sibling.__key;
         const offset = isBackward ? sibling.getTextContent().length : 0;
-        focus.set(siblingKey, offset, 'text');
+        focus.set(siblingKey, offset, "text");
 
         if (collapse) {
-          anchor.set(siblingKey, offset, 'text');
+          anchor.set(siblingKey, offset, "text");
         }
 
         return;
@@ -5052,7 +5576,12 @@ class RangeSelection {
     // using Intl.Segmenter or other workarounds that struggle with word segments
     // and line segments (especially with word wrapping and non-Roman languages).
 
-    $moveNativeSelection(domSelection, alter, isBackward ? 'backward' : 'forward', granularity); // Guard against no ranges
+    $moveNativeSelection(
+      domSelection,
+      alter,
+      isBackward ? "backward" : "forward",
+      granularity
+    ); // Guard against no ranges
 
     if (domSelection.rangeCount > 0) {
       const range = domSelection.getRangeAt(0); // Apply the DOM selection to our Lexical selection.
@@ -5062,7 +5591,11 @@ class RangeSelection {
       // the anchor and focus points to match what the DOM has, not what
       // the range has specifically.
 
-      if (!collapse && (domSelection.anchorNode !== range.startContainer || domSelection.anchorOffset !== range.startOffset)) {
+      if (
+        !collapse &&
+        (domSelection.anchorNode !== range.startContainer ||
+          domSelection.anchorOffset !== range.startOffset)
+      ) {
         $swapPoints(this);
       }
     }
@@ -5074,27 +5607,37 @@ class RangeSelection {
       const focus = this.focus;
       let anchorNode = anchor.getNode();
 
-      if (!isBackward && ( // Delete forward handle case
-      anchor.type === 'element' && // $FlowFixMe: always an element node
-      anchor.offset === anchorNode.getChildrenSize() || anchor.type === 'text' && anchor.offset === anchorNode.getTextContentSize())) {
-        const nextSibling = anchorNode.getNextSibling() || anchorNode.getParentOrThrow().getNextSibling();
+      if (
+        !isBackward && // Delete forward handle case
+        ((anchor.type === "element" && // $FlowFixMe: always an element node
+          anchor.offset === anchorNode.getChildrenSize()) ||
+          (anchor.type === "text" &&
+            anchor.offset === anchorNode.getTextContentSize()))
+      ) {
+        const nextSibling =
+          anchorNode.getNextSibling() ||
+          anchorNode.getParentOrThrow().getNextSibling();
 
         if ($isElementNode(nextSibling) && !nextSibling.canExtractContents()) {
           return;
         }
       }
 
-      this.modify('extend', isBackward, 'character');
+      this.modify("extend", isBackward, "character");
 
       if (!this.isCollapsed()) {
-        const focusNode = focus.type === 'text' ? focus.getNode() : null;
-        anchorNode = anchor.type === 'text' ? anchor.getNode() : null;
+        const focusNode = focus.type === "text" ? focus.getNode() : null;
+        anchorNode = anchor.type === "text" ? anchor.getNode() : null;
 
         if (focusNode !== null && focusNode.isSegmented()) {
           const offset = focus.offset;
           const textContentSize = focusNode.getTextContentSize();
 
-          if (focusNode.is(anchorNode) || isBackward && offset !== textContentSize || !isBackward && offset !== 0) {
+          if (
+            focusNode.is(anchorNode) ||
+            (isBackward && offset !== textContentSize) ||
+            (!isBackward && offset !== 0)
+          ) {
             $removeSegment(focusNode, isBackward, offset);
             return;
           }
@@ -5102,7 +5645,11 @@ class RangeSelection {
           const offset = anchor.offset;
           const textContentSize = anchorNode.getTextContentSize();
 
-          if (anchorNode.is(focusNode) || isBackward && offset !== 0 || !isBackward && offset !== textContentSize) {
+          if (
+            anchorNode.is(focusNode) ||
+            (isBackward && offset !== 0) ||
+            (!isBackward && offset !== textContentSize)
+          ) {
             $removeSegment(anchorNode, isBackward, offset);
             return;
           }
@@ -5111,7 +5658,10 @@ class RangeSelection {
         $updateCaretSelectionForUnicodeCharacter(this, isBackward);
       } else if (isBackward && anchor.offset === 0) {
         // Special handling around rich text nodes
-        const element = anchor.type === 'element' ? anchor.getNode() : anchor.getNode().getParentOrThrow();
+        const element =
+          anchor.type === "element"
+            ? anchor.getNode()
+            : anchor.getNode().getParentOrThrow();
 
         if (element.collapseAtStart(this)) {
           return;
@@ -5124,7 +5674,7 @@ class RangeSelection {
 
   deleteLine(isBackward) {
     if (this.isCollapsed()) {
-      this.modify('extend', isBackward, 'lineboundary');
+      this.modify("extend", isBackward, "lineboundary");
     }
 
     this.removeText();
@@ -5132,12 +5682,11 @@ class RangeSelection {
 
   deleteWord(isBackward) {
     if (this.isCollapsed()) {
-      this.modify('extend', isBackward, 'word');
+      this.modify("extend", isBackward, "word");
     }
 
     this.removeText();
   }
-
 }
 function $isNodeSelection(x) {
   return x instanceof NodeSelection;
@@ -5146,20 +5695,26 @@ function $isNodeSelection(x) {
 function getCharacterOffset(point) {
   const offset = point.offset;
 
-  if (point.type === 'text') {
+  if (point.type === "text") {
     return offset;
   } // $FlowFixMe: cast
 
-
   const parent = point.getNode();
-  return offset === parent.getChildrenSize() ? parent.getTextContent().length : 0;
+  return offset === parent.getChildrenSize()
+    ? parent.getTextContent().length
+    : 0;
 }
 
 function getCharacterOffsets(selection) {
   const anchor = selection.anchor;
   const focus = selection.focus;
 
-  if (anchor.type === 'element' && focus.type === 'element' && anchor.key === focus.key && anchor.offset === focus.offset) {
+  if (
+    anchor.type === "element" &&
+    focus.type === "element" &&
+    anchor.key === focus.key &&
+    anchor.offset === focus.offset
+  ) {
     return [0, 0];
   }
 
@@ -5187,7 +5742,11 @@ function $updateCaretSelectionForUnicodeCharacter(selection, isBackward) {
   const anchorNode = anchor.getNode();
   const focusNode = focus.getNode();
 
-  if (anchorNode === focusNode && anchor.type === 'text' && focus.type === 'text') {
+  if (
+    anchorNode === focusNode &&
+    anchor.type === "text" &&
+    focus.type === "text"
+  ) {
     // Handling of multibyte characters
     const anchorOffset = anchor.offset;
     const focusOffset = focus.offset;
@@ -5224,7 +5783,11 @@ function $removeSegment(node, isBackward, offset) {
     restoreOffset = segmentOffset;
     segmentOffset += text.length;
 
-    if (isBackward && segmentOffset === offset || segmentOffset > offset || isLast) {
+    if (
+      (isBackward && segmentOffset === offset) ||
+      segmentOffset > offset ||
+      isLast
+    ) {
       split.splice(i, 1);
 
       if (isLast) {
@@ -5235,9 +5798,9 @@ function $removeSegment(node, isBackward, offset) {
     }
   }
 
-  const nextTextContent = split.join(' ');
+  const nextTextContent = split.join(" ");
 
-  if (nextTextContent === '') {
+  if (nextTextContent === "") {
     textNode.remove();
   } else {
     textNode.setTextContent(nextTextContent);
@@ -5247,7 +5810,12 @@ function $removeSegment(node, isBackward, offset) {
 
 function shouldResolveAncestor(resolvedElement, resolvedOffset, lastPoint) {
   const parent = resolvedElement.getParent();
-  return lastPoint === null || parent === null || !parent.canBeEmpty() || parent !== lastPoint.getNode();
+  return (
+    lastPoint === null ||
+    parent === null ||
+    !parent.canBeEmpty() ||
+    parent !== lastPoint.getNode()
+  );
 }
 
 function internalResolveSelectionPoint(dom, offset, lastPoint) {
@@ -5286,8 +5854,13 @@ function internalResolveSelectionPoint(dom, offset, lastPoint) {
       if ($isElementNode(resolvedElement)) {
         let child = resolvedElement.getChildAtIndex(resolvedOffset);
 
-        if ($isElementNode(child) && shouldResolveAncestor(child, resolvedOffset, lastPoint)) {
-          const descendant = moveSelectionToEnd ? child.getLastDescendant() : child.getFirstDescendant();
+        if (
+          $isElementNode(child) &&
+          shouldResolveAncestor(child, resolvedOffset, lastPoint)
+        ) {
+          const descendant = moveSelectionToEnd
+            ? child.getLastDescendant()
+            : child.getFirstDescendant();
 
           if (descendant === null) {
             resolvedElement = child;
@@ -5309,7 +5882,11 @@ function internalResolveSelectionPoint(dom, offset, lastPoint) {
         const index = resolvedElement.getIndexWithinParent(); // When selecting decorators, there can be some selection issues when using resolvedOffset,
         // and instead we should be checking if we're using the offset
 
-        if (offset === 0 && $isDecoratorNode(resolvedElement) && getNodeFromDOM(dom) === resolvedElement) {
+        if (
+          offset === 0 &&
+          $isDecoratorNode(resolvedElement) &&
+          getNodeFromDOM(dom) === resolvedElement
+        ) {
           resolvedOffset = index;
         } else {
           resolvedOffset = index + 1;
@@ -5319,7 +5896,7 @@ function internalResolveSelectionPoint(dom, offset, lastPoint) {
       }
 
       if ($isElementNode(resolvedElement)) {
-        return $createPoint(resolvedElement.__key, resolvedOffset, 'element');
+        return $createPoint(resolvedElement.__key, resolvedOffset, "element");
       }
     }
   } else {
@@ -5331,7 +5908,7 @@ function internalResolveSelectionPoint(dom, offset, lastPoint) {
     return null;
   }
 
-  return $createPoint(resolvedNode.__key, resolvedOffset, 'text');
+  return $createPoint(resolvedNode.__key, resolvedOffset, "text");
 }
 
 function resolveSelectionPointOnBoundary(point, isBackward, isCollapsed) {
@@ -5343,16 +5920,25 @@ function resolveSelectionPointOnBoundary(point, isBackward, isCollapsed) {
     const parent = node.getParent();
 
     if (!isBackward) {
-      if ($isElementNode(prevSibling) && !isCollapsed && prevSibling.isInline()) {
+      if (
+        $isElementNode(prevSibling) &&
+        !isCollapsed &&
+        prevSibling.isInline()
+      ) {
         point.key = prevSibling.__key;
         point.offset = prevSibling.getChildrenSize(); // $FlowFixMe: intentional
 
-        point.type = 'element';
+        point.type = "element";
       } else if ($isTextNode(prevSibling) && !prevSibling.isInert()) {
         point.key = prevSibling.__key;
         point.offset = prevSibling.getTextContent().length;
       }
-    } else if ((isCollapsed || !isBackward) && prevSibling === null && $isElementNode(parent) && parent.isInline()) {
+    } else if (
+      (isCollapsed || !isBackward) &&
+      prevSibling === null &&
+      $isElementNode(parent) &&
+      parent.isInline()
+    ) {
       const parentSibling = parent.getPreviousSibling();
 
       if ($isTextNode(parentSibling)) {
@@ -5368,8 +5954,13 @@ function resolveSelectionPointOnBoundary(point, isBackward, isCollapsed) {
       point.key = nextSibling.__key;
       point.offset = 0; // $FlowFixMe: intentional
 
-      point.type = 'element';
-    } else if ((isCollapsed || isBackward) && nextSibling === null && $isElementNode(parent) && parent.isInline()) {
+      point.type = "element";
+    } else if (
+      (isCollapsed || isBackward) &&
+      nextSibling === null &&
+      $isElementNode(parent) &&
+      parent.isInline()
+    ) {
       const parentSibling = parent.getNextSibling();
 
       if ($isTextNode(parentSibling)) {
@@ -5381,7 +5972,7 @@ function resolveSelectionPointOnBoundary(point, isBackward, isCollapsed) {
 }
 
 function normalizeSelectionPointsForBoundaries(anchor, focus, lastSelection) {
-  if (anchor.type === 'text' && focus.type === 'text') {
+  if (anchor.type === "text" && focus.type === "text") {
     const isBackward = anchor.isBefore(focus);
     const isCollapsed = anchor.is(focus); // Attempt to normalize the offset to the previous sibling if we're at the
     // start of a text node and the sibling is a text node or inline element.
@@ -5397,59 +5988,100 @@ function normalizeSelectionPointsForBoundaries(anchor, focus, lastSelection) {
 
     const editor = getActiveEditor();
 
-    if (editor.isComposing() && editor._compositionKey !== anchor.key && $isRangeSelection(lastSelection)) {
+    if (
+      editor.isComposing() &&
+      editor._compositionKey !== anchor.key &&
+      $isRangeSelection(lastSelection)
+    ) {
       const lastAnchor = lastSelection.anchor;
       const lastFocus = lastSelection.focus;
-      $setPointValues(anchor, lastAnchor.key, lastAnchor.offset, lastAnchor.type);
+      $setPointValues(
+        anchor,
+        lastAnchor.key,
+        lastAnchor.offset,
+        lastAnchor.type
+      );
       $setPointValues(focus, lastFocus.key, lastFocus.offset, lastFocus.type);
     }
   }
 }
 
-function internalResolveSelectionPoints(anchorDOM, anchorOffset, focusDOM, focusOffset, editor, lastSelection) {
-  if (anchorDOM === null || focusDOM === null || !isSelectionWithinEditor(editor, anchorDOM, focusDOM)) {
+function internalResolveSelectionPoints(
+  anchorDOM,
+  anchorOffset,
+  focusDOM,
+  focusOffset,
+  editor,
+  lastSelection
+) {
+  if (
+    anchorDOM === null ||
+    focusDOM === null ||
+    !isSelectionWithinEditor(editor, anchorDOM, focusDOM)
+  ) {
     return null;
   }
 
-  const resolvedAnchorPoint = internalResolveSelectionPoint(anchorDOM, anchorOffset, $isRangeSelection(lastSelection) ? lastSelection.anchor : null);
+  const resolvedAnchorPoint = internalResolveSelectionPoint(
+    anchorDOM,
+    anchorOffset,
+    $isRangeSelection(lastSelection) ? lastSelection.anchor : null
+  );
 
   if (resolvedAnchorPoint === null) {
     return null;
   }
 
-  const resolvedFocusPoint = internalResolveSelectionPoint(focusDOM, focusOffset, $isRangeSelection(lastSelection) ? lastSelection.focus : null);
+  const resolvedFocusPoint = internalResolveSelectionPoint(
+    focusDOM,
+    focusOffset,
+    $isRangeSelection(lastSelection) ? lastSelection.focus : null
+  );
 
   if (resolvedFocusPoint === null) {
     return null;
   } // Handle normalization of selection when it is at the boundaries.
 
-
-  normalizeSelectionPointsForBoundaries(resolvedAnchorPoint, resolvedFocusPoint, lastSelection);
+  normalizeSelectionPointsForBoundaries(
+    resolvedAnchorPoint,
+    resolvedFocusPoint,
+    lastSelection
+  );
   return [resolvedAnchorPoint, resolvedFocusPoint];
 } // This is used to make a selection when the existing
 // selection is null, i.e. forcing selection on the editor
 // when it current exists outside the editor.
 
-
-function internalMakeRangeSelection(anchorKey, anchorOffset, focusKey, focusOffset, anchorType, focusType) {
+function internalMakeRangeSelection(
+  anchorKey,
+  anchorOffset,
+  focusKey,
+  focusOffset,
+  anchorType,
+  focusType
+) {
   const editorState = getActiveEditorState();
-  const selection = new RangeSelection($createPoint(anchorKey, anchorOffset, anchorType), $createPoint(focusKey, focusOffset, focusType), 0);
+  const selection = new RangeSelection(
+    $createPoint(anchorKey, anchorOffset, anchorType),
+    $createPoint(focusKey, focusOffset, focusType),
+    0
+  );
   selection.dirty = true;
   editorState._selection = selection;
   return selection;
 }
 function $createEmptyRangeSelection() {
-  const anchor = $createPoint('root', 0, 'element');
-  const focus = $createPoint('root', 0, 'element');
+  const anchor = $createPoint("root", 0, "element");
+  const focus = $createPoint("root", 0, "element");
   return new RangeSelection(anchor, focus, 0);
 }
 function $createEmptyObjectSelection() {
   return new NodeSelection(new Set());
 }
 function $createEmptyGridSelection() {
-  const anchor = $createPoint('root', 0, 'element');
-  const focus = $createPoint('root', 0, 'element');
-  return new GridSelection('root', anchor, focus);
+  const anchor = $createPoint("root", 0, "element");
+  const focus = $createPoint("root", 0, "element");
+  return new GridSelection("root", anchor, focus);
 }
 
 function getActiveEventType() {
@@ -5484,8 +6116,15 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
   // reconciliation unless there are dirty nodes that need
   // reconciling.
   const eventType = getActiveEventType();
-  const isSelectionChange = eventType === 'selectionchange';
-  const useDOMSelection = !getIsProcesssingMutations() && (isSelectionChange || eventType === 'beforeinput' || eventType === 'compositionstart' || eventType === 'compositionend' || eventType === 'click' && window.event.detail === 3 || eventType === undefined);
+  const isSelectionChange = eventType === "selectionchange";
+  const useDOMSelection =
+    !getIsProcesssingMutations() &&
+    (isSelectionChange ||
+      eventType === "beforeinput" ||
+      eventType === "compositionstart" ||
+      eventType === "compositionend" ||
+      (eventType === "click" && window.event.detail === 3) ||
+      eventType === undefined);
   let anchorDOM, focusDOM, anchorOffset, focusOffset;
 
   if (!$isRangeSelection(lastSelection) || useDOMSelection) {
@@ -5502,15 +6141,25 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
   } // Let's resolve the text nodes from the offsets and DOM nodes we have from
   // native selection.
 
-
-  const resolvedSelectionPoints = internalResolveSelectionPoints(anchorDOM, anchorOffset, focusDOM, focusOffset, editor, lastSelection);
+  const resolvedSelectionPoints = internalResolveSelectionPoints(
+    anchorDOM,
+    anchorOffset,
+    focusDOM,
+    focusOffset,
+    editor,
+    lastSelection
+  );
 
   if (resolvedSelectionPoints === null) {
     return null;
   }
 
   const [resolvedAnchorPoint, resolvedFocusPoint] = resolvedSelectionPoints;
-  return new RangeSelection(resolvedAnchorPoint, resolvedFocusPoint, !$isRangeSelection(lastSelection) ? 0 : lastSelection.format);
+  return new RangeSelection(
+    resolvedAnchorPoint,
+    resolvedFocusPoint,
+    !$isRangeSelection(lastSelection) ? 0 : lastSelection.format
+  );
 }
 
 function $getSelection() {
@@ -5523,18 +6172,47 @@ function $getPreviousSelection() {
 }
 function internalCreateSelectionFromParse(parsedSelection) {
   if (parsedSelection !== null) {
-    if (parsedSelection.type === 'range') {
-      return new RangeSelection($createPoint(parsedSelection.anchor.key, parsedSelection.anchor.offset, parsedSelection.anchor.type), $createPoint(parsedSelection.focus.key, parsedSelection.focus.offset, parsedSelection.focus.type), 0);
-    } else if (parsedSelection.type === 'node') {
+    if (parsedSelection.type === "range") {
+      return new RangeSelection(
+        $createPoint(
+          parsedSelection.anchor.key,
+          parsedSelection.anchor.offset,
+          parsedSelection.anchor.type
+        ),
+        $createPoint(
+          parsedSelection.focus.key,
+          parsedSelection.focus.offset,
+          parsedSelection.focus.type
+        ),
+        0
+      );
+    } else if (parsedSelection.type === "node") {
       return new NodeSelection(new Set(parsedSelection.nodes));
-    } else if (parsedSelection.type === 'grid') {
-      return new GridSelection(parsedSelection.gridKey, $createPoint(parsedSelection.anchor.key, parsedSelection.anchor.offset, parsedSelection.anchor.type), $createPoint(parsedSelection.focus.key, parsedSelection.focus.offset, parsedSelection.focus.type));
+    } else if (parsedSelection.type === "grid") {
+      return new GridSelection(
+        parsedSelection.gridKey,
+        $createPoint(
+          parsedSelection.anchor.key,
+          parsedSelection.anchor.offset,
+          parsedSelection.anchor.type
+        ),
+        $createPoint(
+          parsedSelection.focus.key,
+          parsedSelection.focus.offset,
+          parsedSelection.focus.type
+        )
+      );
     }
   }
 
   return null;
 }
-function $updateElementSelectionOnCreateDeleteNode(selection, parentNode, nodeOffset, times = 1) {
+function $updateElementSelectionOnCreateDeleteNode(
+  selection,
+  parentNode,
+  nodeOffset,
+  times = 1
+) {
   const anchor = selection.anchor;
   const focus = selection.focus;
   const anchorNode = anchor.getNode();
@@ -5551,15 +6229,14 @@ function $updateElementSelectionOnCreateDeleteNode(selection, parentNode, nodeOf
 
     if (nodeOffset <= selectionOffset) {
       const newSelectionOffset = Math.max(0, selectionOffset + times);
-      anchor.set(parentKey, newSelectionOffset, 'element');
-      focus.set(parentKey, newSelectionOffset, 'element'); // The new selection might point to text nodes, try to resolve them
+      anchor.set(parentKey, newSelectionOffset, "element");
+      focus.set(parentKey, newSelectionOffset, "element"); // The new selection might point to text nodes, try to resolve them
 
       $updateSelectionResolveTextNodes(selection);
     }
 
     return;
   } // Multiple nodes selected. We shift or redimension selection
-
 
   const isBackward = selection.isBackward();
   const firstPoint = isBackward ? focus : anchor;
@@ -5571,7 +6248,11 @@ function $updateElementSelectionOnCreateDeleteNode(selection, parentNode, nodeOf
     const firstPointOffset = firstPoint.offset;
 
     if (nodeOffset <= firstPointOffset) {
-      firstPoint.set(parentKey, Math.max(0, firstPointOffset + times), 'element');
+      firstPoint.set(
+        parentKey,
+        Math.max(0, firstPointOffset + times),
+        "element"
+      );
     }
   }
 
@@ -5579,10 +6260,9 @@ function $updateElementSelectionOnCreateDeleteNode(selection, parentNode, nodeOf
     const lastPointOffset = lastPoint.offset;
 
     if (nodeOffset <= lastPointOffset) {
-      lastPoint.set(parentKey, Math.max(0, lastPointOffset + times), 'element');
+      lastPoint.set(parentKey, Math.max(0, lastPointOffset + times), "element");
     }
   } // The new selection might point to text nodes, try to resolve them
-
 
   $updateSelectionResolveTextNodes(selection);
 }
@@ -5602,7 +6282,9 @@ function $updateSelectionResolveTextNodes(selection) {
 
     const childSize = anchorNode.getChildrenSize();
     const anchorOffsetAtEnd = anchorOffset >= childSize;
-    const child = anchorOffsetAtEnd ? anchorNode.getChildAtIndex(childSize - 1) : anchorNode.getChildAtIndex(anchorOffset);
+    const child = anchorOffsetAtEnd
+      ? anchorNode.getChildAtIndex(childSize - 1)
+      : anchorNode.getChildAtIndex(anchorOffset);
 
     if ($isTextNode(child)) {
       let newOffset = 0;
@@ -5611,8 +6293,8 @@ function $updateSelectionResolveTextNodes(selection) {
         newOffset = child.getTextContentSize();
       }
 
-      anchor.set(child.__key, newOffset, 'text');
-      focus.set(child.__key, newOffset, 'text');
+      anchor.set(child.__key, newOffset, "text");
+      focus.set(child.__key, newOffset, "text");
     }
 
     return;
@@ -5621,7 +6303,9 @@ function $updateSelectionResolveTextNodes(selection) {
   if ($isElementNode(anchorNode)) {
     const childSize = anchorNode.getChildrenSize();
     const anchorOffsetAtEnd = anchorOffset >= childSize;
-    const child = anchorOffsetAtEnd ? anchorNode.getChildAtIndex(childSize - 1) : anchorNode.getChildAtIndex(anchorOffset);
+    const child = anchorOffsetAtEnd
+      ? anchorNode.getChildAtIndex(childSize - 1)
+      : anchorNode.getChildAtIndex(anchorOffset);
 
     if ($isTextNode(child)) {
       let newOffset = 0;
@@ -5630,14 +6314,16 @@ function $updateSelectionResolveTextNodes(selection) {
         newOffset = child.getTextContentSize();
       }
 
-      anchor.set(child.__key, newOffset, 'text');
+      anchor.set(child.__key, newOffset, "text");
     }
   }
 
   if ($isElementNode(focusNode)) {
     const childSize = focusNode.getChildrenSize();
     const focusOffsetAtEnd = focusOffset >= childSize;
-    const child = focusOffsetAtEnd ? focusNode.getChildAtIndex(childSize - 1) : focusNode.getChildAtIndex(focusOffset);
+    const child = focusOffsetAtEnd
+      ? focusNode.getChildAtIndex(childSize - 1)
+      : focusNode.getChildAtIndex(focusOffset);
 
     if ($isTextNode(child)) {
       let newOffset = 0;
@@ -5646,7 +6332,7 @@ function $updateSelectionResolveTextNodes(selection) {
         newOffset = child.getTextContentSize();
       }
 
-      focus.set(child.__key, newOffset, 'text');
+      focus.set(child.__key, newOffset, "text");
     }
   }
 }
@@ -5661,12 +6347,12 @@ function applySelectionTransforms(nextEditorState, editor) {
     const focus = nextSelection.focus;
     let anchorNode;
 
-    if (anchor.type === 'text') {
+    if (anchor.type === "text") {
       anchorNode = anchor.getNode();
       anchorNode.selectionTransform(prevSelection, nextSelection);
     }
 
-    if (focus.type === 'text') {
+    if (focus.type === "text") {
       const focusNode = focus.getNode();
 
       if (anchorNode !== focusNode) {
@@ -5675,7 +6361,13 @@ function applySelectionTransforms(nextEditorState, editor) {
     }
   }
 }
-function moveSelectionPointToSibling(point, node, parent, prevSibling, nextSibling) {
+function moveSelectionPointToSibling(
+  point,
+  node,
+  parent,
+  prevSibling,
+  nextSibling
+) {
   let siblingKey = null;
   let offset = 0;
   let type = null;
@@ -5685,19 +6377,19 @@ function moveSelectionPointToSibling(point, node, parent, prevSibling, nextSibli
 
     if ($isTextNode(prevSibling)) {
       offset = prevSibling.getTextContentSize();
-      type = 'text';
+      type = "text";
     } else if ($isElementNode(prevSibling)) {
       offset = prevSibling.getChildrenSize();
-      type = 'element';
+      type = "element";
     }
   } else {
     if (nextSibling !== null) {
       siblingKey = nextSibling.__key;
 
       if ($isTextNode(nextSibling)) {
-        type = 'text';
+        type = "text";
       } else if ($isElementNode(nextSibling)) {
-        type = 'element';
+        type = "element";
       }
     }
   }
@@ -5712,11 +6404,17 @@ function moveSelectionPointToSibling(point, node, parent, prevSibling, nextSibli
       offset = parent.getChildrenSize();
     }
 
-    point.set(parent.__key, offset, 'element');
+    point.set(parent.__key, offset, "element");
   }
 }
-function adjustPointOffsetForMergedSibling(point, isBefore, key, target, textLength) {
-  if (point.type === 'text') {
+function adjustPointOffsetForMergedSibling(
+  point,
+  isBefore,
+  key,
+  target,
+  textLength
+) {
+  if (point.type === "text") {
     point.key = key;
 
     if (!isBefore) {
@@ -5733,7 +6431,7 @@ function adjustPointOffsetForMergedSibling(point, isBefore, key, target, textLen
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 function removeNode(nodeToRemove, restoreSelection, preserveEmptyParent) {
   errorOnReadOnly();
@@ -5752,12 +6450,24 @@ function removeNode(nodeToRemove, restoreSelection, preserveEmptyParent) {
     const focus = selection.focus;
 
     if (anchor.key === key) {
-      moveSelectionPointToSibling(anchor, nodeToRemove, parent, nodeToRemove.getPreviousSibling(), nodeToRemove.getNextSibling());
+      moveSelectionPointToSibling(
+        anchor,
+        nodeToRemove,
+        parent,
+        nodeToRemove.getPreviousSibling(),
+        nodeToRemove.getNextSibling()
+      );
       selectionMoved = true;
     }
 
     if (focus.key === key) {
-      moveSelectionPointToSibling(focus, nodeToRemove, parent, nodeToRemove.getPreviousSibling(), nodeToRemove.getNextSibling());
+      moveSelectionPointToSibling(
+        focus,
+        nodeToRemove,
+        parent,
+        nodeToRemove.getPreviousSibling(),
+        nodeToRemove.getNextSibling()
+      );
       selectionMoved = true;
     }
   }
@@ -5781,7 +6491,13 @@ function removeNode(nodeToRemove, restoreSelection, preserveEmptyParent) {
     $updateElementSelectionOnCreateDeleteNode(selection, parent, index, -1);
   }
 
-  if (!preserveEmptyParent && parent !== null && !$isRootNode(parent) && !parent.canBeEmpty() && parent.isEmpty()) {
+  if (
+    !preserveEmptyParent &&
+    parent !== null &&
+    !$isRootNode(parent) &&
+    !parent.canBeEmpty() &&
+    parent.isEmpty()
+  ) {
     removeNode(parent, restoreSelection);
   }
 
@@ -5794,7 +6510,9 @@ function $getNodeByKeyOrThrow(key) {
 
   if (node === null) {
     {
-      throw Error(`Expected node with key ${key} to exist but it's not in the nodeMap.`);
+      throw Error(
+        `Expected node with key ${key} to exist but it's not in the nodeMap.`
+      );
     }
   }
 
@@ -5808,13 +6526,17 @@ class LexicalNode {
   // their own implementation.
   static getType() {
     {
-      throw Error(`LexicalNode: Node ${this.name} does not implement .getType().`);
+      throw Error(
+        `LexicalNode: Node ${this.name} does not implement .getType().`
+      );
     }
   }
 
   static clone(data) {
     {
-      throw Error(`LexicalNode: Node ${this.name} does not implement .clone().`);
+      throw Error(
+        `LexicalNode: Node ${this.name} does not implement .clone().`
+      );
     }
   }
 
@@ -5825,19 +6547,20 @@ class LexicalNode {
 
     {
       const proto = Object.getPrototypeOf(this);
-      ['getType', 'clone'].forEach(method => {
+      ["getType", "clone"].forEach((method) => {
         if (!proto.constructor.hasOwnProperty(method)) {
-          console.warn(`${this.constructor.name} must implement static "${method}" method`);
+          console.warn(
+            `${this.constructor.name} must implement static "${method}" method`
+          );
         }
       });
 
-      if (this.__type !== 'root') {
+      if (this.__type !== "root") {
         errorOnReadOnly();
         errorOnTypeKlassMismatch(this.__type, this.constructor);
       }
     }
   } // Getters and Traversers
-
 
   getType() {
     return this.__type;
@@ -5847,7 +6570,7 @@ class LexicalNode {
     let nodeKey = this.__key;
 
     while (nodeKey !== null) {
-      if (nodeKey === 'root') {
+      if (nodeKey === "root") {
         return true;
       }
 
@@ -5870,7 +6593,7 @@ class LexicalNode {
       return false;
     }
 
-    const selectedNodeKeys = new Set(selection.getNodes().map(n => n.__key));
+    const selectedNodeKeys = new Set(selection.getNodes().map((n) => n.__key));
     const isSelected = selectedNodeKeys.has(this.__key);
 
     if ($isTextNode(this)) {
@@ -5878,8 +6601,13 @@ class LexicalNode {
     } // For inline images inside of element nodes.
     // Without this change the image will be selected if the cursor is before or after it.
 
-
-    if ($isRangeSelection(selection) && selection.anchor.type === 'element' && selection.focus.type === 'element' && selection.anchor.key === selection.focus.key && selection.anchor.offset === selection.focus.offset) {
+    if (
+      $isRangeSelection(selection) &&
+      selection.anchor.type === "element" &&
+      selection.focus.type === "element" &&
+      selection.anchor.key === selection.focus.key &&
+      selection.anchor.offset === selection.focus.offset
+    ) {
       return false;
     }
 
@@ -5945,7 +6673,9 @@ class LexicalNode {
 
     if (parent === null) {
       {
-        throw Error(`Expected node ${this.__key} to have a top parent element.`);
+        throw Error(
+          `Expected node ${this.__key} to have a top parent element.`
+        );
       }
     }
 
@@ -6002,7 +6732,9 @@ class LexicalNode {
 
     const children = parent.__children;
     const index = children.indexOf(this.__key);
-    return children.slice(0, index).map(childKey => $getNodeByKeyOrThrow(childKey));
+    return children
+      .slice(0, index)
+      .map((childKey) => $getNodeByKeyOrThrow(childKey));
   }
 
   getNextSibling() {
@@ -6032,7 +6764,9 @@ class LexicalNode {
 
     const children = parent.__children;
     const index = children.indexOf(this.__key);
-    return children.slice(index + 1).map(childKey => $getNodeByKeyOrThrow(childKey));
+    return children
+      .slice(index + 1)
+      .map((childKey) => $getNodeByKeyOrThrow(childKey));
   }
 
   getCommonAncestor(node) {
@@ -6155,7 +6889,11 @@ class LexicalNode {
         break;
       }
 
-      const child = $isElementNode(node) ? isBefore ? node.getFirstChild() : node.getLastChild() : null;
+      const child = $isElementNode(node)
+        ? isBefore
+          ? node.getFirstChild()
+          : node.getLastChild()
+        : null;
 
       if (child !== null) {
         if (dfsAncestor === null) {
@@ -6166,7 +6904,9 @@ class LexicalNode {
         continue;
       }
 
-      const nextSibling = isBefore ? node.getNextSibling() : node.getPreviousSibling();
+      const nextSibling = isBefore
+        ? node.getNextSibling()
+        : node.getPreviousSibling();
 
       if (nextSibling !== null) {
         node = nextSibling;
@@ -6197,7 +6937,9 @@ class LexicalNode {
           }
         }
 
-        parentSibling = isBefore ? ancestor.getNextSibling() : ancestor.getPreviousSibling();
+        parentSibling = isBefore
+          ? ancestor.getNextSibling()
+          : ancestor.getPreviousSibling();
         ancestor = ancestor.getParent();
 
         if (ancestor !== null) {
@@ -6227,7 +6969,6 @@ class LexicalNode {
     return dirtyLeaves !== null && dirtyLeaves.has(this.__key);
   } // TODO remove this and move to TextNode
 
-
   isComposing() {
     return this.__key === $getCompositionKey();
   }
@@ -6243,7 +6984,6 @@ class LexicalNode {
 
     return latest;
   } // $FlowFixMe this is LexicalNode
-
 
   getWritable() {
     errorOnReadOnly();
@@ -6289,16 +7029,13 @@ class LexicalNode {
     return mutableNode;
   } // TODO remove this completely
 
-
   getTextContent(includeInert, includeDirectionless) {
-    return '';
+    return "";
   } // TODO remove this completely
-
 
   getTextContentSize(includeInert, includeDirectionless) {
     return this.getTextContent(includeInert, includeDirectionless).length;
   } // View
-
 
   createDOM(config, editor) {
     {
@@ -6306,8 +7043,7 @@ class LexicalNode {
     }
   }
 
-  updateDOM( // $FlowFixMe: TODO
-  prevNode, dom, config) {
+  updateDOM(prevNode, dom, config) { // $FlowFixMe: TODO
     {
       throw Error(`updateDOM: base method not extended`);
     }
@@ -6317,20 +7053,19 @@ class LexicalNode {
     if ($isDecoratorNode(this)) {
       const element = editor.getElementByKey(this.getKey());
       return {
-        element: element ? element.cloneNode() : null
+        element: element ? element.cloneNode() : null,
       };
     }
 
     const element = this.createDOM(editor._config, editor);
     return {
-      element
+      element,
     };
   }
 
   static importDOM() {
     return null;
   } // Setters and mutators
-
 
   remove(preserveEmptyParent) {
     errorOnReadOnly();
@@ -6397,8 +7132,14 @@ class LexicalNode {
         const oldParentKey = oldParent.__key;
         const anchor = selection.anchor;
         const focus = selection.focus;
-        elementAnchorSelectionOnNode = anchor.type === 'element' && anchor.key === oldParentKey && anchor.offset === oldIndex + 1;
-        elementFocusSelectionOnNode = focus.type === 'element' && focus.key === oldParentKey && focus.offset === oldIndex + 1;
+        elementAnchorSelectionOnNode =
+          anchor.type === "element" &&
+          anchor.key === oldParentKey &&
+          anchor.offset === oldIndex + 1;
+        elementFocusSelectionOnNode =
+          focus.type === "element" &&
+          focus.key === oldParentKey &&
+          focus.offset === oldIndex + 1;
       }
     }
 
@@ -6418,15 +7159,19 @@ class LexicalNode {
     internalMarkSiblingsAsDirty(writableNodeToInsert);
 
     if ($isRangeSelection(selection)) {
-      $updateElementSelectionOnCreateDeleteNode(selection, writableParent, index + 1);
+      $updateElementSelectionOnCreateDeleteNode(
+        selection,
+        writableParent,
+        index + 1
+      );
       const writableParentKey = writableParent.__key;
 
       if (elementAnchorSelectionOnNode) {
-        selection.anchor.set(writableParentKey, index + 2, 'element');
+        selection.anchor.set(writableParentKey, index + 2, "element");
       }
 
       if (elementFocusSelectionOnNode) {
-        selection.focus.set(writableParentKey, index + 2, 'element');
+        selection.focus.set(writableParentKey, index + 2, "element");
       }
     }
 
@@ -6455,7 +7200,11 @@ class LexicalNode {
     const selection = $getSelection();
 
     if ($isRangeSelection(selection)) {
-      $updateElementSelectionOnCreateDeleteNode(selection, writableParent, index);
+      $updateElementSelectionOnCreateDeleteNode(
+        selection,
+        writableParent,
+        index
+      );
     }
 
     return nodeToInsert;
@@ -6499,20 +7248,19 @@ class LexicalNode {
     return nextSibling.select(anchorOffset, focusOffset);
   } // Proxy to mark something as dirty
 
-
   markDirty() {
     this.getWritable();
   }
-
 }
 
 function errorOnTypeKlassMismatch(type, klass) {
   const registeredNode = getActiveEditor()._nodes.get(type); // Common error - split in its own invariant
 
-
   if (registeredNode === undefined) {
     {
-      throw Error(`Create node: Attempted to create node ${klass.name} that was not previously registered on the editor. You can use register your custom nodes.`);
+      throw Error(
+        `Create node: Attempted to create node ${klass.name} that was not previously registered on the editor. You can use register your custom nodes.`
+      );
     }
   }
 
@@ -6520,7 +7268,9 @@ function errorOnTypeKlassMismatch(type, klass) {
 
   if (editorKlass !== klass) {
     {
-      throw Error(`Create node: Type ${type} in node ${klass.name} does not match registered node ${editorKlass.name} with the same type`);
+      throw Error(
+        `Create node: Type ${type} in node ${klass.name} does not match registered node ${editorKlass.name} with the same type`
+      );
     }
   }
 }
@@ -6531,7 +7281,7 @@ function errorOnTypeKlassMismatch(type, klass) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class DecoratorNode extends LexicalNode {
   constructor(key) {
@@ -6539,9 +7289,11 @@ class DecoratorNode extends LexicalNode {
 
     {
       const proto = Object.getPrototypeOf(this);
-      ['decorate'].forEach(method => {
+      ["decorate"].forEach((method) => {
         if (!proto.hasOwnProperty(method)) {
-          console.warn(`${this.constructor.name} must implement "${method}" method`);
+          console.warn(
+            `${this.constructor.name} must implement "${method}" method`
+          );
         }
       });
     }
@@ -6560,7 +7312,6 @@ class DecoratorNode extends LexicalNode {
   isTopLevel() {
     return false;
   }
-
 }
 function $isDecoratorNode(node) {
   return node instanceof DecoratorNode;
@@ -6572,7 +7323,7 @@ function $isDecoratorNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class ElementNode extends LexicalNode {
   constructor(key) {
@@ -6700,14 +7451,19 @@ class ElementNode extends LexicalNode {
     } // For non-empty element nodes, we resolve its descendant
     // (either a leaf node or the bottom-most element)
 
-
     if (index >= childrenLength) {
       const resolvedNode = children[childrenLength - 1];
-      return $isElementNode(resolvedNode) && resolvedNode.getLastDescendant() || resolvedNode;
+      return (
+        ($isElementNode(resolvedNode) && resolvedNode.getLastDescendant()) ||
+        resolvedNode
+      );
     }
 
     const resolvedNode = children[index];
-    return $isElementNode(resolvedNode) && resolvedNode.getFirstDescendant() || resolvedNode;
+    return (
+      ($isElementNode(resolvedNode) && resolvedNode.getFirstDescendant()) ||
+      resolvedNode
+    );
   }
 
   getFirstChild() {
@@ -6759,7 +7515,7 @@ class ElementNode extends LexicalNode {
   }
 
   getTextContent(includeInert, includeDirectionless) {
-    let textContent = '';
+    let textContent = "";
     const children = this.getChildren();
     const childrenLength = children.length;
 
@@ -6767,7 +7523,11 @@ class ElementNode extends LexicalNode {
       const child = children[i];
       textContent += child.getTextContent(includeInert, includeDirectionless);
 
-      if ($isElementNode(child) && i !== childrenLength - 1 && !child.isInline()) {
+      if (
+        $isElementNode(child) &&
+        i !== childrenLength - 1 &&
+        !child.isInline()
+      ) {
         textContent += DOUBLE_LINE_BREAK;
       }
     }
@@ -6784,7 +7544,6 @@ class ElementNode extends LexicalNode {
     const formatFlag = ELEMENT_TYPE_TO_FORMAT[type];
     return (this.getFormat() & formatFlag) !== 0;
   } // Mutators
-
 
   select(_anchorOffset, _focusOffset) {
     errorOnReadOnly();
@@ -6804,10 +7563,17 @@ class ElementNode extends LexicalNode {
     const key = this.__key;
 
     if (!$isRangeSelection(selection)) {
-      return internalMakeRangeSelection(key, anchorOffset, key, focusOffset, 'element', 'element');
+      return internalMakeRangeSelection(
+        key,
+        anchorOffset,
+        key,
+        focusOffset,
+        "element",
+        "element"
+      );
     } else {
-      selection.anchor.set(key, anchorOffset, 'element');
-      selection.focus.set(key, focusOffset, 'element');
+      selection.anchor.set(key, anchorOffset, "element");
+      selection.focus.set(key, focusOffset, "element");
       selection.dirty = true;
     }
 
@@ -6820,7 +7586,6 @@ class ElementNode extends LexicalNode {
     if ($isElementNode(firstNode) || $isTextNode(firstNode)) {
       return firstNode.select(0, 0);
     } // Decorator or LineBreak
-
 
     if (firstNode !== null) {
       return firstNode.selectPrevious();
@@ -6836,7 +7601,6 @@ class ElementNode extends LexicalNode {
       return lastNode.select();
     } // Decorator or LineBreak
 
-
     if (lastNode !== null) {
       return lastNode.selectNext();
     }
@@ -6848,7 +7612,7 @@ class ElementNode extends LexicalNode {
     errorOnReadOnly();
     const writableSelf = this.getWritable();
     const children = this.getChildren();
-    children.forEach(child => child.remove());
+    children.forEach((child) => child.remove());
     return writableSelf;
   }
 
@@ -6903,7 +7667,6 @@ class ElementNode extends LexicalNode {
       nodesToInsertKeys.push(newKey);
     } // Mark range edges siblings as dirty
 
-
     const nodeBeforeRange = this.getChildAtIndex(start - 1);
 
     if (nodeBeforeRange) {
@@ -6916,18 +7679,20 @@ class ElementNode extends LexicalNode {
       internalMarkNodeAsDirty(nodeAfterRange);
     } // Remove defined range of children
 
-
     let nodesToRemoveKeys; // Using faster push when only appending nodes
 
     if (start === writableSelfChildren.length) {
       writableSelfChildren.push(...nodesToInsertKeys);
       nodesToRemoveKeys = [];
     } else {
-      nodesToRemoveKeys = writableSelfChildren.splice(start, deleteCount, ...nodesToInsertKeys);
+      nodesToRemoveKeys = writableSelfChildren.splice(
+        start,
+        deleteCount,
+        ...nodesToInsertKeys
+      );
     } // In case of deletion we need to adjust selection, unlink removed nodes
     // and clean up node itself if it becomes empty. None of these needed
     // for insertion-only cases
-
 
     if (nodesToRemoveKeys.length) {
       // Adjusting selection, in case node that was anchor/focus will be deleted
@@ -6937,13 +7702,16 @@ class ElementNode extends LexicalNode {
         const nodesToRemoveKeySet = new Set(nodesToRemoveKeys);
         const nodesToInsertKeySet = new Set(nodesToInsertKeys);
 
-        const isPointRemoved = point => {
+        const isPointRemoved = (point) => {
           let node = point.getNode();
 
           while (node) {
             const nodeKey = node.__key;
 
-            if (nodesToRemoveKeySet.has(nodeKey) && !nodesToInsertKeySet.has(nodeKey)) {
+            if (
+              nodesToRemoveKeySet.has(nodeKey) &&
+              !nodesToInsertKeySet.has(nodeKey)
+            ) {
               return true;
             }
 
@@ -6953,19 +7721,27 @@ class ElementNode extends LexicalNode {
           return false;
         };
 
-        const {
-          anchor,
-          focus
-        } = selection;
+        const { anchor, focus } = selection;
 
         if (isPointRemoved(anchor)) {
-          moveSelectionPointToSibling(anchor, anchor.getNode(), this, nodeBeforeRange, nodeAfterRange);
+          moveSelectionPointToSibling(
+            anchor,
+            anchor.getNode(),
+            this,
+            nodeBeforeRange,
+            nodeAfterRange
+          );
         }
 
         if (isPointRemoved(focus)) {
-          moveSelectionPointToSibling(focus, focus.getNode(), this, nodeBeforeRange, nodeAfterRange);
+          moveSelectionPointToSibling(
+            focus,
+            focus.getNode(),
+            this,
+            nodeBeforeRange,
+            nodeAfterRange
+          );
         } // Unlink removed nodes from current parent
-
 
         const nodesToRemoveKeysLength = nodesToRemoveKeys.length;
 
@@ -6978,8 +7754,11 @@ class ElementNode extends LexicalNode {
           }
         } // Cleanup if node can't be empty
 
-
-        if (writableSelfChildren.length === 0 && !this.canBeEmpty() && !$isRootNode(this)) {
+        if (
+          writableSelfChildren.length === 0 &&
+          !this.canBeEmpty() &&
+          !$isRootNode(this)
+        ) {
           this.remove();
         }
       }
@@ -6987,7 +7766,6 @@ class ElementNode extends LexicalNode {
 
     return writableSelf;
   } // These are intended to be extends for specific element heuristics.
-
 
   insertNewAfter(selection) {
     return null;
@@ -7040,7 +7818,6 @@ class ElementNode extends LexicalNode {
   canMergeWith(node) {
     return false;
   }
-
 }
 function $isElementNode(node) {
   return node instanceof ElementNode;
@@ -7052,11 +7829,11 @@ function $isElementNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class RootNode extends ElementNode {
   static getType() {
-    return 'root';
+    return "root";
   }
 
   static clone() {
@@ -7064,21 +7841,29 @@ class RootNode extends ElementNode {
   }
 
   constructor() {
-    super('root');
+    super("root");
     this.__cachedText = null;
   }
 
   getTopLevelElementOrThrow() {
     {
-      throw Error(`getTopLevelElementOrThrow: root nodes are not top level elements`);
+      throw Error(
+        `getTopLevelElementOrThrow: root nodes are not top level elements`
+      );
     }
   }
 
   getTextContent(includeInert, includeDirectionless) {
     const cachedText = this.__cachedText;
 
-    if (isCurrentlyReadOnlyMode() || getActiveEditor()._dirtyType === NO_DIRTY_NODES) {
-      if (cachedText !== null && (!includeInert || includeDirectionless !== false)) {
+    if (
+      isCurrentlyReadOnlyMode() ||
+      getActiveEditor()._dirtyType === NO_DIRTY_NODES
+    ) {
+      if (
+        cachedText !== null &&
+        (!includeInert || includeDirectionless !== false)
+      ) {
         return cachedText;
       }
     }
@@ -7110,11 +7895,9 @@ class RootNode extends ElementNode {
     }
   } // View
 
-
   updateDOM(prevNode, dom) {
     return false;
   } // Mutate
-
 
   append(...nodesToAppend) {
     for (let i = 0; i < nodesToAppend.length; i++) {
@@ -7122,7 +7905,9 @@ class RootNode extends ElementNode {
 
       if (!$isElementNode(node) && !$isDecoratorNode(node)) {
         {
-          throw Error(`rootNode.append: Only element or decorator nodes can be appended to the root node`);
+          throw Error(
+            `rootNode.append: Only element or decorator nodes can be appended to the root node`
+          );
         }
       }
     }
@@ -7136,12 +7921,11 @@ class RootNode extends ElementNode {
       __dir: this.__dir,
       __format: this.__format,
       __indent: this.__indent,
-      __key: 'root',
+      __key: "root",
       __parent: null,
-      __type: 'root'
+      __type: "root",
     };
   }
-
 }
 function $createRootNode() {
   return new RootNode();
@@ -7156,7 +7940,7 @@ function $isRootNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 function editorStateHasDirtySelection(editorState, editor) {
   const currentSelection = editor.getEditorState()._selection;
@@ -7177,7 +7961,7 @@ function cloneEditorState(current) {
   return new EditorState(new Map(current._nodeMap));
 }
 function createEmptyEditorState() {
-  return new EditorState(new Map([['root', $createRootNode()]]));
+  return new EditorState(new Map([["root", $createRootNode()]]));
 }
 class EditorState {
   constructor(nodeMap, selection) {
@@ -7196,7 +7980,10 @@ class EditorState {
   }
 
   clone(selection) {
-    const editorState = new EditorState(this._nodeMap, selection === undefined ? this._selection : selection);
+    const editorState = new EditorState(
+      this._nodeMap,
+      selection === undefined ? this._selection : selection
+    );
     editorState._readOnly = true;
     return editorState;
   }
@@ -7205,38 +7992,43 @@ class EditorState {
     const selection = this._selection;
     return {
       _nodeMap: Array.from(this._nodeMap.entries()),
-      _selection: $isRangeSelection(selection) ? {
-        anchor: {
-          key: selection.anchor.key,
-          offset: selection.anchor.offset,
-          type: selection.anchor.type
-        },
-        focus: {
-          key: selection.focus.key,
-          offset: selection.focus.offset,
-          type: selection.focus.type
-        },
-        type: 'range'
-      } : $isNodeSelection(selection) ? {
-        nodes: Array.from(selection._nodes),
-        type: 'node'
-      } : $isGridSelection(selection) ? {
-        anchor: {
-          key: selection.anchor.key,
-          offset: selection.anchor.offset,
-          type: selection.anchor.type
-        },
-        focus: {
-          key: selection.focus.key,
-          offset: selection.focus.offset,
-          type: selection.focus.type
-        },
-        gridKey: selection.gridKey,
-        type: 'grid'
-      } : null
+      _selection: $isRangeSelection(selection)
+        ? {
+            anchor: {
+              key: selection.anchor.key,
+              offset: selection.anchor.offset,
+              type: selection.anchor.type,
+            },
+            focus: {
+              key: selection.focus.key,
+              offset: selection.focus.offset,
+              type: selection.focus.type,
+            },
+            type: "range",
+          }
+        : $isNodeSelection(selection)
+        ? {
+            nodes: Array.from(selection._nodes),
+            type: "node",
+          }
+        : $isGridSelection(selection)
+        ? {
+            anchor: {
+              key: selection.anchor.key,
+              offset: selection.anchor.offset,
+              type: selection.anchor.type,
+            },
+            focus: {
+              key: selection.focus.key,
+              offset: selection.focus.offset,
+              type: selection.focus.type,
+            },
+            gridKey: selection.gridKey,
+            type: "grid",
+          }
+        : null,
     };
   }
-
 }
 
 /**
@@ -7245,11 +8037,11 @@ class EditorState {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class LineBreakNode extends LexicalNode {
   static getType() {
-    return 'linebreak';
+    return "linebreak";
   }
 
   static clone(node) {
@@ -7261,11 +8053,11 @@ class LineBreakNode extends LexicalNode {
   }
 
   getTextContent() {
-    return '\n';
+    return "\n";
   }
 
   createDOM() {
-    return document.createElement('br');
+    return document.createElement("br");
   }
 
   updateDOM() {
@@ -7274,18 +8066,17 @@ class LineBreakNode extends LexicalNode {
 
   static importDOM() {
     return {
-      br: node => ({
+      br: (node) => ({
         conversion: convertLineBreakElement,
-        priority: 0
-      })
+        priority: 0,
+      }),
     };
   }
-
 }
 
 function convertLineBreakElement(node) {
   return {
-    node: $createLineBreakNode()
+    node: $createLineBreakNode(),
   };
 }
 
@@ -7302,7 +8093,7 @@ function $isLineBreakNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 function simpleDiffWithCursor(a, b, cursor) {
   const aLength = a.length;
@@ -7313,24 +8104,35 @@ function simpleDiffWithCursor(a, b, cursor) {
   // Iterate left to the right until we find a changed character
   // First iteration considers the current cursor position
 
-  while (left < aLength && left < bLength && a[left] === b[left] && left < cursor) {
+  while (
+    left < aLength &&
+    left < bLength &&
+    a[left] === b[left] &&
+    left < cursor
+  ) {
     left++;
   } // Iterate right to the left until we find a changed character
 
-
-  while (right + left < aLength && right + left < bLength && a[aLength - right - 1] === b[bLength - right - 1]) {
+  while (
+    right + left < aLength &&
+    right + left < bLength &&
+    a[aLength - right - 1] === b[bLength - right - 1]
+  ) {
     right++;
   } // Try to iterate left further to the right without caring about the current cursor position
 
-
-  while (right + left < aLength && right + left < bLength && a[left] === b[left]) {
+  while (
+    right + left < aLength &&
+    right + left < bLength &&
+    a[left] === b[left]
+  ) {
     left++;
   }
 
   return {
     index: left,
     insert: b.slice(left, bLength - right),
-    remove: aLength - left - right
+    remove: aLength - left - right,
   };
 }
 
@@ -7340,20 +8142,20 @@ function simpleDiffWithCursor(a, b, cursor) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 
 function getElementOuterTag(node, format) {
   if (format & IS_CODE) {
-    return 'code';
+    return "code";
   }
 
   if (format & IS_SUBSCRIPT) {
-    return 'sub';
+    return "sub";
   }
 
   if (format & IS_SUPERSCRIPT) {
-    return 'sup';
+    return "sup";
   }
 
   return null;
@@ -7361,20 +8163,26 @@ function getElementOuterTag(node, format) {
 
 function getElementInnerTag(node, format) {
   if (format & IS_BOLD) {
-    return 'strong';
+    return "strong";
   }
 
   if (format & IS_ITALIC) {
-    return 'em';
+    return "em";
   }
 
-  return 'span';
+  return "span";
 }
 
-function setTextThemeClassNames(tag, prevFormat, nextFormat, dom, textClassNames) {
+function setTextThemeClassNames(
+  tag,
+  prevFormat,
+  nextFormat,
+  dom,
+  textClassNames
+) {
   const domClassList = dom.classList; // Firstly we handle the base theme.
 
-  let classNames = getCachedClassNameArray(textClassNames, 'base');
+  let classNames = getCachedClassNameArray(textClassNames, "base");
 
   if (classNames !== undefined) {
     domClassList.add(...classNames);
@@ -7384,11 +8192,15 @@ function setTextThemeClassNames(tag, prevFormat, nextFormat, dom, textClassNames
   // In an ideal world we shouldn't have to do this, but there's no
   // easy workaround for many atomic CSS systems today.
 
-
-  classNames = getCachedClassNameArray(textClassNames, 'underlineStrikethrough');
+  classNames = getCachedClassNameArray(
+    textClassNames,
+    "underlineStrikethrough"
+  );
   let hasUnderlineStrikethrough = false;
-  const prevUnderlineStrikethrough = prevFormat & IS_UNDERLINE && prevFormat & IS_STRIKETHROUGH;
-  const nextUnderlineStrikethrough = nextFormat & IS_UNDERLINE && nextFormat & IS_STRIKETHROUGH;
+  const prevUnderlineStrikethrough =
+    prevFormat & IS_UNDERLINE && prevFormat & IS_STRIKETHROUGH;
+  const nextUnderlineStrikethrough =
+    nextFormat & IS_UNDERLINE && nextFormat & IS_STRIKETHROUGH;
 
   if (classNames !== undefined) {
     if (nextUnderlineStrikethrough) {
@@ -7410,7 +8222,10 @@ function setTextThemeClassNames(tag, prevFormat, nextFormat, dom, textClassNames
 
     if (classNames !== undefined) {
       if (nextFormat & flag) {
-        if (hasUnderlineStrikethrough && (key === 'underline' || key === 'strikethrough')) {
+        if (
+          hasUnderlineStrikethrough &&
+          (key === "underline" || key === "strikethrough")
+        ) {
           if (prevFormat & flag) {
             domClassList.remove(...classNames);
           }
@@ -7418,7 +8233,11 @@ function setTextThemeClassNames(tag, prevFormat, nextFormat, dom, textClassNames
           continue;
         }
 
-        if ((prevFormat & flag) === 0 || prevUnderlineStrikethrough && key === 'underline' || key === 'strikethrough') {
+        if (
+          (prevFormat & flag) === 0 ||
+          (prevUnderlineStrikethrough && key === "underline") ||
+          key === "strikethrough"
+        ) {
           domClassList.add(...classNames);
         }
       } else if (prevFormat & flag) {
@@ -7438,7 +8257,11 @@ function diffComposedText(a, b) {
     left++;
   }
 
-  while (right + left < aLength && right + left < bLength && a[aLength - right - 1] === b[bLength - right - 1]) {
+  while (
+    right + left < aLength &&
+    right + left < bLength &&
+    a[aLength - right - 1] === b[bLength - right - 1]
+  ) {
     right++;
   }
 
@@ -7450,24 +8273,25 @@ function setTextContent(nextText, dom, node) {
   const firstChild = dom.firstChild;
   const isComposing = node.isComposing(); // Always add a suffix if we're composing a node
 
-  const suffix = isComposing ? ZERO_WIDTH_CHAR : '';
+  const suffix = isComposing ? ZERO_WIDTH_CHAR : "";
   const text = nextText + suffix;
 
   if (firstChild == null) {
     dom.textContent = text;
   } else {
     const nodeValue = firstChild.nodeValue;
-    if (nodeValue !== text) if (isComposing) {
-      const [index, remove, insert] = diffComposedText(nodeValue, text);
+    if (nodeValue !== text)
+      if (isComposing) {
+        const [index, remove, insert] = diffComposedText(nodeValue, text);
 
-      if (remove !== 0) {
-        firstChild.deleteData(index, remove);
+        if (remove !== 0) {
+          firstChild.deleteData(index, remove);
+        }
+
+        firstChild.insertData(index, insert);
+      } else {
+        firstChild.nodeValue = text;
       }
-
-      firstChild.insertData(index, insert);
-    } else {
-      firstChild.nodeValue = text;
-    }
   }
 }
 
@@ -7484,11 +8308,7 @@ function createTextInnerDOM(innerDOM, node, innerTag, format, text, config) {
 
 function updateTextMarks(textNode, marks, offset, delCount, size) {
   for (let i = 0; i < marks.length; i++) {
-    const {
-      id,
-      start,
-      end
-    } = marks[i];
+    const { id, start, end } = marks[i];
     let newStart = start;
     let newEnd = end;
 
@@ -7509,7 +8329,10 @@ function updateTextMarks(textNode, marks, offset, delCount, size) {
     }
 
     if (newStart !== start || newEnd !== end) {
-      if (newStart === null && newEnd === null || newStart !== null && newEnd !== null && newStart >= newEnd) {
+      if (
+        (newStart === null && newEnd === null) ||
+        (newStart !== null && newEnd !== null && newStart >= newEnd)
+      ) {
         textNode.deleteMark(id);
       } else {
         textNode.setMark(id, newStart, newEnd);
@@ -7520,7 +8343,7 @@ function updateTextMarks(textNode, marks, offset, delCount, size) {
 
 class TextNode extends LexicalNode {
   static getType() {
-    return 'text';
+    return "text";
   }
 
   static clone(node) {
@@ -7531,7 +8354,7 @@ class TextNode extends LexicalNode {
     super(key);
     this.__text = text;
     this.__format = 0;
-    this.__style = '';
+    this.__style = "";
     this.__mode = 0;
     this.__detail = 0;
     this.__marks = null;
@@ -7595,12 +8418,15 @@ class TextNode extends LexicalNode {
   }
 
   isSimpleText() {
-    return this.__type === 'text' && this.__mode === 0;
+    return this.__type === "text" && this.__mode === 0;
   }
 
   getTextContent(includeInert, includeDirectionless) {
-    if (!includeInert && this.isInert() || includeDirectionless === false && this.isDirectionless()) {
-      return '';
+    if (
+      (!includeInert && this.isInert()) ||
+      (includeDirectionless === false && this.isDirectionless())
+    ) {
+      return "";
     }
 
     const self = this.getLatest();
@@ -7612,7 +8438,6 @@ class TextNode extends LexicalNode {
     const format = self.__format;
     return toggleTextFormatType(format, type, alignWithFormat);
   } // View
-
 
   createDOM(config) {
     const format = this.__format;
@@ -7631,7 +8456,7 @@ class TextNode extends LexicalNode {
     createTextInnerDOM(innerDOM, this, innerTag, format, text, config);
     const style = this.__style;
 
-    if (style !== '') {
+    if (style !== "") {
       dom.style.cssText = style;
     }
 
@@ -7664,7 +8489,14 @@ class TextNode extends LexicalNode {
       }
 
       const nextInnerDOM = document.createElement(nextInnerTag);
-      createTextInnerDOM(nextInnerDOM, this, nextInnerTag, nextFormat, nextText, config);
+      createTextInnerDOM(
+        nextInnerDOM,
+        this,
+        nextInnerTag,
+        nextFormat,
+        nextText,
+        config
+      );
       dom.replaceChild(nextInnerDOM, prevInnerDOM);
       return false;
     }
@@ -7690,7 +8522,13 @@ class TextNode extends LexicalNode {
     const textClassNames = theme.text;
 
     if (textClassNames !== undefined && prevFormat !== nextFormat) {
-      setTextThemeClassNames(nextInnerTag, prevFormat, nextFormat, innerDOM, textClassNames);
+      setTextThemeClassNames(
+        nextInnerTag,
+        prevFormat,
+        nextFormat,
+        innerDOM,
+        textClassNames
+      );
     }
 
     const prevStyle = prevNode.__style;
@@ -7705,37 +8543,36 @@ class TextNode extends LexicalNode {
 
   static importDOM() {
     return {
-      '#text': node => ({
+      "#text": (node) => ({
         conversion: convertTextDOMNode,
-        priority: 0
+        priority: 0,
       }),
-      b: node => ({
+      b: (node) => ({
         conversion: convertBringAttentionToElement,
-        priority: 0
+        priority: 0,
       }),
-      em: node => ({
+      em: (node) => ({
         conversion: convertTextFormatElement,
-        priority: 0
+        priority: 0,
       }),
-      i: node => ({
+      i: (node) => ({
         conversion: convertTextFormatElement,
-        priority: 0
+        priority: 0,
       }),
-      span: node => ({
+      span: (node) => ({
         conversion: convertSpanElement,
-        priority: 0
+        priority: 0,
       }),
-      strong: node => ({
+      strong: (node) => ({
         conversion: convertTextFormatElement,
-        priority: 0
+        priority: 0,
       }),
-      u: node => ({
+      u: (node) => ({
         conversion: convertTextFormatElement,
-        priority: 0
-      })
+        priority: 0,
+      }),
     };
   } // Mutators
-
 
   selectionTransform(prevSelection, nextSelection) {}
 
@@ -7785,7 +8622,7 @@ class TextNode extends LexicalNode {
     const nextMark = {
       end,
       id,
-      start
+      start,
     };
 
     {
@@ -7855,7 +8692,11 @@ class TextNode extends LexicalNode {
         }
       }
 
-      const diff = simpleDiffWithCursor(writableSelf.__text, text, cursorOffset);
+      const diff = simpleDiffWithCursor(
+        writableSelf.__text,
+        text,
+        cursorOffset
+      );
       this.spliceText(diff.index, diff.remove, diff.insert);
     } else {
       writableSelf.__text = text;
@@ -7872,7 +8713,7 @@ class TextNode extends LexicalNode {
     const text = this.getTextContent();
     const key = this.__key;
 
-    if (typeof text === 'string') {
+    if (typeof text === "string") {
       const lastOffset = text.length;
 
       if (anchorOffset === undefined) {
@@ -7888,11 +8729,21 @@ class TextNode extends LexicalNode {
     }
 
     if (!$isRangeSelection(selection)) {
-      return internalMakeRangeSelection(key, anchorOffset, key, focusOffset, 'text', 'text');
+      return internalMakeRangeSelection(
+        key,
+        anchorOffset,
+        key,
+        focusOffset,
+        "text",
+        "text"
+      );
     } else {
       const compositionKey = $getCompositionKey();
 
-      if (compositionKey === selection.anchor.key || compositionKey === selection.focus.key) {
+      if (
+        compositionKey === selection.anchor.key ||
+        compositionKey === selection.focus.key
+      ) {
         $setCompositionKey(key);
       }
 
@@ -7921,10 +8772,16 @@ class TextNode extends LexicalNode {
 
     if (moveSelection && $isRangeSelection(selection)) {
       const newOffset = offset + handledTextLength;
-      selection.setTextNodeRange(writableSelf, newOffset, writableSelf, newOffset);
+      selection.setTextNodeRange(
+        writableSelf,
+        newOffset,
+        writableSelf,
+        newOffset
+      );
     }
 
-    const updatedText = text.slice(0, index) + newText + text.slice(index + delCount);
+    const updatedText =
+      text.slice(0, index) + newText + text.slice(index + delCount);
     const marks = writableSelf.__marks;
 
     if (marks !== null) {
@@ -7952,18 +8809,18 @@ class TextNode extends LexicalNode {
     const offsetsSet = new Set(splitOffsets);
     const parts = [];
     const textLength = textContent.length;
-    let string = '';
+    let string = "";
 
     for (let i = 0; i < textLength; i++) {
-      if (string !== '' && offsetsSet.has(i)) {
+      if (string !== "" && offsetsSet.has(i)) {
         parts.push(string);
-        string = '';
+        string = "";
       }
 
       string += textContent[i];
     }
 
-    if (string !== '') {
+    if (string !== "") {
       parts.push(string);
     }
 
@@ -8000,7 +8857,6 @@ class TextNode extends LexicalNode {
       writableNode.__text = firstPart;
     } // Handle selection
 
-
     const selection = $getSelection(); // Then handle all other parts
 
     const splitNodes = [writableNode];
@@ -8020,13 +8876,23 @@ class TextNode extends LexicalNode {
         const anchor = selection.anchor;
         const focus = selection.focus;
 
-        if (anchor.key === key && anchor.type === 'text' && anchor.offset > textSize && anchor.offset <= nextTextSize) {
+        if (
+          anchor.key === key &&
+          anchor.type === "text" &&
+          anchor.offset > textSize &&
+          anchor.offset <= nextTextSize
+        ) {
           anchor.key = siblingKey;
           anchor.offset -= textSize;
           selection.dirty = true;
         }
 
-        if (focus.key === key && focus.type === 'text' && focus.offset > textSize && focus.offset <= nextTextSize) {
+        if (
+          focus.key === key &&
+          focus.type === "text" &&
+          focus.offset > textSize &&
+          focus.offset <= nextTextSize
+        ) {
           focus.key = siblingKey;
           focus.offset -= textSize;
           selection.dirty = true;
@@ -8044,11 +8910,7 @@ class TextNode extends LexicalNode {
 
     if (marks !== null) {
       for (let i = 0; i < marks.length; i++) {
-        const {
-          id,
-          start,
-          end
-        } = marks[i];
+        const { id, start, end } = marks[i];
         let foundStart = false;
         let foundEnd = false;
         let partSize = 0;
@@ -8056,8 +8918,16 @@ class TextNode extends LexicalNode {
         for (let s = 0; s < partsLength; s++) {
           const textNode = splitNodes[s];
           const nextPartSize = partSize + parts[s].length;
-          const nextStart = !foundStart && start !== null && nextPartSize > start - (start === 0 ? 1 : 0) ? start - partSize : null;
-          const nextEnd = !foundEnd && end !== null && nextPartSize >= end ? end - partSize : null;
+          const nextStart =
+            !foundStart &&
+            start !== null &&
+            nextPartSize > start - (start === 0 ? 1 : 0)
+              ? start - partSize
+              : null;
+          const nextEnd =
+            !foundEnd && end !== null && nextPartSize >= end
+              ? end - partSize
+              : null;
 
           if (nextStart !== null || nextEnd !== null) {
             if (nextStart !== null) {
@@ -8082,12 +8952,11 @@ class TextNode extends LexicalNode {
       }
     } // Insert the nodes into the parent's children
 
-
     internalMarkSiblingsAsDirty(this);
     const writableParent = parent.getWritable();
     const writableParentChildren = writableParent.__children;
     const insertionIndex = writableParentChildren.indexOf(key);
-    const splitNodesKeys = splitNodes.map(splitNode => splitNode.__key);
+    const splitNodesKeys = splitNodes.map((splitNode) => splitNode.__key);
 
     if (hasReplacedSelf) {
       writableParentChildren.splice(insertionIndex, 0, ...splitNodesKeys);
@@ -8097,7 +8966,12 @@ class TextNode extends LexicalNode {
     }
 
     if ($isRangeSelection(selection)) {
-      $updateElementSelectionOnCreateDeleteNode(selection, parent, insertionIndex, partsLength - 1);
+      $updateElementSelectionOnCreateDeleteNode(
+        selection,
+        parent,
+        insertionIndex,
+        partsLength - 1
+      );
     }
 
     return splitNodes;
@@ -8108,7 +8982,9 @@ class TextNode extends LexicalNode {
 
     if (!isBefore && target !== this.getNextSibling()) {
       {
-        throw Error(`mergeWithSibling: sibling must be a previous or next sibling`);
+        throw Error(
+          `mergeWithSibling: sibling must be a previous or next sibling`
+        );
       }
     }
 
@@ -8129,12 +9005,24 @@ class TextNode extends LexicalNode {
       const focus = selection.focus;
 
       if (anchor !== null && anchor.key === targetKey) {
-        adjustPointOffsetForMergedSibling(anchor, isBefore, key, target, textLength);
+        adjustPointOffsetForMergedSibling(
+          anchor,
+          isBefore,
+          key,
+          target,
+          textLength
+        );
         selection.dirty = true;
       }
 
       if (focus !== null && focus.key === targetKey) {
-        adjustPointOffsetForMergedSibling(focus, isBefore, key, target, textLength);
+        adjustPointOffsetForMergedSibling(
+          focus,
+          isBefore,
+          key,
+          target,
+          textLength
+        );
         selection.dirty = true;
       }
     }
@@ -8148,7 +9036,13 @@ class TextNode extends LexicalNode {
     const marks = target.getLatest().__marks;
 
     if (marks !== null) {
-      updateTextMarks(writableSelf, marks, isBefore ? targetTextLength : 0, 0, textLength);
+      updateTextMarks(
+        writableSelf,
+        marks,
+        isBefore ? targetTextLength : 0,
+        0,
+        textLength
+      );
     }
 
     target.remove();
@@ -8158,23 +9052,22 @@ class TextNode extends LexicalNode {
   isTextEntity() {
     return false;
   }
-
 }
 
 function convertSpanElement(domNode) {
   // $FlowFixMe[incompatible-type] domNode is a <span> since we matched it by nodeName
   const span = domNode; // Google Docs uses span tags + font-weight for bold text
 
-  const hasBoldFontWeight = span.style.fontWeight === '700';
+  const hasBoldFontWeight = span.style.fontWeight === "700";
   return {
-    forChild: lexicalNode => {
+    forChild: (lexicalNode) => {
       if ($isTextNode(lexicalNode) && hasBoldFontWeight) {
-        lexicalNode.toggleFormat('bold');
+        lexicalNode.toggleFormat("bold");
       }
 
       return lexicalNode;
     },
-    node: null
+    node: null,
   };
 }
 
@@ -8182,30 +9075,30 @@ function convertBringAttentionToElement(domNode) {
   // $FlowFixMe[incompatible-type] domNode is a <b> since we matched it by nodeName
   const b = domNode; // Google Docs wraps all copied HTML in a <b> with font-weight normal
 
-  const hasNormalFontWeight = b.style.fontWeight === 'normal';
+  const hasNormalFontWeight = b.style.fontWeight === "normal";
   return {
-    forChild: lexicalNode => {
+    forChild: (lexicalNode) => {
       if ($isTextNode(lexicalNode) && !hasNormalFontWeight) {
-        lexicalNode.toggleFormat('bold');
+        lexicalNode.toggleFormat("bold");
       }
 
       return lexicalNode;
     },
-    node: null
+    node: null,
   };
 }
 
 function convertTextDOMNode(domNode) {
   return {
-    node: $createTextNode(domNode.textContent)
+    node: $createTextNode(domNode.textContent),
   };
 }
 
 const nodeNameToTextFormat = {
-  em: 'italic',
-  i: 'italic',
-  strong: 'bold',
-  u: 'underline'
+  em: "italic",
+  i: "italic",
+  strong: "bold",
+  u: "underline",
 };
 
 function convertTextFormatElement(domNode) {
@@ -8213,23 +9106,23 @@ function convertTextFormatElement(domNode) {
 
   if (format === undefined) {
     return {
-      node: null
+      node: null,
     };
   }
 
   return {
-    forChild: lexicalNode => {
+    forChild: (lexicalNode) => {
       if ($isTextNode(lexicalNode)) {
         lexicalNode.toggleFormat(format);
       }
 
       return lexicalNode;
     },
-    node: null
+    node: null,
   };
 }
 
-function $createTextNode(text = '') {
+function $createTextNode(text = "") {
   return new TextNode(text);
 }
 function $isTextNode(node) {
@@ -8242,21 +9135,20 @@ function $isTextNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class ParagraphNode extends ElementNode {
   static getType() {
-    return 'paragraph';
+    return "paragraph";
   }
 
   static clone(node) {
     return new ParagraphNode(node.__key);
   } // View
 
-
   createDOM(config) {
-    const dom = document.createElement('p');
-    const classNames = getCachedClassNameArray(config.theme, 'paragraph');
+    const dom = document.createElement("p");
+    const classNames = getCachedClassNameArray(config.theme, "paragraph");
 
     if (classNames !== undefined) {
       const domClassList = dom.classList;
@@ -8272,29 +9164,26 @@ class ParagraphNode extends ElementNode {
 
   static importDOM() {
     return {
-      p: node => ({
+      p: (node) => ({
         conversion: convertParagraphElement,
-        priority: 0
-      })
+        priority: 0,
+      }),
     };
   }
 
   exportDOM(editor) {
-    const {
-      element
-    } = super.exportDOM(editor);
+    const { element } = super.exportDOM(editor);
 
     if (element) {
       if (this.getTextContentSize() === 0) {
-        element.append(document.createElement('br'));
+        element.append(document.createElement("br"));
       }
     }
 
     return {
-      element
+      element,
     };
   } // Mutation
-
 
   insertNewAfter() {
     const newElement = $createParagraphNode();
@@ -8308,7 +9197,10 @@ class ParagraphNode extends ElementNode {
     const children = this.getChildren(); // If we have an empty (trimmed) first paragraph and try and remove it,
     // delete the paragraph as long as we have another sibling to go to
 
-    if (children.length === 0 || $isTextNode(children[0]) && children[0].getTextContent().trim() === '') {
+    if (
+      children.length === 0 ||
+      ($isTextNode(children[0]) && children[0].getTextContent().trim() === "")
+    ) {
       const nextSibling = this.getNextSibling();
 
       if (nextSibling !== null) {
@@ -8328,12 +9220,11 @@ class ParagraphNode extends ElementNode {
 
     return false;
   }
-
 }
 
 function convertParagraphElement() {
   return {
-    node: $createParagraphNode()
+    node: $createParagraphNode(),
   };
 }
 
@@ -8350,7 +9241,7 @@ function $isParagraphNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 const COMMAND_PRIORITY_EDITOR = 0;
 const COMMAND_PRIORITY_LOW = 1;
@@ -8358,7 +9249,12 @@ const COMMAND_PRIORITY_NORMAL = 2;
 const COMMAND_PRIORITY_HIGH = 3;
 const COMMAND_PRIORITY_CRITICAL = 4; // eslint-disable-next-line no-unused-vars
 
-function resetEditor(editor, prevRootElement, nextRootElement, pendingEditorState) {
+function resetEditor(
+  editor,
+  prevRootElement,
+  nextRootElement,
+  pendingEditorState
+) {
   const keyNodeMap = editor._keyToDOMMap;
   keyNodeMap.clear();
   editor._editorState = createEmptyEditorState();
@@ -8382,21 +9278,20 @@ function resetEditor(editor, prevRootElement, nextRootElement, pendingEditorStat
     editor._observer = null;
   } // Remove all the DOM nodes from the root element
 
-
   if (prevRootElement !== null) {
-    prevRootElement.textContent = '';
+    prevRootElement.textContent = "";
   }
 
   if (nextRootElement !== null) {
-    nextRootElement.textContent = '';
-    keyNodeMap.set('root', nextRootElement);
+    nextRootElement.textContent = "";
+    keyNodeMap.set("root", nextRootElement);
   }
 }
 
 function initializeConversionCache(nodes) {
   const conversionCache = new Map();
   const handledConversions = new Set();
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     const importDOM = node.klass.importDOM;
 
     if (handledConversions.has(importDOM)) {
@@ -8407,7 +9302,7 @@ function initializeConversionCache(nodes) {
     const map = importDOM();
 
     if (map !== null) {
-      Object.keys(map).forEach(key => {
+      Object.keys(map).forEach((key) => {
         let currentCache = conversionCache.get(key);
 
         if (currentCache === undefined) {
@@ -8430,7 +9325,13 @@ function createEditor(editorConfig) {
   const disableEvents = config.disableEvents || false;
   const editorState = createEmptyEditorState();
   const initialEditorState = config.editorState;
-  const nodes = [RootNode, TextNode, LineBreakNode, ParagraphNode, ...(config.nodes || [])];
+  const nodes = [
+    RootNode,
+    TextNode,
+    LineBreakNode,
+    ParagraphNode,
+    ...(config.nodes || []),
+  ];
   const onError = config.onError;
   const isReadOnly = config.readOnly || false;
   const registeredNodes = new Map();
@@ -8440,17 +9341,24 @@ function createEditor(editorConfig) {
     const type = klass.getType();
     registeredNodes.set(type, {
       klass,
-      transforms: new Set()
+      transforms: new Set(),
     });
   } // klass: Array<Class<LexicalNode>>
   // $FlowFixMe: use our declared type instead
 
-
-  const editor = new LexicalEditor(editorState, parentEditor, registeredNodes, {
-    disableEvents,
-    namespace,
-    theme
-  }, onError, initializeConversionCache(registeredNodes), isReadOnly);
+  const editor = new LexicalEditor(
+    editorState,
+    parentEditor,
+    registeredNodes,
+    {
+      disableEvents,
+      namespace,
+      theme,
+    },
+    onError,
+    initializeConversionCache(registeredNodes),
+    isReadOnly
+  );
 
   if (initialEditorState !== undefined) {
     editor._pendingEditorState = initialEditorState;
@@ -8460,7 +9368,15 @@ function createEditor(editorConfig) {
   return editor;
 }
 class LexicalEditor {
-  constructor(editorState, parentEditor, nodes, config, onError, htmlConversions, readOnly) {
+  constructor(
+    editorState,
+    parentEditor,
+    nodes,
+    config,
+    onError,
+    htmlConversions,
+    readOnly
+  ) {
     this._parentEditor = parentEditor; // The root element associated with this editor
 
     this._rootElement = null; // The current editor state
@@ -8482,7 +9398,7 @@ class LexicalEditor {
       readonly: new Set(),
       root: new Set(),
       textcontent: new Set(),
-      update: new Set()
+      update: new Set(),
     }; // Commands
 
     this._commands = new Map(); // Editor configuration for theme/context.
@@ -8565,14 +9481,22 @@ class LexicalEditor {
     const commandsMap = this._commands;
 
     if (!commandsMap.has(command)) {
-      commandsMap.set(command, [new Set(), new Set(), new Set(), new Set(), new Set()]);
+      commandsMap.set(command, [
+        new Set(),
+        new Set(),
+        new Set(),
+        new Set(),
+        new Set(),
+      ]);
     }
 
     const listenersInPriorityOrder = commandsMap.get(command);
 
     if (listenersInPriorityOrder === undefined) {
       {
-        throw Error(`registerCommand: Command ${command} not found in command map`);
+        throw Error(
+          `registerCommand: Command ${command} not found in command map`
+        );
       }
     }
 
@@ -8581,7 +9505,11 @@ class LexicalEditor {
     return () => {
       listeners.delete(listener);
 
-      if (listenersInPriorityOrder.every(listenersSet => listenersSet.size === 0)) {
+      if (
+        listenersInPriorityOrder.every(
+          (listenersSet) => listenersSet.size === 0
+        )
+      ) {
         commandsMap.delete(command);
       }
     };
@@ -8592,7 +9520,9 @@ class LexicalEditor {
 
     if (registeredNode === undefined) {
       {
-        throw Error(`Node ${klass.name} has not been registered. Ensure node has been passed to createEditor.`);
+        throw Error(
+          `Node ${klass.name} has not been registered. Ensure node has been passed to createEditor.`
+        );
       }
     }
 
@@ -8604,15 +9534,19 @@ class LexicalEditor {
   }
 
   registerNodeTransform( // There's no Flow-safe way to preserve the T in Transform<T>, but <T: LexicalNode> in the
-  // declaration below guarantees these are LexicalNodes.
-  klass, listener) {
+    // declaration below guarantees these are LexicalNodes.
+    klass,
+    listener
+  ) {
     const type = klass.getType();
 
     const registeredNode = this._nodes.get(type);
 
     if (registeredNode === undefined) {
       {
-        throw Error(`Node ${klass.name} has not been registered. Ensure node has been passed to createEditor.`);
+        throw Error(
+          `Node ${klass.name} has not been registered. Ensure node has been passed to createEditor.`
+        );
       }
     }
 
@@ -8670,14 +9604,14 @@ class LexicalEditor {
 
       if (nextRootElement !== null) {
         const style = nextRootElement.style;
-        style.userSelect = 'text';
-        style.whiteSpace = 'pre-wrap';
-        style.wordBreak = 'break-word';
-        nextRootElement.setAttribute('data-lexical-editor', 'true');
+        style.userSelect = "text";
+        style.whiteSpace = "pre-wrap";
+        style.wordBreak = "break-word";
+        nextRootElement.setAttribute("data-lexical-editor", "true");
         this._dirtyType = FULL_RECONCILE;
         initMutationObserver(this);
 
-        this._updateTags.add('history-merge');
+        this._updateTags.add("history-merge");
 
         commitPendingUpdates(this); // TODO: remove this flag once we no longer use UEv2 internally
 
@@ -8686,7 +9620,7 @@ class LexicalEditor {
         }
       }
 
-      triggerListeners('root', this, false, nextRootElement, prevRootElement);
+      triggerListeners("root", this, false, nextRootElement, prevRootElement);
     }
   }
 
@@ -8701,7 +9635,9 @@ class LexicalEditor {
   setEditorState(editorState, options) {
     if (editorState.isEmpty()) {
       {
-        throw Error(`setEditorState: the editor state is empty. Ensure the editor state's root node never becomes empty.`);
+        throw Error(
+          `setEditorState: the editor state is empty. Ensure the editor state's root node never becomes empty.`
+        );
       }
     }
 
@@ -8743,26 +9679,30 @@ class LexicalEditor {
 
     if (rootElement !== null) {
       // This ensures that iOS does not trigger caps lock upon focus
-      rootElement.setAttribute('autocapitalize', 'off');
-      updateEditor(this, () => {
-        const selection = $getSelection();
-        const root = $getRoot();
+      rootElement.setAttribute("autocapitalize", "off");
+      updateEditor(
+        this,
+        () => {
+          const selection = $getSelection();
+          const root = $getRoot();
 
-        if (selection !== null) {
-          // Marking the selection dirty will force the selection back to it
-          selection.dirty = true;
-        } else if (root.getChildrenSize() !== 0) {
-          root.selectEnd();
-        }
-      }, {
-        onUpdate: () => {
-          rootElement.removeAttribute('autocapitalize');
-
-          if (callbackFn) {
-            callbackFn();
+          if (selection !== null) {
+            // Marking the selection dirty will force the selection back to it
+            selection.dirty = true;
+          } else if (root.getChildrenSize() !== 0) {
+            root.selectEnd();
           }
+        },
+        {
+          onUpdate: () => {
+            rootElement.removeAttribute("autocapitalize");
+
+            if (callbackFn) {
+              callbackFn();
+            }
+          },
         }
-      });
+      );
     }
   }
 
@@ -8786,15 +9726,14 @@ class LexicalEditor {
 
   setReadOnly(readOnly) {
     this._readOnly = readOnly;
-    triggerListeners('readonly', this, true, readOnly);
+    triggerListeners("readonly", this, true, readOnly);
   }
 
   toJSON() {
     return {
-      editorState: this._editorState
+      editorState: this._editorState,
     };
   }
-
 }
 
 /**
@@ -8803,9 +9742,9 @@ class LexicalEditor {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
-const VERSION = '0.2.5';
+const VERSION = "0.2.5";
 
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
@@ -8813,13 +9752,12 @@ const VERSION = '0.2.5';
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class GridCellNode extends ElementNode {
   constructor(colSpan, key) {
     super(key);
   }
-
 }
 function $isGridCellNode(node) {
   return node instanceof GridCellNode;
@@ -8831,7 +9769,7 @@ function $isGridCellNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class GridNode extends ElementNode {}
 function $isGridNode(node) {
@@ -8844,7 +9782,7 @@ function $isGridNode(node) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * 
+ *
  */
 class GridRowNode extends ElementNode {}
 function $isGridRowNode(node) {
