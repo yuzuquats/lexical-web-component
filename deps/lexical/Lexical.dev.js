@@ -6152,6 +6152,7 @@ function internalCreateRangeSelection(lastSelection, domSelection, editor) {
     lastSelection
   );
 
+  console.log({ resolvedSelectionPoints });
   if (resolvedSelectionPoints === null) {
     return null;
   }

@@ -4,12 +4,14 @@
   "description": "",
   "main": "dist/lexical.bundle.min.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "onchange 'deps/**/*.js' -- npm run build"
   },
   "keywords": [],
   "dependencies": {
     "@lexical/plain-text": "file:deps/@lexical/plain-text",
-    "lexical": "file:deps/lexical"
+    "lexical": "file:deps/lexical",
+    "onchange": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
