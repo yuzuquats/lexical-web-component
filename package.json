@@ -8,22 +8,8 @@
   },
   "keywords": [],
   "dependencies": {
-    "@lexical/clipboard": "0.2.5",
-    "@lexical/code": "0.2.5",
-    "@lexical/dragon": "0.2.5",
-    "@lexical/hashtag": "0.2.5",
-    "@lexical/history": "0.2.5",
-    "@lexical/link": "0.2.5",
-    "@lexical/list": "0.2.5",
-    "@lexical/markdown": "0.2.5",
-    "@lexical/overflow": "0.2.5",
-    "@lexical/plain-text": "0.2.5",
-    "@lexical/rich-text": "0.2.5",
-    "@lexical/selection": "0.2.5",
-    "@lexical/table": "0.2.5",
-    "@lexical/text": "0.2.5",
-    "@lexical/utils": "0.2.5",
-    "@lexical/yjs": "0.2.5"
+    "lexical": "file:deps/lexical",
+    "@lexical/plain-text": "file:deps/@lexical/plain-text"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
